@@ -14,7 +14,11 @@ npm install
 in the package directory. 
 In order to open it, do
 ```
-mangod
+mongod
+```
+Note that if do not have permission to create /data/db, do instead
+```
+sudo mongod
 ```
 in a SECOND terminal, then do
 ```
