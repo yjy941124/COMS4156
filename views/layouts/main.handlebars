@@ -5,10 +5,10 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="User Authentication">
-  <meta name="author" content="">
+  <meta name="description" content="Forever Read">
+  <meta name="author" content="Naughty Blue Cat">
 
-  <title>User Authentication</title>
+  <title>Forever Read</title>
 
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -23,6 +23,7 @@
       <div class="container-fluid">
 
       <!-- Brand and toggle get grouped for better mobile display -->
+          <!--The following code is for the nav-bar-->
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
           <span class="sr-only">Toggle navigation</span>
@@ -39,8 +40,8 @@
               {{#if user}}
                 <p class="navbar-text">
                   <strong>Hi,</strong> 
-                  <img src="{{user.avatar}}" width="20" height="20"> 
-                  {{user.username}}
+
+                  {{user.username}}, You are a {{user.role}}
                 </p>
                 </li>
                 </ul>

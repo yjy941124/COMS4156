@@ -12,6 +12,14 @@ var config = require('./config.js'), //config file contains all tokens and other
 
 var app = express();
 
+//HandleBars functions for ==.
+exphbs.helpers('ifCond', function(v1, v2, options) {
+    if(v1 === v2) {
+        return options.fn(this);
+    }
+    return options.inverse(this);
+});
+
 //===============PASSPORT=================
 
 // Passport session setup.
@@ -52,7 +60,8 @@ passport.use('local-signin', new LocalStrategy(
 passport.use('local-signup', new LocalStrategy(
   {passReqToCallback : true}, //allows us to pass back the request to the callback
   function(req, username, password, done) {
-    funct.localReg(username, password)
+
+    funct.localReg(username, password, req.body.role)
     .then(function (user) {
       if (user) {
         console.log("REGISTERED: " + user.username);
@@ -70,6 +79,7 @@ passport.use('local-signup', new LocalStrategy(
     });
   }
 ));
+
 
 // Simple route middleware to ensure user is authenticated.
 function ensureAuthenticated(req, res, next) {
@@ -129,14 +139,16 @@ app.get('/signin', function(req, res){
 });
 
 //sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
-app.post('/local-reg', passport.authenticate('local-signup', {
-  successRedirect: '/',
-  failureRedirect: '/signin'
-  })
-);
+
+app.post('/local-reg', function(req, res) {
+    passport.authenticate('local-signup', {
+        successRedirect: '/',
+        failureRedirect: '/signin'
+    })(req, res);
+});
 
 //sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page
-app.post('/login', passport.authenticate('local-signin', { 
+app.post('/login', passport.authenticate('local-signin', {
   successRedirect: '/',
   failureRedirect: '/signin'
   })

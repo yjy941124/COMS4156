@@ -1,7 +1,7 @@
 <!-- views/home.handlebars -->
-{{#if user}}
+{{#ifCond user.role "writer"}}
   <div class="jumbotron">
-    <h1>MongoDB User Authentication</h1>
+    <h1>MongoDB User Authentication Writer</h1>
     <p>Below is your profile information!</p>
   </div>
   <div class="panel panel-default">
@@ -26,5 +26,6 @@
     </p>
   </div>
   
-{{/if}}
+{{/ifCond}}
+
    
