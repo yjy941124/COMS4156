@@ -3,7 +3,7 @@ This is the final project of COMS 4156, co-authored by four members from the cla
 
 ### March 16 2017 - Jinyang
 I have made several updates so far and here's a quick summary of what has been changed from Mar 2.
-- Repository is no longer a template. It's now a initial prototype.
+- Repository is no longer a template. It's now an initial prototype.
 - No longer needs to do npm install first. However, if you run into any problem, try npm intall anyway. (Still needs to open mongodb.)
 - Update 1: Now can register new users with either being a reader or writer (must specify) - denote as "writer" and "reader" in the database. JS-wise it's called "user.role", same as "user.username".
 - Update 2: Move from the original handlebars to ejs view engine.
