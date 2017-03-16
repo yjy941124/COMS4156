@@ -19,9 +19,8 @@ Right now the user login stays as is in the above work (+google/twitter/etc logi
 
 ~~Note this template needs to install first.~~ **First install node.js and mongodb before install this package.**
 ~~Then do,
-```
 npm install
-```~~
+~~
 in the package directory. 
 In order to open it, do
 ```
