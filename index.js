@@ -1,24 +1,35 @@
-var express = require('express'),
-    exphbs  = require('express-handlebars'),
-    passport = require('passport'),
-    LocalStrategy = require('passport-local'),
-    TwitterStrategy = require('passport-twitter'),
-    GoolgeStrategy = require('passport-google'),
-    FacebookStrategy = require('passport-facebook');
-    
+var express = require('express');
+var expressLayouts = require('./express-layouts');
+var passport = require('passport');
+// var logger = require('morgan');
+var LocalStrategy = require('passport-local');
+var cookieParser = require('cookie-parser');
+var app = express();
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+var session = require('express-session');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressLayouts);
+app.use('/public',express.static('./public'));
+app.set('views', './views');  // Specify the folder to find templates
+app.set('view engine', 'ejs');    // Set the template engine
+
+// app.use(logger);
+app.use(cookieParser());
+
+app.use(methodOverride());
+app.use(session({
+    secret: 'supernova',
+    resave: false,
+    saveUninitialized: true,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 var config = require('./config.js'), //config file contains all tokens and other private info
     funct = require('./functions.js');
 
-var app = express();
-
-//HandleBars functions for ==.
-exphbs.helpers('ifCond', function(v1, v2, options) {
-    if(v1 === v2) {
-        return options.fn(this);
-    }
-    return options.inverse(this);
-});
 
 //===============PASSPORT=================
 
@@ -92,13 +103,7 @@ function ensureAuthenticated(req, res, next) {
 //===============EXPRESS=================
 
 // Configure Express
-app.use(express.logger());
-app.use(express.cookieParser());
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.session({ secret: 'supernova' }));
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 // Session-persisted message middleware
 app.use(function(req, res, next){
@@ -117,20 +122,22 @@ app.use(function(req, res, next){
   next();
 });
 
-app.use(app.router);
 
-// Configure express to use handlebars templates
+
+/*// Configure express to use handlebars templates
 var hbs = exphbs.create({
     defaultLayout: 'main',
 });
 app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
+app.set('view engine', 'handlebars');*/
 
 
 //===============ROUTES=================
 //displays our homepage
 app.get('/', function(req, res){
-  res.render('home', {user: req.user});
+  res.render('home', {
+      user: req.user
+  });
 });
 
 //displays our signup page
