@@ -20,7 +20,7 @@ I have made several updates so far and here's a quick summary of what has been c
 
 TODO:
 - Update UI. There is no UI design what so ever right now. 
-- Implement simple publish book function (including publish chapter within a book). [Priority].
+- ~~Implement simple publish book function (including publish chapter within a book). [Priority].~~
 ### March 2 2017 - Jinyang
 I uploaded a template to start with. This template includes node.js configuration and routing, mongoDB connection, handlebar.js view engine (same as mastache.js), and user signup and login system. This template is modified from https://github.com/pymander/userAuth.git
 
@@ -45,5 +45,5 @@ node index.js
 in the FIRST terminal.
 
 ## First step goal
-- simple input text in a box and save in db and render on browser.
+- ~~simple input text in a box and save in db and render on browser.~~
 - ~~modify user login to fit our goal.~~
