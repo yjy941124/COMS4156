@@ -1,6 +1,15 @@
 # COMS4156
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### March 17 2017 - Jinyang
+Implemented some new features.
+- Now writer can publish a new book. The book is saved in mongodb as "Books" collection. It has "bookname", "bookdes", "writerID", and "writerName". 
+- All published books can be viewed at home page. Only bookname and writerName are shown.
+
+TODO:
+- add publish chapter under each book feature. (@query parameter look up)
+- Right now, any user can still access "/publish" regardless of its role. Need to limit access only to writers.
+- Start to build user profile page. (@query parameter again)
 ### March 16 2017 - Jinyang
 I have made several updates so far and here's a quick summary of what has been changed from Mar 2.
 - Repository is no longer a template. It's now an initial prototype.
