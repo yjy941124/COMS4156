@@ -2,81 +2,131 @@ var bcrypt = require('bcryptjs'),
     Q = require('q'),
     config = require('./config.js'); //config file contains all tokens and other private info
 
-// MongoDB connection information
-var mongodbUrl = 'mongodb://' + config.mongodbHost + ':27017/users';
+// setup MongoDB connection information
+var mongodbUrl = 'mongodb://' + config.mongodbHost + ':27017/foreverRead';
 var MongoClient = require('mongodb').MongoClient;
+function IDGenerator() {
+    var id = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
+    for (var i = 0; i < 32; i++) {
+        id += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return id;
+}
 //used in local-signup strategy
 exports.localReg = function (username, password, role) {
-  var deferred = Q.defer();
-  
-  MongoClient.connect(mongodbUrl, function (err, db) {
-    var collection = db.collection('localUsers');
+    var deferred = Q.defer();
+    var userID = IDGenerator;
+    var IDexist = true;
+    MongoClient.connect(mongodbUrl, function (err, db) {
+        var collection = db.collection('Users');
+        //check if username is already assigned in our database
+        collection.findOne({'username': username})
+            .then(function (result) {
+                if (null != result) {
+                    console.log("USERNAME ALREADY EXISTS:", result.username);
+                    deferred.resolve(false); // username exists
+                }
+                else {
+                    var hash = bcrypt.hashSync(password, 8);
+                    var user = {
+                        "username": username,
+                        "password": hash,
+                        "role": role
+                    };
 
-    //check if username is already assigned in our database
-    collection.findOne({'username' : username})
-      .then(function (result) {
-        if (null != result) {
-          console.log("USERNAME ALREADY EXISTS:", result.username);
-          deferred.resolve(false); // username exists
-        }
-        else  {
-          var hash = bcrypt.hashSync(password, 8);
-          var user = {
-            "username": username,
-            "password": hash,
-            "role": role
-          };
+                    console.log("CREATING USER:", username);
 
-          console.log("CREATING USER:", username);
-          console.log('I just wanna see foo! ' + role);
-            collection.insert(user)
-            .then(function () {
-              db.close();
-              deferred.resolve(user);
+                    collection.insertOne(user)
+                        .then(function () {
+                            db.close();
+                            deferred.resolve(user);
+                        });
+                }
             });
-        }
-      });
-  });
+    });
 
-  return deferred.promise;
+    return deferred.promise;
 };
 
+//TODO add alert window for username already exists.
 
 //check if user exists
-    //if user exists check if passwords match (use bcrypt.compareSync(password, hash); // true where 'hash' is password in DB)
-      //if password matches take into website
-  //if user doesn't exist or password doesn't match tell them it failed
+//if user exists check if passwords match (use bcrypt.compareSync(password, hash); // true where 'hash' is password in DB)
+//if password matches take into website
+//if user doesn't exist or password doesn't match tell them it failed
 exports.localAuth = function (username, password) {
-  var deferred = Q.defer();
+    var deferred = Q.defer();
 
-  MongoClient.connect(mongodbUrl, function (err, db) {
-    var collection = db.collection('localUsers');
+    MongoClient.connect(mongodbUrl, function (err, db) {
+        var collection = db.collection('Users');
 
-    collection.findOne({'username' : username})
-      .then(function (result) {
-        if (null == result) {
-          console.log("USERNAME NOT FOUND:", username);
+        collection.findOne({'username': username})
+            .then(function (result) {
+                if (null == result) {
+                    console.log("USERNAME NOT FOUND:", username);
 
-          deferred.resolve(false);
-        }
-        else {
-          var hash = result.password;
+                    deferred.resolve(false);
+                }
+                else {
+                    var hash = result.password;
 
-          console.log("FOUND USER: " + result.username);
+                    console.log("FOUND USER: " + result.username);
 
-          if (bcrypt.compareSync(password, hash)) {
-            deferred.resolve(result);
-          } else {
-            console.log("AUTHENTICATION FAILED");
-            deferred.resolve(false);
-          }
-        }
+                    if (bcrypt.compareSync(password, hash)) {
+                        deferred.resolve(result);
+                    } else {
+                        console.log("AUTHENTICATION FAILED");
+                        deferred.resolve(false);
+                    }
+                }
+                db.close();
+            });
+    });
 
-        db.close();
-      });
-  });
+    return deferred.promise;
+};
+exports.publishBook = function (req, res) {
+    var bookname = req.body.bookname;
+    var bookdes = req.body.bookDescription;
+    var writerID = req.user._id.toString();
+    var writerName = req.user.username;
+    var book = {
+        'bookname': bookname,
+        'bookdes': bookdes,
+        'writerID': writerID,
+        'writerName': writerName
 
-  return deferred.promise;
+    };
+    MongoClient.connect(mongodbUrl, function (err, db) {
+        var books = db.collection('Books');
+        books.findOne({'bookname': book.bookname})
+            .then(function (result) {
+                if (null != result) {
+                    console.log('book already exists' + result.bookname);
+                }
+                else {
+                    books.insertOne(book)
+                        .then(function () {
+                            db.close();
+
+                        });
+                }
+            });
+    });
+    console.log(book);
+    res.send('published!');
+};
+
+exports.queryAllBook = function () {
+    var bookList;
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+        var books = db.collection('Books');
+        return books.find({}).toArray();
+    }).then(function(items) {
+            console.log(items);
+            return items;
+        });
 };
 

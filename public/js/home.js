@@ -6,8 +6,12 @@ $(document).ready(function () {
     //console.log(user);
 
     var userRole = $("#parse-user").html();
-    console.log(userRole);
+
     if (userRole == 'writer') {
-        $("#publish-page").html("<a id='publish' class='btn btn-default btn-md' role='button'>Publish Page</a>");
+        $("#publish-page").html("<a id='publish' href='/publish' class='btn btn-default btn-md' role='button'>Publish Page</a>");
     }
+
 });
+
+
+

@@ -22,7 +22,7 @@ function parseContents(locals) {
     var i = 1;
 
     if (matches != null) {
-        matches.forEach(function(match) {
+        matches.forEach(function (match) {
             var name = match.split(contentPattern)[1];
             locals[name] = split[i];
             i++;
@@ -41,10 +41,10 @@ function parseScripts(locals) {
     }
 }
 
-module.exports = exports = function(req, res, next) {
+module.exports = exports = function (req, res, next) {
     var render = res.render;
 
-    res.render = function(view, options, fn) {
+    res.render = function (view, options, fn) {
 
         var options = options || {};
 
@@ -57,7 +57,7 @@ module.exports = exports = function(req, res, next) {
         var defaultLayout = app.get('layout')
         var specifiedLayout = options.layout
 
-        if (specifiedLayout === false || ((specifiedLayout || defaultLayout) === false) ) {
+        if (specifiedLayout === false || ((specifiedLayout || defaultLayout) === false)) {
             render.call(res, view, options, fn)
             return
         }
@@ -69,7 +69,7 @@ module.exports = exports = function(req, res, next) {
         options.contentFor = contentFor
 
         var self = this;
-        render.call(res, view, options, function(err, str){
+        render.call(res, view, options, function (err, str) {
 
             if (err) {
                 if (fn)
@@ -78,7 +78,7 @@ module.exports = exports = function(req, res, next) {
                     throw err
             }
 
-            var locals = { body: str }
+            var locals = {body: str}
             for (var l in options) {
                 if (options.hasOwnProperty(l)
                     && l != 'layout'

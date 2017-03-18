@@ -1,10 +1,15 @@
-
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
 <div class="container">
     <% if (user != null) { %>
-  <p hidden id="parse-user"><%=(user.role).toString()%></p>
-    <% }%>
-  <!--nav bar do not render right now-->
-  <!--<nav class="navbar navbar-inverse navbar-fixed-top">
+    <p hidden id="parse-user"><%= (user.role).toString() %></p>
+    <% } %>
+    <!--nav bar do not render right now-->
+    <!--<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
 
       &lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;
@@ -26,7 +31,7 @@
             <p class="navbar-text">
               <strong>Hi,</strong>
 
-                <%=user.username%>, You are a <%=user.role%>
+                <%= user.username %>, You are a <%= user.role %>
             </p>
 
           </li>
@@ -38,48 +43,60 @@
             <% } else { %>
           <a href="/signin">Sign In</a>
           </li>
-            <% }%>
+            <% } %>
         </ul>
       </div>&lt;!&ndash; /.navbar-collapse &ndash;&gt;
     </div>&lt;!&ndash; /.container-fluid &ndash;&gt;
   </nav>-->
-</div>
+    <div id="book-list"></div>
 
-
-<% if (user != null) { %>
-  <div class="jumbotron">
-    <p>Welcome, <%=user.username%>, you are logged in as a <%=user.role%></p>
-    <p>You can <a href="/logout">Log Out</a> here.</p>
+    <% if (user != null) { %>
+    <div class="jumbotron">
+        <p>Welcome, <%= user.username %>, you are logged in as a <%= user.role %></p>
+        <p>You can <a href="/logout">Log Out</a> here.</p>
 
   </div>
 <div id="publish-page"></div>
 
-  <!--Don't implement now, maybe useful for later features.
+    <!--Don't implement now, maybe useful for later features.
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">Profile Information</h3>
     </div>
     <div class="panel-body">
-      <p>Username: <%=user.username%></p>
+      <p>Username: <%= user.username %></p>
 
     </div>
   </div>-->
 
-<% } else { %>
-  <div class="jumbotron">
-    <h1>Welcome to Forever Read</h1>
-    <p>You can view books here!</p>
-    <p>
-      <a href="/signin" class="btn btn-primary btn-lg" role="button">
-        <span class="glyphicon glyphicon-user"></span> 
-        Click here to sign in or register an account!
-      </a>
-    </p>
-  </div>
+    <% } else { %>
+    <div class="jumbotron">
+        <h1>Welcome to Forever Read</h1>
+        <p>You can view books here!</p>
+        <table class="100%">
+            <tr>
+                <th>Book Name</th>
+                <th>Writer Name</th>
 
-<% }%>
+            </tr>
+            <% for(var i=0; i<bookList.length; i++) {%>
+            <tr>
+                <th><%= bookList[i].bookname.toString() %></th>
+                <th><%= bookList[i].writerName.toString() %></th>
+            </tr>
+            <% } %>
+        </table>
+        <p>
+            <a href="/signin" class="btn btn-primary btn-lg" role="button">
+                <span class="glyphicon glyphicon-user"></span>
+                Click here to sign in or register an account!
+            </a>
+        </p>
+    </div>
 
+    <% } %>
 
+</div>
 
 <script type="text/javascript" src="../public/js/home.js" defer></script>
 

@@ -1,3 +1,3 @@
 module.exports = {
-  "mongodbHost" : 'localhost'
+    "mongodbHost": 'localhost'
 };
