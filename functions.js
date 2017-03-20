@@ -5,6 +5,8 @@ var bcrypt = require('bcryptjs'),
 // setup MongoDB connection information
 var mongodbUrl = 'mongodb://' + config.mongodbHost + ':27017/foreverRead';
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
+
 function IDGenerator() {
     var id = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -14,6 +16,7 @@ function IDGenerator() {
     }
     return id;
 }
+
 //used in local-signup strategy
 exports.localReg = function (username, password, role) {
     var deferred = Q.defer();
@@ -46,7 +49,6 @@ exports.localReg = function (username, password, role) {
                 }
             });
     });
-
     return deferred.promise;
 };
 
@@ -66,7 +68,6 @@ exports.localAuth = function (username, password) {
             .then(function (result) {
                 if (null == result) {
                     console.log("USERNAME NOT FOUND:", username);
-
                     deferred.resolve(false);
                 }
                 else {
@@ -87,6 +88,7 @@ exports.localAuth = function (username, password) {
 
     return deferred.promise;
 };
+
 exports.publishBook = function (req, res) {
     var bookname = req.body.bookname;
     var bookdes = req.body.bookDescription;
@@ -97,36 +99,51 @@ exports.publishBook = function (req, res) {
         'bookdes': bookdes,
         'writerID': writerID,
         'writerName': writerName
-
     };
     MongoClient.connect(mongodbUrl, function (err, db) {
         var books = db.collection('Books');
-        books.findOne({'bookname': book.bookname})
-            .then(function (result) {
-                if (null != result) {
-                    console.log('book already exists' + result.bookname);
-                }
-                else {
-                    books.insertOne(book)
-                        .then(function () {
-                            db.close();
-
-                        });
-                }
-            });
+        var users = db.collection('Users');
+        books.insertOne(book).then(function (result) {
+            var book_id = (result.ops)[0]._id;
+            users.updateOne(
+                {_id: new ObjectId(writerID)},
+                {
+                    $push: {
+                        publication: {
+                            'book_id': new ObjectId(book_id),
+                            'bookname': bookname
+                        }
+                    }
+                },
+                {upsert: true})
+                .then(function () {
+                    console.log("Update success");
+                    db.close();
+                });
+        });
     });
     console.log(book);
     res.send('published!');
 };
 
 exports.queryAllBook = function () {
-    var bookList;
     return MongoClient.connect(mongodbUrl).then(function (db) {
         var books = db.collection('Books');
         return books.find({}).toArray();
-    }).then(function(items) {
-            console.log(items);
-            return items;
-        });
+    }).then(function (items) {
+        return items;
+    });
 };
 
+exports.queryPublicationFromWriter = function (user_id) {
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+        var users = db.collection('Users');
+        return users.findOne({'_id': new ObjectId(user_id)})
+            .then(function (result) {
+                console.log(result.publication);
+                return result.publication;
+            })
+    }).then(function (items) {
+        return items;
+    })
+};

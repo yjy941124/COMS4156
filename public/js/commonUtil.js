@@ -8,3 +8,4 @@ user = 1;
 function getUser() {
     return user;
 }
+

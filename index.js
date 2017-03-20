@@ -14,21 +14,19 @@ app.use(expressLayouts);
 app.use('/public', express.static('./public'));
 app.set('views', './views');  // Specify the folder to find templates
 app.set('view engine', 'ejs');    // Set the template engine
-
 // app.use(logger);
 app.use(cookieParser());
-
 app.use(methodOverride());
 app.use(session({
     secret: 'supernova',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
 var config = require('./config.js'), //config file contains all tokens and other private info
     funct = require('./functions.js');
+
 
 
 //===============PASSPORT=================
@@ -124,14 +122,12 @@ app.use(function (req, res, next) {
     next();
 });
 
-
 /*// Configure express to use handlebars templates
  var hbs = exphbs.create({
  defaultLayout: 'main',
  });
  app.engine('handlebars', hbs.engine);
  app.set('view engine', 'handlebars');*/
-
 
 //===============ROUTES=================
 //displays our homepage
@@ -144,8 +140,6 @@ app.get('/', function (req, res) {
     }, function (err) {
         console.log("I receive error" + err);
     });
-
-
 });
 
 //displays our signup page
@@ -184,6 +178,22 @@ app.get('/publish', function (req, res) {
 //writer publish a book
 app.post('/publishBook', funct.publishBook);
 //TODO look up query parameter. add get for each book.
+
+app.get('/profile/:userId', function (req, res) {
+
+    var user_id = req.params.userId;
+    var userRole = req.user.role;
+    console.log('============');
+    funct.queryPublicationFromWriter(user_id).then(function (publications) {
+        res.render('profile',{
+            userID: req.params.userId,
+            userRole: userRole,
+            publication: publications
+        });
+    });
+
+});
+
 
 //===============PORT=================
 var port = process.env.PORT || 5000;

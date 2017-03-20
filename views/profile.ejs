@@ -1,0 +1,24 @@
+<div id="container">
+    This is the profile page.
+    <p hidden id="parse-user-id"><%=userID%></p>
+    <p hidden id="parse-user-role"><%=userRole%></p>
+    <% if (publication != undefined) {%>
+    <div id="publication-list">
+        <p>Here is the book you published.</p>
+        <table class="100%">
+            <tr>
+                <th>Book Name</th>
+
+
+            </tr>
+            <% for(var i = 0; i < publication.length; i++) { %>
+            <tr>
+                <th><%= publication[i].bookname.toString() %></th>
+            </tr>
+            <% } %>
+        </table>
+    </div>
+    <%}%>
+
+    <p>Here is the book you subscribed.</p>
+</div>
