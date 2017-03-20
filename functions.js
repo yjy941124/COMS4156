@@ -131,6 +131,8 @@ exports.queryAllBook = function () {
         var books = db.collection('Books');
         return books.find({}).toArray();
     }).then(function (items) {
+        console.log("All books available on Forever Read are...");
+        console.log(items);
         return items;
     });
 };
@@ -147,3 +149,6 @@ exports.queryPublicationFromWriter = function (user_id) {
         return items;
     })
 };
+
+
+

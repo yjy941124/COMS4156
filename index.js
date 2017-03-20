@@ -133,12 +133,30 @@ app.use(function (req, res, next) {
 //displays our homepage
 app.get('/', function (req, res) {
     funct.queryAllBook().then(function (items) {
-        res.render('home', {
-            user: req.user,
-            bookList: items
+        var user=req.user;
+        var bookIDs=[];
+        var bookList=items;
+        //bookList is an array consisting of _id for each book in DB
+        bookList.forEach(function(elem){
+            //assert that each bookIDs element is typeof String
+            bookIDs.push(elem._id.toString());
         });
+        /* bookList schema{
+         * _id
+         * bookname
+         * bookdes
+         * writerID
+         * writerName
+         */
+        res.render('home', {
+            user: user,
+            bookList: bookList,
+            bookIDs: bookIDs
+        });
+        console.log("print bookIDs array in corresponding order: ");
+        console.log(bookIDs);
     }, function (err) {
-        console.log("I receive error" + err);
+        console.log("error occurs, details: " + err);
     });
 });
 
@@ -194,8 +212,16 @@ app.get('/profile/:userId', function (req, res) {
 
 });
 
+app.get('/books/58d024daa184c41cd7c4904a',function(req,res){
+    console.log("The book ID that's selected is "+req.params.bookID);
+})
+
+
+
+
 
 //===============PORT=================
 var port = process.env.PORT || 5000;
 app.listen(port);
-console.log("listening on " + port + "!");
+console.log("Listening on " + port + "!");
+console.log("Go to http://localhost:"+port);
