@@ -1,6 +1,5 @@
-/**
- * Created by jinyangyu on 3/19/17.
- */
+/* profile.js */
+
 $(document).ready(function () {
 
     var user_id = $("#parse-user-id").html();
@@ -8,6 +7,7 @@ $(document).ready(function () {
     if (userRole == 'writer') {
         $('#publication-list').hide();
     }
+    var book_id=$("#parse-book-id").html();
 
 
 });

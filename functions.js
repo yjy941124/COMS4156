@@ -131,6 +131,8 @@ exports.queryAllBook = function () {
         var books = db.collection('Books');
         return books.find({}).toArray();
     }).then(function (items) {
+        console.log("All books available on Forever Read are...");
+        console.log(items);
         return items;
     });
 };
@@ -147,3 +149,36 @@ exports.queryPublicationFromWriter = function (user_id) {
         return items;
     })
 };
+
+
+// to query all chapters from one book
+
+/*
+exports.queryChaptersFromBook = function (book_id){
+    return MongoClient.connect(mongodbUrl).then(function(db){
+        var books=db.collection('Books');
+        return books.findOne({'_id':new Object(book_id)})
+            .then(function(result){
+                console.log(result.)
+
+            })
+    })
+}
+*/
+
+
+exports.queryBookinfoFromID = function(book_id){
+    return MongoClient.connect(mongodbUrl).then (function(db){
+        var books=db.collection('Books');
+        return books.findOne({'_id':new ObjectId(book_id)})
+            .then(function(result){
+                console.log(result);
+                return result;
+            })
+    }).then(function(items){
+        return items;
+    });
+};
+
+
+

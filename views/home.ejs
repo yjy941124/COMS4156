@@ -77,7 +77,6 @@
 
     <% } else { %>
     <div class="jumbotron">
-
         <p>
             <a href="/signin" class="btn btn-primary btn-lg" role="button">
                 <span class="glyphicon glyphicon-user"></span>
@@ -87,21 +86,31 @@
     </div>
 
     <% } %>
+
+
+    <!-- this div may be changed to render only for registered user (writer, reader, admin) later-->
     <div id="render-for-all">
         <h1>Welcome to Forever Read</h1>
         <p>You can view books here!</p>
         <table class="100%">
+            <thead>
             <tr>
                 <th>Book Name</th>
                 <th>Writer Name</th>
-
             </tr>
-            <% for(var i = 0; i < bookList.length; i++) { %>
+            </thead>
+
+            <tbody>
+            <% for(var i = 0; i < bookList.length; i++) {%>
             <tr>
-                <th><%= bookList[i].bookname.toString() %></th>
+                <th>
+                    <% var bookID= bookIDs[i].toString() %>
+                    <p hidden id="parse-book-id"><%=bookID%></p>
+                    <a href= <%= "/books/"+bookIDs[i].toString() %>> <%= bookList[i].bookname.toString() %></a></th>
                 <th><%= bookList[i].writerName.toString() %></th>
             </tr>
             <% } %>
+            </tbody>
         </table>
     </div>
 </div>

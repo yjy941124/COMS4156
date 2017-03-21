@@ -133,12 +133,30 @@ app.use(function (req, res, next) {
 //displays our homepage
 app.get('/', function (req, res) {
     funct.queryAllBook().then(function (items) {
-        res.render('home', {
-            user: req.user,
-            bookList: items
+        var user=req.user;
+        var bookIDs=[];
+        var bookList=items;
+        //bookList is an array consisting of _id for each book in DB
+        bookList.forEach(function(elem){
+            //assert that each bookIDs element is typeof String
+            bookIDs.push(elem._id.toString());
         });
+        /* bookList schema{
+         * _id
+         * bookname
+         * bookdes
+         * writerID
+         * writerName
+         */
+        res.render('home', {
+            user: user,
+            bookList: bookList,
+            bookIDs: bookIDs
+        });
+        console.log("print bookIDs array in corresponding order: ");
+        console.log(bookIDs);
     }, function (err) {
-        console.log("I receive error" + err);
+        console.log("error occurs, details: " + err);
     });
 });
 
@@ -181,10 +199,10 @@ app.post('/publishBook', funct.publishBook);
 
 app.get('/profile/:userId', function (req, res) {
 
-    var user_id = req.params.userId;
+    var userId = req.params.userId;
     var userRole = req.user.role;
     console.log('============');
-    funct.queryPublicationFromWriter(user_id).then(function (publications) {
+    funct.queryPublicationFromWriter(userId).then(function (publications) {
         res.render('profile',{
             userID: req.params.userId,
             userRole: userRole,
@@ -194,8 +212,22 @@ app.get('/profile/:userId', function (req, res) {
 
 });
 
+/* since we have a render-for-all situation, I only render bookId to fetch all chapters */
+app.get('/books/:bookId',function(req,res){
+    var bookId=req.params.bookId;
+    funct.queryBookinfoFromID(bookId).then(function(item){
+        res.render('chapters',{
+            bookID: bookId,
+            book: item
+        });
+    });
+});
+
+
+
 
 //===============PORT=================
 var port = process.env.PORT || 5000;
 app.listen(port);
-console.log("listening on " + port + "!");
+console.log("Listening on " + port + "!");
+console.log("Go to http://localhost:"+port);
