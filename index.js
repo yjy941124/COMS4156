@@ -230,7 +230,6 @@ app.post('/uploadNewChapter', function (req, res) {
     });
 });
 
-app.post('/')
 
 //===============PORT=================
 var port = process.env.PORT || 5000;
