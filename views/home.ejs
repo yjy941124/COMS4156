@@ -77,7 +77,6 @@
 
     <% } else { %>
     <div class="jumbotron">
-
         <p>
             <a href="/signin" class="btn btn-primary btn-lg" role="button">
                 <span class="glyphicon glyphicon-user"></span>
@@ -98,16 +97,16 @@
             <tr>
                 <th>Book Name</th>
                 <th>Writer Name</th>
-
             </tr>
             </thead>
+
             <tbody>
-            <% for(var i = 0; i < bookList.length; i++) { %>
+            <% for(var i = 0; i < bookList.length; i++) {%>
             <tr>
                 <th>
                     <% var bookID= bookIDs[i].toString() %>
-                    <p id="parse-book-id"><%=bookID%></p>
-                    <a id="parse-book-id" href= <%= "/books/"+bookIDs[i].toString() %>> <%= bookList[i].bookname.toString() %></a></th>
+                    <p hidden id="parse-book-id"><%=bookID%></p>
+                    <a href= <%= "/books/"+bookIDs[i].toString() %>> <%= bookList[i].bookname.toString() %></a></th>
                 <th><%= bookList[i].writerName.toString() %></th>
             </tr>
             <% } %>

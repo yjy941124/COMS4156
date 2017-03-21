@@ -151,4 +151,20 @@ exports.queryPublicationFromWriter = function (user_id) {
 };
 
 
+// to query all chapters from one book
+
+/*
+exports.queryChaptersFromBook = function (book_id){
+    return MongoClient.connect(mongodbUrl).then(function(db){
+        var books=db.collection('Books');
+        return books.findOne({'_id':new Object(book_id)})
+            .then(function(result){
+                console.log(result.)
+
+            })
+    })
+}
+*/
+
+
 

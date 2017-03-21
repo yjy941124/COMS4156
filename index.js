@@ -199,10 +199,10 @@ app.post('/publishBook', funct.publishBook);
 
 app.get('/profile/:userId', function (req, res) {
 
-    var user_id = req.params.userId;
+    var userId = req.params.userId;
     var userRole = req.user.role;
     console.log('============');
-    funct.queryPublicationFromWriter(user_id).then(function (publications) {
+    funct.queryPublicationFromWriter(userId).then(function (publications) {
         res.render('profile',{
             userID: req.params.userId,
             userRole: userRole,
@@ -212,10 +212,14 @@ app.get('/profile/:userId', function (req, res) {
 
 });
 
-app.get('/books/58d024daa184c41cd7c4904a',function(req,res){
-    console.log("The book ID that's selected is "+req.params.bookID);
-})
-
+/* since we have a render-for-all situation, I only render bookId to fetch all chapters */
+app.get('/books/:bookId',function(req,res){
+    var bookId=req.params.bookId;
+    console.log('============');
+    res.render('chapters',{
+        bookID: bookId
+    });
+});
 
 
 
