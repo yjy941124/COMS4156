@@ -215,9 +215,11 @@ app.get('/profile/:userId', function (req, res) {
 /* since we have a render-for-all situation, I only render bookId to fetch all chapters */
 app.get('/books/:bookId',function(req,res){
     var bookId=req.params.bookId;
-    console.log('============');
-    res.render('chapters',{
-        bookID: bookId
+    funct.queryBookinfoFromID(bookId).then(function(item){
+        res.render('chapters',{
+            bookID: bookId,
+            book: item
+        });
     });
 });
 

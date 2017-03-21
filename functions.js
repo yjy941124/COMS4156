@@ -167,4 +167,18 @@ exports.queryChaptersFromBook = function (book_id){
 */
 
 
+exports.queryBookinfoFromID = function(book_id){
+    return MongoClient.connect(mongodbUrl).then (function(db){
+        var books=db.collection('Books');
+        return books.findOne({'_id':new ObjectId(book_id)})
+            .then(function(result){
+                console.log(result);
+                return result;
+            })
+    }).then(function(items){
+        return items;
+    });
+};
+
+
 
