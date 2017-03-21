@@ -223,8 +223,14 @@ app.get('/books/:bookId',function(req,res){
     });
 });
 
+app.post('/uploadNewChapter', function (req, res) {
 
+    res.render('uploadNewChapter',{
+        bookID: bookid
+    });
+});
 
+app.post('/')
 
 //===============PORT=================
 var port = process.env.PORT || 5000;

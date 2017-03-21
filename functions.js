@@ -180,6 +180,36 @@ exports.queryBookinfoFromID = function(book_id){
         return items;
     });
 };
+/*exports.addNewChapterUsingBookID = function (book_id) {
+    MongoClient.connect(mongodbUrl).then (function (db) {
+        var books = db.collection('Books');
+        return books.updateOne(
+            {_id: new ObjectId(book_id)},
+            {
+                $push:{
+                    chapters:{
+                        'title' :
+                    }
+                }
+            }
+            )
+    })
+}*/
 
+users.updateOne(
+    {_id: new ObjectId(writerID)},
+    {
+        $push: {
+            publication: {
+                'book_id': new ObjectId(book_id),
+                'bookname': bookname
+            }
+        }
+    },
+    {upsert: true})
+    .then(function () {
+        console.log("Update success");
+        db.close();
+    });
 
 
