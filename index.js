@@ -27,7 +27,7 @@ app.use(passport.session());
 var config = require('./config.js'), //config file contains all tokens and other private info
     funct = require('./functions.js');
 
-
+//test if ignore works.
 
 //===============PASSPORT=================
 
@@ -223,8 +223,14 @@ app.get('/books/:bookId',function(req,res){
     });
 });
 
+app.post('/uploadNewChapter', function (req, res) {
 
+    res.render('uploadNewChapter',{
+        bookID: bookid
+    });
+});
 
+app.post('/')
 
 //===============PORT=================
 var port = process.env.PORT || 5000;
