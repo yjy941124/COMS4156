@@ -154,18 +154,19 @@ exports.queryPublicationFromWriter = function (user_id) {
 
 // to query all chapters from one book
 
-/*
+
 exports.queryChaptersFromBook = function (book_id){
     return MongoClient.connect(mongodbUrl).then(function(db){
         var books=db.collection('Books');
         return books.findOne({'_id':new Object(book_id)})
             .then(function(result){
-                console.log(result.)
-
+                return result.chapters;
             })
+    }).then(function (items) {
+        return items;
     })
 }
-*/
+
 
 
 exports.queryBookinfoFromID = function(book_id){
@@ -179,6 +180,41 @@ exports.queryBookinfoFromID = function(book_id){
     }).then(function(items){
         return items;
     });
+};
+exports.insertNewChapterToABook = function (req, res) {
+  var book_id = req.body.bookid[0];
+  MongoClient.connect(mongodbUrl).then (function (db) {
+      var books = db.collection('Books');
+      books.findOneAndUpdate(
+          {'_id' : new ObjectId(book_id)},
+          {$push : {
+              chapters : {
+                  _id:ObjectId(),
+                  title: req.body.title,
+                  content: req.body.chapterContent
+              }
+          }},
+      {upsert: true})
+          .then(function () {
+              console.log('chapter update success');
+              db.close();
+          })
+  }).then(function () {
+      res.redirect('/books/'+book_id);
+  })
+};
+
+exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+        var books = db.collection('Books');
+        return books.findOne({'_id':new ObjectId(bookId)})
+            .then(function (result) {//console.log(result.chapters[chapterIdx]);
+                return [result.chapters[chapterIdx], result.chapters.length];
+            })
+    }).then(function (item) {
+
+        return item;
+    })
 };
 /*exports.addNewChapterUsingBookID = function (book_id) {
     MongoClient.connect(mongodbUrl).then (function (db) {
