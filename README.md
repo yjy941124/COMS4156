@@ -1,13 +1,29 @@
 # COMS4156
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### March 22 2017 - Jinyang
+Implemented some new features
+- Render chapters under each book.[Implemented by Yulong Qiao]
+- Render chapter content after clicking on each chapter
+- Add redirect between chapters.
+- Writer can publish new chapters under a book.
+
+TODO:
+- Implement user subscription
+- Implement labelling when publishing book (sci-fi, art, math, etc)
+- Implement edit book info
+- Implement edit chapter info
+- Redirect between pages
+- Ban user limits respectively, ( see March 17 TODO)
+- Not much more I can think of now...
+
 ### March 20 2017 - Jinyang
 Implemengted some new features.
 - Add profile page for all users. Writers can now view all book they published. Subscription is not yet implemented.
 
 TODO:
 - Implement Subscription.
-- See earlier TODOs.
+- ~~See earlier TODOs.~~
 - 
 ### March 17 2017 - Jinyang
 Implemented some new features.
@@ -15,7 +31,7 @@ Implemented some new features.
 - All published books can be viewed at home page. Only bookname and writerName are shown.
 
 TODO:
-- add publish chapter under each book feature. (@query parameter look up)
+- ~~add publish chapter under each book feature. (@path parameter look up)~~
 - Right now, any user can still access "/publish" regardless of its role. Need to limit access only to writers.
 - ~~Start to build user profile page. (@query parameter again)~~
 ### March 16 2017 - Jinyang
