@@ -1,9 +1,13 @@
 <div id="container">
     This is the chapter page.
-    <p id="parse-book-id"><%=bookID%></p>
-    <p><%=book.bookname%></p>
+    <p hidden id="parse-book-id"><%=bookID%></p>
+    <p>BookName: <%=book.bookname%></p>
     <p>Author: <%=book.writerName%></p>
-    <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a>
+    <!-- TODO: check if user is registered -->
+    <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe to this Book</a>
+    <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><br>
+    <!-- problem here, book.chapters.length may be 0-->
+    <% if (book.chapters!=null) {%>
     <table id='table-for-chapter-menu' class="100%">
         <thead>
         <tr>
@@ -13,8 +17,6 @@
         </thead>
 
         <tbody>
-        <!-- problem here, book.chapters.length may be 0-->
-        <% if (book.chapters!=null) {%>
         <% for(var i = 0; i < book.chapters.length; i++) {%>
         <% var bookID= book._id.toString() %>
         <tr>
@@ -26,8 +28,9 @@
                 <p hidden id="parse-book-id"><%=bookID%></p>
                 <a href= <%= "/books/"+bookID +'/'+i %>> <%= book.chapters[i].title%></a></th>
         </tr>
-        <% }} %>
+        <% } %>
         </tbody>
     </table>
+    <% }%>
 </div>
 <script type="text/javascript" src="../public/js/chapters.js" defer></script>

@@ -225,8 +225,7 @@ app.get('/books/:bookId', function (req, res) {
     });
 });
 
-//note that per now we should go to books/:bookId/uploadNewChapter at the first place
-//then the anchor to chapters at '/' become successful
+
 app.get('/books/:bookId/uploadNewChapter', function (req, res) {
     var bookID = req.params.bookId;
     res.render('uploadNewChapter', {
@@ -234,7 +233,7 @@ app.get('/books/:bookId/uploadNewChapter', function (req, res) {
     });
 });
 
-app.post('/service/uploadNewChapter', function (req, res) {
+app.post('/util/uploadNewChapter', function (req, res) {
     funct.insertNewChapterToABook(req, res);
 });
 
@@ -251,6 +250,15 @@ app.get('/books/:bookId/:chapterIdx', function (req, res) {
             chapterMax: chapterInfos[1]
         });
     })
+});
+
+app.get('/books/:bookId/subscribeBook/subscribe',function(req,res){
+    var bookId=req.params.bookId;
+    console.log(bookId);
+    console.log("you got here");
+    res.render('test',{
+        bookID: bookId
+    });
 });
 
 //===============PORT=================
