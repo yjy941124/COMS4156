@@ -2,6 +2,30 @@
     This is the chapter page.
     <p id="parse-book-id"><%=bookID%></p>
     <p><%=book.bookname%></p>
-    <button id="update-new-chapter" onclick="updateNewChapter()">update new chapter</button>
+    <p>Author: <%=book.writerName%></p>
+    <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a>
+    <table id='table-for-chapter-menu' class="100%">
+        <thead>
+        <tr>
+            <th>Chapter Index</th>
+            <th>Chapter Title</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% for(var i = 0; i < book.chapters.length; i++) {%>
+        <% var bookID= book._id.toString() %>
+        <tr>
+            <th>
+                <p><%=i%></p>
+            </th>
+            <th>
+                <% var chapterID= book.chapters[i].toString() %>
+                <p hidden id="parse-book-id"><%=bookID%></p>
+                <a href= <%= "/books/"+bookID +'/'+i %>> <%= book.chapters[i].title%></a></th>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
 </div>
 <script type="text/javascript" src="../public/js/chapters.js" defer></script>

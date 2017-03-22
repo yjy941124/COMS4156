@@ -1,0 +1,12 @@
+<div id="chapter">
+    <label id="title">Title: <%=chapter.title%></label>
+    <br>
+    <label id="content">Content: <%=chapter.content%></label>
+    <%if (parseInt(chapterIdx) != 0) {%>
+    <a href= <%= "/books/"+ bookId + '/' + (parseInt(chapterIdx) - 1).toString()%>>Previous Chapter</a>
+    <%}%>
+    <a href= <%= "/books/"+bookId%>>Return to Menu</a>
+    <%if (parseInt(chapterIdx) != chapterMax) {%>
+    <a href= <%= "/books/"+ bookId + '/' + (parseInt(chapterIdx) + 1).toString()%>>Next Chapter</a>
+    <%}%>
+</div>
