@@ -151,9 +151,7 @@ exports.queryPublicationFromWriter = function (user_id) {
     })
 };
 
-
 // to query all chapters from one book
-
 
 exports.queryChaptersFromBook = function (book_id){
     return MongoClient.connect(mongodbUrl).then(function(db){
@@ -167,8 +165,6 @@ exports.queryChaptersFromBook = function (book_id){
     })
 }
 
-
-
 exports.queryBookinfoFromID = function(book_id){
     return MongoClient.connect(mongodbUrl).then (function(db){
         var books=db.collection('Books');
@@ -181,6 +177,7 @@ exports.queryBookinfoFromID = function(book_id){
         return items;
     });
 };
+
 exports.insertNewChapterToABook = function (req, res) {
   var book_id = req.body.bookid[0];
   MongoClient.connect(mongodbUrl).then (function (db) {
@@ -216,6 +213,8 @@ exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
         return item;
     })
 };
+
+
 /*exports.addNewChapterUsingBookID = function (book_id) {
     MongoClient.connect(mongodbUrl).then (function (db) {
         var books = db.collection('Books');

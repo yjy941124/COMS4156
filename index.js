@@ -225,16 +225,19 @@ app.get('/books/:bookId', function (req, res) {
     });
 });
 
-
+//note that per now we should go to books/:bookId/uploadNewChapter at the first place
+//then the anchor to chapters at '/' become successful
 app.get('/books/:bookId/uploadNewChapter', function (req, res) {
     var bookID = req.params.bookId;
     res.render('uploadNewChapter', {
         bookID: bookID
     });
 });
+
 app.post('/service/uploadNewChapter', function (req, res) {
     funct.insertNewChapterToABook(req, res);
 });
+
 app.get('/books/:bookId/:chapterIdx', function (req, res) {
     var chapterIdx = parseInt(req.params.chapterIdx);
     var bookId = req.params.bookId;
