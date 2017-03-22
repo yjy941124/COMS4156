@@ -3,9 +3,9 @@
     <p hidden id="parse-book-id"><%=bookID%></p>
     <p>BookName: <%=book.bookname%></p>
     <p>Author: <%=book.writerName%></p>
-    <!-- TODO: check if user is registered -->
-    <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe to this Book</a>
     <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><br>
+    <!-- TODO: check if user is registered -->
+    <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe to this Book</a><br>
     <!-- problem here, book.chapters.length may be 0-->
     <% if (book.chapters!=null) {%>
     <table id='table-for-chapter-menu' class="100%">

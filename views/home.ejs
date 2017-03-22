@@ -100,17 +100,31 @@
             </tr>
             </thead>
 
+            <% if  (user!=null) {%>
             <tbody>
             <% for(var i = 0; i < bookList.length; i++) {%>
             <tr>
                 <th>
                     <% var bookID= bookIDs[i].toString() %>
-                    <p hidden id="parse-book-id"><%=bookID%></p>
-                    <a href= <%= "/books/"+bookIDs[i].toString() %>> <%= bookList[i].bookname.toString() %></a></th>
+                    <a href= <%= "/books/"+bookIDs[i].toString()+"/"+user._id+"/"+user.role %>> <%= bookList[i].bookname.toString() %></a>
+                </th>
+                <th><%= bookList[i].writerName.toString() %></th>
+            </tr>
+            <% }%>
+            </tbody>
+            <% } else {%>
+            <tbody>
+            <% for(var i = 0; i < bookList.length; i++) {%>
+            <tr>
+                <th>
+                    <% var bookID= bookIDs[i].toString() %>
+                    <a href= <%= "/books/"+bookIDs[i].toString() %>> <%= bookList[i].bookname.toString() %></a>
+                </th>
                 <th><%= bookList[i].writerName.toString() %></th>
             </tr>
             <% } %>
             </tbody>
+            <% } %>
         </table>
     </div>
 </div>

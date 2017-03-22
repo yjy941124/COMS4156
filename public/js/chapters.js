@@ -7,8 +7,7 @@ $(document).ready(function () {
     var uploadChapterUrl = '/books/' + book_idForFunction + '/uploadNewChapter';
     $('#upload-chapter').attr("href", uploadChapterUrl);
     //subscribe to this book
-    var subscribeBookUrl= '/books/' + book_idForFunction + '/subscribeBook'+'/subscribe';
-    console.log(subscribeBookUrl);
+    var subscribeBookUrl= '/util' + '/subscribeBook/'+ book_idForFunction;
     $('#subscribe-book').attr("href",subscribeBookUrl);
 });
 

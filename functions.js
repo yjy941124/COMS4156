@@ -197,6 +197,7 @@ exports.insertNewChapterToABook = function (req, res) {
               db.close();
           })
   }).then(function () {
+      //pay attention to here
       res.redirect('/books/'+book_id);
   })
 };

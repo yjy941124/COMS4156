@@ -33,12 +33,10 @@ var config = require('./config.js'), //config file contains all tokens and other
 
 // Passport session setup.
 passport.serializeUser(function (user, done) {
-    console.log("serializing " + user.username);
     done(null, user);
 });
 
 passport.deserializeUser(function (obj, done) {
-    console.log("deserializing " + obj);
     done(null, obj);
 });
 
@@ -189,10 +187,12 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
     req.session.notice = "You have successfully been logged out " + name + "!";
 });
+
 //render publish page
 app.get('/publish', function (req, res) {
     res.render('publish');
 });
+
 //writer publish a book
 app.post('/publishBook', funct.publishBook);
 //TODO look up query parameter. add get for each book.
@@ -215,6 +215,11 @@ app.get('/profile/:userId', function (req, res) {
 /* since we have a render-for-all situation, I only render bookId to fetch all chapters */
 /*WARNING: for now we are sending all books info to html. This may or may not impact large scale code and
  are subject to change.*/
+
+
+//anonymous browse
+
+
 app.get('/books/:bookId', function (req, res) {
     var bookId = req.params.bookId;
     funct.queryBookinfoFromID(bookId).then(function (item) {
@@ -224,6 +229,27 @@ app.get('/books/:bookId', function (req, res) {
         });
     });
 });
+
+
+app.get('/books/:bookId/:userId/:userRole', function (req, res) {
+    console.log("user func 2 is being used");
+    var bookId = req.params.bookId;
+    var userId=req.params.userId;
+    var userRole=req.params.userRole;
+    console.log("getting info");
+    console.log(bookId);
+    console.log(userId);
+    console.log(userRole);
+    funct.queryBookinfoFromID(bookId).then(function (item) {
+        res.render('chapters', {
+            bookID: bookId,
+            book: item,
+            userID: userId
+        });
+    });
+});
+
+
 
 
 app.get('/books/:bookId/uploadNewChapter', function (req, res) {
@@ -252,9 +278,10 @@ app.get('/books/:bookId/:chapterIdx', function (req, res) {
     })
 });
 
-app.get('/books/:bookId/subscribeBook/subscribe',function(req,res){
+// to be modified
+app.get('/util/subscribeBook/:bookId',function(req,res){
     var bookId=req.params.bookId;
-    console.log(bookId);
+    console.log("Subscribing the book"+bookId);
     console.log("you got here");
     res.render('test',{
         bookID: bookId
