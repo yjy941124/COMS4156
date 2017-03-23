@@ -7,7 +7,7 @@
     <p id='parse-book-id'><%=book._id%></p>
     <p id='parse-user-role'><%=userRole%></p>
     <% if (book.writerID==userID) {%>
-    <a id='upload-chapter' href='/fdsfsd' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><br><%}%>
+    <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><br><%}%>
     <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe to this Book</a><br>
     <!-- problem here, book.chapters.length may be 0-->
     <% if (book.chapters!=null) {%>
