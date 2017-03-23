@@ -1,0 +1,37 @@
+<div id="container">
+    This is the chapter page.
+    <p hidden id="parse-book-id"><%=bookID%></p>
+    <p>BookName: <%=book.bookname%></p>
+    <p>Author: <%=book.writerName%></p>
+    <% if (userRole=='writer') {%>
+    <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><br><%}%>
+    <!-- TODO: check if user is registered -->
+    <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe to this Book</a><br>
+    <!-- problem here, book.chapters.length may be 0-->
+    <% if (book.chapters!=null) {%>
+    <table id='table-for-chapter-menu' class="100%">
+        <thead>
+        <tr>
+            <th>Chapter Index</th>
+            <th>Chapter Title</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% for(var i = 0; i < book.chapters.length; i++) {%>
+        <% var bookID= book._id.toString() %>
+        <tr>
+            <th>
+                <p><%=i%></p>
+            </th>
+            <th>
+                <% var chapterID= book.chapters[i].toString() %>
+                <p hidden id="parse-book-id"><%=bookID%></p>
+                <a href= <%= "/books/"+bookID +'/'+i %>> <%= book.chapters[i].title%></a></th>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+    <% }%>
+</div>
+<script type="text/javascript" src="../public/js/chaptersAnonymous.js" defer></script>

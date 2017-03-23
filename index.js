@@ -218,33 +218,26 @@ app.get('/profile/:userId', function (req, res) {
 
 
 //anonymous browse
-
-
 app.get('/books/:bookId', function (req, res) {
     var bookId = req.params.bookId;
     funct.queryBookinfoFromID(bookId).then(function (item) {
-        res.render('chapters', {
+        res.render('chaptersAnonymous', {
             bookID: bookId,
             book: item
         });
     });
 });
 
-
 app.get('/books/:bookId/:userId/:userRole', function (req, res) {
-    console.log("user func 2 is being used");
     var bookId = req.params.bookId;
     var userId=req.params.userId;
     var userRole=req.params.userRole;
-    console.log("getting info");
-    console.log(bookId);
-    console.log(userId);
-    console.log(userRole);
     funct.queryBookinfoFromID(bookId).then(function (item) {
-        res.render('chapters', {
+        res.render('chaptersRegistered', {
             bookID: bookId,
             book: item,
-            userID: userId
+            userID: userId,
+            userRole: userRole
         });
     });
 });
@@ -252,7 +245,8 @@ app.get('/books/:bookId/:userId/:userRole', function (req, res) {
 
 
 
-app.get('/books/:bookId/uploadNewChapter', function (req, res) {
+app.get('/books/:bookId/:userId/:userRole/uploadNewChapter', function (req, res) {
+    console.log("UPLOADINGCHAPTER");
     var bookID = req.params.bookId;
     res.render('uploadNewChapter', {
         bookID: bookID

@@ -143,8 +143,21 @@ exports.queryPublicationFromWriter = function (user_id) {
         var users = db.collection('Users');
         return users.findOne({'_id': new ObjectId(user_id)})
             .then(function (result) {
+                console.log("User "+user_id+"'s publication is");
                 console.log(result.publication);
                 return result.publication;
+            })
+    }).then(function (items) {
+        return items;
+    })
+};
+
+exports.queryUserFromId = function (user_id) {
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+        var users = db.collection('Users');
+        return users.findOne({'_id': new ObjectId(user_id)})
+            .then(function (result) {
+                return result;
             })
     }).then(function (items) {
         return items;
