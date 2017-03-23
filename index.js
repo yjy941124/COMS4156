@@ -246,7 +246,7 @@ app.get('/books/:bookId/:userId/:userRole', function (req, res) {
 
 
 app.get('/books/:bookId/:userId/:userRole/uploadNewChapter', function (req, res) {
-    console.log("UPLOADINGCHAPTER");
+    //more to render
     var bookID = req.params.bookId;
     res.render('uploadNewChapter', {
         bookID: bookID
