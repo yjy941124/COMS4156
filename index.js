@@ -228,6 +228,7 @@ app.get('/books/:bookId', function (req, res) {
     });
 });
 
+//lack one function
 app.get('/books/:bookId/:userId/:userRole', function (req, res) {
     var bookId = req.params.bookId;
     var userId=req.params.userId;

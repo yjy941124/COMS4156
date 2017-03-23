@@ -3,12 +3,15 @@
     <p hidden id="parse-book-id"><%=bookID%></p>
     <p>BookName: <%=book.bookname%></p>
     <p>Author: <%=book.writerName%></p>
+    <p>!!!! <%=book%></p>
     <p id='parse-user-id'><%=userID%></p>
     <p id='parse-book-id'><%=book._id%></p>
     <p id='parse-user-role'><%=userRole%></p>
     <% if (book.writerID==userID) {%>
     <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><br><%}%>
+    <!-- jQuery hide -->
     <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe to this Book</a><br>
+    <a id='unsubscribe-book' href='/' class='btn btn-default btn-md' role='button'>Ubsubscribe this Book</a><br>
 
     <!-- problem here, book.chapters.length may be 0-->
     <% if (book.chapters!=null) {%>

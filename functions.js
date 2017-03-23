@@ -164,6 +164,8 @@ exports.queryUserFromId = function (user_id) {
     })
 };
 
+
+
 // to query all chapters from one book
 
 exports.queryChaptersFromBook = function (book_id){
@@ -189,9 +191,6 @@ exports.queryWriterIdFromBook=function(book_id){
         return items;
     })
 };
-
-
-
 
 exports.queryBookinfoFromID = function(book_id){
     return MongoClient.connect(mongodbUrl).then (function(db){
@@ -250,7 +249,7 @@ exports.insertNewSubscriptionToUser=function(user_id,book_id){
             {'_id': new ObjectId(user_id)},
             {$push: {
                     subscriptions: {
-                        _id:ObjectId(),
+                        // _id:ObjectId(),
                         bookId: book_id
                     }
                 }
