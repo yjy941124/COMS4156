@@ -13,6 +13,8 @@
         </thead>
 
         <tbody>
+        <!-- problem here, book.chapters.length may be 0-->
+        <% if (book.chapters!=null) {%>
         <% for(var i = 0; i < book.chapters.length; i++) {%>
         <% var bookID= book._id.toString() %>
         <tr>
@@ -24,7 +26,7 @@
                 <p hidden id="parse-book-id"><%=bookID%></p>
                 <a href= <%= "/books/"+bookID +'/'+i %>> <%= book.chapters[i].title%></a></th>
         </tr>
-        <% } %>
+        <% }} %>
         </tbody>
     </table>
 </div>

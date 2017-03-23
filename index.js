@@ -245,7 +245,7 @@ app.get('/books/:bookId/:chapterIdx', function (req, res) {
             chapter: chapterInfos[0],
             bookId: bookId,
             chapterIdx: chapterIdx,
-            chapterMax: chapterInfos[1]
+            chapterMax: chapterInfos[1] - 1
         });
     })
 });
