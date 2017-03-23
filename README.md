@@ -1,8 +1,14 @@
 # COMS4156
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### March 23 2017 - Jinyang
+Note: Reverted to bb9b99f branch.
+Implemented some new features
+- Render chapter under each book
+- Add new chapter
+
 ### March 20 2017 - Jinyang
-Implemengted some new features.
+Implemented some new features.
 - Add profile page for all users. Writers can now view all book they published. Subscription is not yet implemented.
 
 TODO:
