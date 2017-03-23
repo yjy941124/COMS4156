@@ -1,5 +1,5 @@
 /* chapters */
-var book_idForFunction;
+/*
 $(document).ready(function () {
     var book_id=$("#parse-book-id").html(),
     book_idForFunction = book_id;
@@ -9,5 +9,5 @@ $(document).ready(function () {
     //subscribe to this book
     var subscribeBookUrl= '/util' + '/subscribeBook/'+ book_idForFunction;
     $('#subscribe-book').attr("href",subscribeBookUrl);
-});
+});*/
 

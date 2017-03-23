@@ -1,13 +1,12 @@
-/* chapters */
-var book_idForFunction;
 $(document).ready(function () {
-    var book_id=$("#parse-book-id").html(),
-    book_idForFunction = book_id;
+    var book_id=$('#parse-book-id').html();
+    var user_id=$('#parse-user-id').html();
     //upload Chapter
-    var uploadChapterUrl = '/books/' + book_idForFunction + '/uploadNewChapter';
+    var uploadChapterUrl = '/books/' + book_id +'/'+ user_id + '/' + user_role + '/uploadNewChapter';
     $('#upload-chapter').attr("href", uploadChapterUrl);
     //subscribe to this book
-    var subscribeBookUrl= '/util' + '/subscribeBook/'+ book_idForFunction;
+    //TODO
+    var subscribeBookUrl= '/util' + '/subscribeBook/';
     $('#subscribe-book').attr("href",subscribeBookUrl);
 });
 

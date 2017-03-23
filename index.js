@@ -237,7 +237,7 @@ app.get('/books/:bookId/:userId/:userRole', function (req, res) {
             bookID: bookId,
             book: item,
             userID: userId,
-            userRole: userRole
+            userRole: userRole,
         });
     });
 });

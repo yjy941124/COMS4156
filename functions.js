@@ -176,7 +176,22 @@ exports.queryChaptersFromBook = function (book_id){
     }).then(function (items) {
         return items;
     })
-}
+};
+
+exports.queryWriterIdFromBook=function(book_id){
+    return MongoClient.connect(mongodbUrl).then(function(db){
+        var books=db.collection('Books');
+        return books.findOne({'_id':new Object(book_id)})
+            .then(function(result){
+                return result.writerID;
+            })
+    }).then(function (items) {
+        return items;
+    })
+};
+
+
+
 
 exports.queryBookinfoFromID = function(book_id){
     return MongoClient.connect(mongodbUrl).then (function(db){
