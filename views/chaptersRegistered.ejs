@@ -9,6 +9,7 @@
     <% if (book.writerID==userID) {%>
     <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><br><%}%>
     <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe to this Book</a><br>
+
     <!-- problem here, book.chapters.length may be 0-->
     <% if (book.chapters!=null) {%>
     <table id='table-for-chapter-menu' class="100%">
@@ -36,4 +37,4 @@
     </table>
     <% }%>
 </div>
-<script type="text/javascript" src="/public/js/chaptersRegistered.js"></script>
+<script type="text/javascript" src="/public/js/chaptersRegistered.js" defer></script>

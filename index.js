@@ -237,7 +237,7 @@ app.get('/books/:bookId/:userId/:userRole', function (req, res) {
             bookID: bookId,
             book: item,
             userID: userId,
-            userRole: userRole,
+            userRole: userRole
         });
     });
 });
@@ -273,13 +273,12 @@ app.get('/books/:bookId/:chapterIdx', function (req, res) {
 });
 
 // to be modified
-app.get('/util/subscribeBook/:bookId',function(req,res){
+app.get('/util/subscribeBook/:bookId/:userId',function(req,res){
+    var userId=req.params.userId;
     var bookId=req.params.bookId;
-    console.log("Subscribing the book"+bookId);
-    console.log("you got here");
-    res.render('test',{
-        bookID: bookId
-    });
+    console.log("User "+ userId+" is subscribing the book "+bookId);
+    funct.insertNewSubscriptionToUser(userId,bookId);
+    res.redirect('/');
 });
 
 //===============PORT=================

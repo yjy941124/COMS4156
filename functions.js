@@ -243,6 +243,28 @@ exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
     })
 };
 
+exports.insertNewSubscriptionToUser=function(user_id,book_id){
+    MongoClient.connect(mongodbUrl).then(function(db){
+        var users=db.collection('Users');
+        users.findOneAndUpdate(
+            {'_id': new ObjectId(user_id)},
+            {$push: {
+                    subscriptions: {
+                        _id:ObjectId(),
+                        bookId: book_id
+                    }
+                }
+            },
+            {upsert:true})
+            .then(function(){
+                console.log("insert subscription is a success");
+                db.close();
+            }).then(function(){
+                return;
+            })
+    });
+};
+
 
 /*exports.addNewChapterUsingBookID = function (book_id) {
     MongoClient.connect(mongodbUrl).then (function (db) {
