@@ -232,9 +232,17 @@ app.get('/books/:bookId/uploadNewChapter', function (req, res) {
         bookID: bookID
     });
 });
+
 app.post('/service/uploadNewChapter', function (req, res) {
     funct.insertNewChapterToABook(req, res);
 });
+
+// update book information
+app.post('/books/:bookId/update', function (req, res) {
+    var bookId = req.params.bookId;
+    funct.updateBookInfo(bookId,req.body,res);
+});
+
 app.get('/books/:bookId/:chapterIdx', function (req, res) {
     var chapterIdx = parseInt(req.params.chapterIdx);
     var bookId = req.params.bookId;

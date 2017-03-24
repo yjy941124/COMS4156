@@ -1,6 +1,17 @@
 # COMS4156
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### March 23 2017 - Ruijue
+Implement two new features. 
+1. Add book genre(s) when publish, show in index and chapters page 
+2. Edit book information in chapters page
+
+TODO:
+1. Verify whether new book name is unique
+2. Change checkbox style for book genres
+3. Only allow writer of the book to edit book info and update new chapter 
+4. See earlier TODOs.
+
 ### March 23 2017 - Jinyang
 Note: Reverted to bb9b99f branch.
 Implemented some new features

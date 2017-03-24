@@ -1,9 +1,17 @@
 <div id="container">
     This is the chapter page.
     <p id="parse-book-id"><%=bookID%></p>
-    <p><%=book.bookname%></p>
+    <p>Book Title: <%=book.bookname%></p>
     <p>Author: <%=book.writerName%></p>
+    <p>Genre: <% if(book.bookgenre!=null){%>
+        <%= book.bookgenre.toString()%>
+        <% } else {%> N/A  <% }%></p>
+    <p>Book Description: <%=book.bookdes%></p>
+
+    <button id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md'> Edit Book Information </button><p></p>
+
     <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a>
+
     <table id='table-for-chapter-menu' class="100%">
         <thead>
         <tr>
@@ -29,5 +37,60 @@
         <% }} %>
         </tbody>
     </table>
+
+    <!--Edit Book Information Modal-->
+    <form id="edit-book-info" action="/service" method="post">
+
+        <div id = "bookinfo_modal" name = "book_modal" class = "modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close" id="close">&times;</span>
+                    <h2>Edit Book Information</h2>
+                </div>
+                <div class="modal-body">
+                    <label>Book Name: </label>
+                    <input type="text" name="bookname" value="<%= book.bookname%>" />
+                    <br></br>
+
+                    <label>Book Description: </label>
+                    <textarea type="text" name="bookDescription"><%= book.bookdes%></textarea>
+                    <br></br>
+
+                    <label>Book Genre: </label>
+
+                    <%if(book.bookgenre != null) {%>
+                        <input id = "bg_fiction" type = "checkbox" name = "bookGenre" value="Fiction" <%if(book.bookgenre.indexOf("Fiction")>= 0){%> checked <%}%> />Fiction
+                        <input id = "bg_romance" type = "checkbox" name = "bookGenre" value="Romance" <%if(book.bookgenre.indexOf("Romance")>= 0){%> checked <%}%> />Romance
+                        <input id = "bg_horror" type = "checkbox" name = "bookGenre" value="Horror"  <%if(book.bookgenre.indexOf("Horror")>= 0){%> checked <%}%> />Horror
+                        <input id = "bg_detective" type = "checkbox" name = "bookGenre" value="Detective"  <%if(book.bookgenre.indexOf("Detective")>= 0){%> checked <%}%> />Detective
+                        <input id = "bg_fantasy" type = "checkbox" name = "bookGenre" value="Fantasy"  <%if(book.bookgenre.indexOf("Fantasy")>= 0){%> checked <%}%> />Fantasy
+                        <input id = "bg_poetry" type = "checkbox" name = "bookGenre" value="Poetry"   <%if(book.bookgenre.indexOf("Poetry")>= 0){%> checked <%}%> />Poetry
+                        <input id = "bg_prose" type = "checkbox" name = "bookGenre" value="Prose"  <%if(book.bookgenre.indexOf("Prose")>= 0){%> checked <%}%> />Prose
+                        <input id = "bg_crime" type = "checkbox" name = "bookGenre" value="Crime"  <%if(book.bookgenre.indexOf("Crime")>= 0){%> checked <%}%> />Crime
+                        <input id = "bg_comedy" type = "checkbox" name = "bookGenre" value="Comedy"  <%if(book.bookgenre.indexOf("Comedy")>= 0){%> checked <%}%> />Comedy
+                        <input id = "bg_other" type = "checkbox" name = "bookGenre" value="Other"  <%if(book.bookgenre.indexOf("Other")>= 0){%> checked <%}%> />Other
+                    <%} else {%>
+                        <input id = "bg_fiction" type = "checkbox" name = "bookGenre" value="Fiction"  />Fiction
+                        <input id = "bg_romance" type = "checkbox" name = "bookGenre" value="Romance" />Romance
+                        <input id = "bg_horror" type = "checkbox" name = "bookGenre" value="Horror"  />Horror
+                        <input id = "bg_detective" type = "checkbox" name = "bookGenre" value="Detective" />Detective
+                        <input id = "bg_fantasy" type = "checkbox" name = "bookGenre" value="Fantasy"   />Fantasy
+                        <input id = "bg_poetry" type = "checkbox" name = "bookGenre" value="Poetry"  />Poetry
+                        <input id = "bg_prose" type = "checkbox" name = "bookGenre" value="Prose" />Prose
+                        <input id = "bg_crime" type = "checkbox" name = "bookGenre" value="Crime"  />Crime
+                        <input id = "bg_comedy" type = "checkbox" name = "bookGenre" value="Comedy"  />Comedy
+                        <input id = "bg_other" type = "checkbox" name = "bookGenre" value="Other" />Other
+                    <%}%>
+                </div>
+                <div class="modal-footer">
+                    <input type = "submit" id = "save_bookchange" class = 'btn btn-default btn-sm' value="Save Changes"/>
+                    <input type = "button" id = "cancel_bookchange" class = 'btn btn-default btn-sm' value="Cancel"/>
+
+                </div>
+            </div>
+
+        </div>
+    </form>
 </div>
 <script type="text/javascript" src="../public/js/chapters.js" defer></script>
+<link type = "stylesheet" href="../css/chapters.css">
