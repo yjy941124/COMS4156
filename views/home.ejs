@@ -97,6 +97,8 @@
             <tr>
                 <th>Book Name</th>
                 <th>Writer Name</th>
+                <th>Book Genre</th>
+
             </tr>
             </thead>
 
@@ -108,6 +110,11 @@
                     <p hidden id="parse-book-id"><%=bookID%></p>
                     <a href= <%= "/books/"+bookIDs[i].toString() %>> <%= bookList[i].bookname.toString() %></a></th>
                 <th><%= bookList[i].writerName.toString() %></th>
+                <% if(bookList[i].bookgenre!=null){%>
+                <th><%= bookList[i].bookgenre.toString()%></th>
+                <% } else {%>
+                <th>N/A</th>
+                <% }%>
             </tr>
             <% } %>
             </tbody>
