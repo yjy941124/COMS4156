@@ -19,7 +19,7 @@ Implement two new features.
 TODO:
 1. ~~Verify whether new book name is unique~~
 2. Change checkbox style for book genres
-3. ~~Only allow writer of the book to edit book info and update new chapter ~~
+3. Only allow writer of the book to edit book info and update new chapter (done)
 4. ~~See earlier TODOs.~~
 
 ### March 23 2017 - Jinyang
