@@ -1,7 +1,7 @@
 <div id="container">
     This is the chapter page.
     <p id="parse-book-id"><%=bookID%></p>
-    <p><%=book.bookname%></p>
+    <p>Book Title: <%=book.bookname%></p>
     <p>Author: <%=book.writerName%></p>
     <p>Genre: <% if(book.bookgenre!=null){%>
         <%= book.bookgenre.toString()%>
