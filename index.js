@@ -38,6 +38,7 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (obj, done) {
+
     console.log("deserializing " + obj);
     done(null, obj);
 });
@@ -133,9 +134,14 @@ app.use(function (req, res, next) {
 //displays our homepage
 app.get('/', function (req, res) {
     funct.queryAllBook().then(function (items) {
+        console.log("here");
         var user = req.user;
         var bookIDs = [];
         var bookList = items;
+        if (user!=null && user.subscriptions!=null){
+            for(var i = 0; i < user.subscriptions.length; i++){
+                console.log(user.subscriptions[i].bookId);
+            }}
         //bookList is an array consisting of _id for each book in DB
         bookList.forEach(function (elem) {
             //assert that each bookIDs element is typeof String
@@ -198,10 +204,9 @@ app.post('/publishBook', funct.publishBook);
 //TODO look up query parameter. add get for each book.
 
 app.get('/profile/:userId', function (req, res) {
-
     var userId = req.params.userId;
     var userRole = req.user.role;
-    console.log('============');
+    console.log("Viewing user "+userId+"'s profile");
     funct.queryPublicationFromWriter(userId).then(function (publications) {
         res.render('profile', {
             userID: req.params.userId,
@@ -209,7 +214,6 @@ app.get('/profile/:userId', function (req, res) {
             publication: publications
         });
     });
-
 });
 
 /* since we have a render-for-all situation, I only render bookId to fetch all chapters */
@@ -217,14 +221,27 @@ app.get('/profile/:userId', function (req, res) {
  are subject to change.*/
 app.get('/books/:bookId', function (req, res) {
     var bookId = req.params.bookId;
-    funct.queryBookinfoFromID(bookId).then(function (item) {
+    var user=req.user;
+    if (typeof user=="undefined"){
+        console.log("Anonymous user is checking book "+bookId);
+    }
+    else{
+        console.log("User "+user._id+"is checking book"+bookId);
+    }
+    //console.log("!!!"+user.subscriptions._id);
+    funct.queryBookandUser(bookId, user._id).then(function (item) {
+        console.log(item[0]);
+        console.log(item[1]);
+    });
+    /*funct.queryBookinfoFromID(bookId).then(function (item) {
         res.render('chapters', {
             bookID: bookId,
-            book: item
-        });
-    });
-});
+            book: item,
+            user:user
 
+        });
+    });*/
+});
 
 app.get('/books/:bookId/uploadNewChapter', function (req, res) {
     var bookID = req.params.bookId;
@@ -232,9 +249,11 @@ app.get('/books/:bookId/uploadNewChapter', function (req, res) {
         bookID: bookID
     });
 });
+
 app.post('/service/uploadNewChapter', function (req, res) {
     funct.insertNewChapterToABook(req, res);
 });
+
 app.get('/books/:bookId/:chapterIdx', function (req, res) {
     var chapterIdx = parseInt(req.params.chapterIdx);
     var bookId = req.params.bookId;
@@ -248,6 +267,15 @@ app.get('/books/:bookId/:chapterIdx', function (req, res) {
             chapterMax: chapterInfos[1] - 1
         });
     })
+});
+
+//get method, user subscribe book
+app.get('/service/subscribeBook/:bookId',function(req,res){
+    var userId=req.user._id;
+    var bookId=req.params.bookId;
+    console.log(userId);
+    console.log(bookId);
+    funct.insertNewSubscriptionToUser(userId,bookId,req,res);
 });
 
 //===============PORT=================

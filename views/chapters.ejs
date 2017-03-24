@@ -1,9 +1,28 @@
 <div id="container">
     This is the chapter page.
-    <p id="parse-book-id"><%=bookID%></p>
+    <p hidden id="parse-book-id"><%=bookID%></p>
+    <p hidden id="parse-user"><%=user%>></p>
     <p><%=book.bookname%></p>
     <p>Author: <%=book.writerName%></p>
-    <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a>
+    <% if (user!=null){%>
+    <p>Welcome to book <%=book.bookname%>, <%=user.username%></p>
+    <!--testing -->
+    <% var isSubscribed =false %>
+    <% if (user.subscriptions!=null){%>
+    <% for(var i = 0; i < user.subscriptions.length; i++) {%>
+    <%=user.subscriptions[i].bookId%>
+    <% if (bookID==user.subscriptions[i].bookId){%>
+    <% isSubscribed=true}}}%>
+    <!-- use jQuery to subscribe or unsubscribe-->
+    <p>!!!<%=isSubscribed%></p>
+    <% if (isSubscribed==true){%>
+    <a id='unsubscribe-book' href='/' class='btn btn-default btn-md' role='button'>Unsubscribe this book</a>
+    <%}else{%>
+    <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe this book</a><br>
+    <%}%>
+    <% if (user.role=="writer"&&user._id==book.writerID){%>
+    <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><%}%>
+    <%}%>
     <table id='table-for-chapter-menu' class="100%">
         <thead>
         <tr>
