@@ -3,15 +3,17 @@
     <p id="parse-book-id"><%=bookID%></p>
     <p>Book Title: <%=book.bookname%></p>
     <p>Author: <%=book.writerName%></p>
+    <p hidden id="parse-author-id"><%=book.writerID%></p>
     <p>Genre: <% if(book.bookgenre!=null){%>
         <%= book.bookgenre.toString()%>
         <% } else {%> N/A  <% }%></p>
     <p>Book Description: <%=book.bookdes%></p>
 
     <button id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md'> Edit Book Information </button><p></p>
-
+    <%if (user != undefined) {%>
+    <%if (user._id == book.writerID) {%>
     <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a>
-
+    <%}}%>
     <table id='table-for-chapter-menu' class="100%">
         <thead>
         <tr>

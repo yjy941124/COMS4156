@@ -127,9 +127,11 @@ exports.publishBook = function (req, res) {
     });
     console.log("publish function");
     console.log(book);
+
     //console.log(typeof (book._id));
-    res.send('published!');
+
 };
+
 
 exports.updateBookInfo =function (book_Id,info,res) {
     var new_bookname = info.bookname;
