@@ -90,25 +90,40 @@ exports.localAuth = function (username, password) {
     return deferred.promise;
 };
 
+/* Not in use
+ * Query book object and user object in a nested manner
+ * input: (bookid,userid)
+ * output: an array [book,user]
+ */
 exports.queryBookandUser = function (bookid, userid) {
-   var results = [];
-   return MongoClient.connect(mongodbUrl, function (err,db) {
-       var books = db.collection('Books');
-       var users = db.collection('Users');
-       books.findOne({
-           '_id' : new ObjectId(bookid)
-       }).then(function (book) {
-           results.push(book);
-           users.findOne({
-               '_id' : new ObjectId(userid)
-           }).then(function (user) {
-               results.push(user);
-               return results;
-           });
-           return results;
-       })
-   })
+    var results = [];
+    return MongoClient.connect(mongodbUrl, function (err, db) {
+        //var results = [];
+        var books = db.collection('Books');
+        var users = db.collection('Users');
+        books.findOne({
+            '_id': new ObjectId(bookid)
+        }).then(function (book) {
+            results.push(book);
+            return results
+        }).then(function(results){
+            users.findOne({
+                '_id': new ObjectId(userid)
+            }).then(function(user){
+                results.push(user);
+                return results;
+
+            }).then(function(item){
+                return item;
+            });
+        }).then(function(item){
+            return item;
+        });
+    }).then(function(item){
+        return item;
+    });
 };
+
 exports.publishBook = function (req, res) {
     var bookname = req.body.bookname;
     var bookdes = req.body.bookDescription;
@@ -184,7 +199,7 @@ exports.queryChaptersFromBook = function (book_id){
     }).then(function (items) {
         return items;
     })
-}
+};
 
 exports.queryUserBasedOnID = function (user_id) {
     return MongoClient.connect(mongodbUrl).then(function (db) {

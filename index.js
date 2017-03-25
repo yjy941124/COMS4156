@@ -222,25 +222,27 @@ app.get('/profile/:userId', function (req, res) {
 app.get('/books/:bookId', function (req, res) {
     var bookId = req.params.bookId;
     var user=req.user;
+    var userId=req.user._id;
     if (typeof user=="undefined"){
         console.log("Anonymous user is checking book "+bookId);
     }
     else{
-        console.log("User "+user._id+"is checking book"+bookId);
+        console.log("User "+userId+"is checking book"+bookId);
     }
-    //console.log("!!!"+user.subscriptions._id);
-    funct.queryBookandUser(bookId, user._id).then(function (item) {
-        console.log(item[0]);
-        console.log(item[1]);
-    });
-    /*funct.queryBookinfoFromID(bookId).then(function (item) {
-        res.render('chapters', {
-            bookID: bookId,
-            book: item,
-            user:user
+    console.log("the bookId that's being queried is "+bookId);
+    console.log("the userId that's being queried is "+userId);
 
+    //fetch book and user from bookId and userId, then render chapters page
+    funct.queryBookinfoFromID(bookId).then(function(item){
+        var book=item;
+        funct.queryUserBasedOnID(userId).then(function(user){
+            res.render('chapters',{
+                user:user,
+                bookID:bookId,
+                book:book
+            });
         });
-    });*/
+    });
 });
 
 app.get('/books/:bookId/uploadNewChapter', function (req, res) {
