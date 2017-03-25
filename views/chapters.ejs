@@ -28,10 +28,11 @@
     <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe this book</a><br>
     <%}%>
     <%}%>
-    
-    <button id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md'> Edit Book Information </button><p></p>
+
     <%if (user != undefined) {%>
     <%if (user._id == book.writerID) {%>
+    <button id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md'> Edit Book Information </button><p></p>
+
     <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a>
     <%}}%>
     
