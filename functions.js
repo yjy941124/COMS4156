@@ -90,6 +90,40 @@ exports.localAuth = function (username, password) {
     return deferred.promise;
 };
 
+/* Not in use
+ * Query book object and user object in a nested manner
+ * input: (bookid,userid)
+ * output: an array [book,user]
+ */
+exports.queryBookandUser = function (bookid, userid) {
+    var results = [];
+    return MongoClient.connect(mongodbUrl, function (err, db) {
+        //var results = [];
+        var books = db.collection('Books');
+        var users = db.collection('Users');
+        books.findOne({
+            '_id': new ObjectId(bookid)
+        }).then(function (book) {
+            results.push(book);
+            return results
+        }).then(function(results){
+            users.findOne({
+                '_id': new ObjectId(userid)
+            }).then(function(user){
+                results.push(user);
+                return results;
+
+            }).then(function(item){
+                return item;
+            });
+        }).then(function(item){
+            return item;
+        });
+    }).then(function(item){
+        return item;
+    });
+};
+
 exports.publishBook = function (req, res) {
     var bookname = req.body.bookname;
     var bookdes = req.body.bookDescription;
@@ -197,9 +231,19 @@ exports.queryChaptersFromBook = function (book_id){
     }).then(function (items) {
         return items;
     })
-}
+};
 
-
+exports.queryUserBasedOnID = function (user_id) {
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+        var users = db.collection('Users');
+        return users.findOne({'_id': new ObjectId(user_id)})
+                .then(function (result) {
+                    return result;
+                })
+    }).then(function (user) {
+        return user;
+    });
+};
 
 exports.queryBookinfoFromID = function(book_id){
     return MongoClient.connect(mongodbUrl).then (function(db){
@@ -248,6 +292,7 @@ exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
         return item;
     })
 };
+
 /*exports.addNewChapterUsingBookID = function (book_id) {
     MongoClient.connect(mongodbUrl).then (function (db) {
         var books = db.collection('Books');
@@ -263,6 +308,51 @@ exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
             )
     })
 }*/
+
+//insert one book to a user's subscription
+exports.insertNewSubscriptionToUser=function(user_id,book_id,req,res){
+    MongoClient.connect(mongodbUrl).then(function(db){
+        var users=db.collection('Users');
+        users.findOneAndUpdate(
+                {'_id': new ObjectId(user_id)},
+                {$push: {
+                    subscriptions: {
+                        _id:ObjectId(),
+                        bookId: book_id
+                    }
+                }
+                },
+                {upsert:true})
+                .then(function(){
+                    console.log("insert subscription is a success");
+                    db.close();
+                }).then(function(){
+            res.redirect('/');
+        })
+    });
+};
+
+//delete one user's subscription
+exports.deleteSubscriptionFromUser=function(user_id, book_id, req, res){
+    MongoClient.connect(mongodbUrl).then(function(db){
+        var users=db.collection('Users');
+        users.findOneAndUpdate(
+                {'_id':new ObjectId(user_id)},
+                {$pull:{
+                    subscriptions:{
+                        bookId: book_id
+                    }
+                }},
+                {upsert:true})
+                .then(function(){
+                    console.log("unsubscription is a success");
+                    db.close();
+                }).then(function(){
+                    res.redirect('/');
+        });
+    });
+};
+
 
 
 

@@ -38,6 +38,7 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (obj, done) {
+
     console.log("deserializing " + obj);
     done(null, obj);
 });
@@ -133,9 +134,14 @@ app.use(function (req, res, next) {
 //displays our homepage
 app.get('/', function (req, res) {
     funct.queryAllBook().then(function (items) {
+        console.log("here");
         var user = req.user;
         var bookIDs = [];
         var bookList = items;
+        if (user!=null && user.subscriptions!=null){
+            for(var i = 0; i < user.subscriptions.length; i++){
+                console.log(user.subscriptions[i].bookId);
+            }}
         //bookList is an array consisting of _id for each book in DB
         bookList.forEach(function (elem) {
             //assert that each bookIDs element is typeof String
@@ -223,19 +229,23 @@ app.post('/publishBook', function (req, res) {
 });
 //TODO look up query parameter. add get for each book.
 
+//profile method to be revised, because we need to display bookname of books subscribed by this user
+//profile.ejs also needs to be modified
 app.get('/profile/:userId', function (req, res) {
-
     var userId = req.params.userId;
     var userRole = req.user.role;
-    console.log('============');
+    var user=req.user;
+    console.log("============");
+    console.log(user._id);
+    console.log("Viewing user "+userId+"'s profile");
     funct.queryPublicationFromWriter(userId).then(function (publications) {
         res.render('profile', {
             userID: req.params.userId,
             userRole: userRole,
-            publication: publications
+            publication: publications,
+            user:user
         });
     });
-
 });
 
 /* since we have a render-for-all situation, I only render bookId to fetch all chapters */
@@ -243,15 +253,43 @@ app.get('/profile/:userId', function (req, res) {
  are subject to change.*/
 app.get('/books/:bookId', function (req, res) {
     var bookId = req.params.bookId;
-    funct.queryBookinfoFromID(bookId).then(function (item) {
-        res.render('chapters', {
-            bookID: bookId,
-            book: item,
-            user: req.user
-        });
-    });
-});
 
+    var user = req.user;
+    if (typeof user == "undefined") {
+        console.log("Anonymous user is checking book " + bookId);
+        console.log("the bookId that's being queried is " + bookId);
+        //if user is anonymous
+        //fetch book from bookId
+        funct.queryBookinfoFromID(bookId).then(function(item){
+            res.render('chapters',{
+                bookID: bookId,
+                book:item,
+                user:req.user
+            });
+
+
+        });
+
+    }
+    else {
+        console.log("User " + user._id + "is checking book" + bookId);
+        console.log("the userId that's being queried is " + user._id);
+        console.log("the bookId that's being queried is " + bookId);
+        //if user is registered
+        // fetch book and user from bookId and userId, then render chapters page
+        var userId=req.user._id;
+        funct.queryBookinfoFromID(bookId).then(function (item) {
+            var book = item;
+            funct.queryUserBasedOnID(userId).then(function (user) {
+                res.render('chapters', {
+                    user: user,
+                    bookID: bookId,
+                    book: book
+                });
+            });
+        });
+    }
+});
 
 app.get('/books/:bookId/uploadNewChapter', function (req, res) {
     var bookID = req.params.bookId;
@@ -264,11 +302,13 @@ app.post('/service/uploadNewChapter', function (req, res) {
     funct.insertNewChapterToABook(req, res);
 });
 
+
 // update book information
 app.post('/books/:bookId/update', function (req, res) {
     var bookId = req.params.bookId;
     funct.updateBookInfo(bookId,req.body,res);
 });
+
 
 app.get('/books/:bookId/:chapterIdx', function (req, res) {
     var chapterIdx = parseInt(req.params.chapterIdx);
@@ -283,6 +323,23 @@ app.get('/books/:bookId/:chapterIdx', function (req, res) {
             chapterMax: chapterInfos[1] - 1
         });
     })
+});
+
+//get method, user subscribe book
+app.get('/service/subscribeBook/:bookId',function(req,res){
+    var userId=req.user._id;
+    var bookId=req.params.bookId;
+    console.log(userId);
+    console.log(bookId);
+    funct.insertNewSubscriptionToUser(userId,bookId,req,res);
+});
+
+//get method, user unsubscribe book
+app.get('/service/unsubscribeBook/:bookId',function(req,res){
+    var bookId=req.params.bookId;
+    var userId=req.user._id;
+    console.log("User "+userId+" is unsubscribing book "+bookId);
+    funct.deleteSubscriptionFromUser(userId,bookId,req,res);
 });
 
 //===============PORT=================
