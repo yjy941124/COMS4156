@@ -1,6 +1,15 @@
 # COMS4156
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### March 24 2017 - Yulong Qiao
+Subcription and Unsubscription function finished:
+- chapters page have three buttons - upload chapter, subscribe and unsubscribe
+- Anonymous user can only view chapters, not button is seen by them
+- Registered user (both writer and reader) can subscribe to one book by clicking *subscribe* button, and they are redirect to home page, after they click back to this book, *subscribe* button is hide, and *unsubscription* button is shown, they can just unsubscribe by clicking on it.
+- If a user is a **writer**, and the book that he is browing is written by him (the writerID of book equals id of user), then *upload new chapter* button is shown to him, and he can click on it.
+
+TODO:
+- the bookname of one user's subscription should be shown on that user's profile page.
 ### March 24 2017 - Jinyang
 Bug fix
 - Now only writer can publish page(previously publish is not visible to reader, but reader can still access through directly type in URL
