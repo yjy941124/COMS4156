@@ -127,11 +127,13 @@ exports.queryBookandUser = function (bookid, userid) {
 exports.publishBook = function (req, res) {
     var bookname = req.body.bookname;
     var bookdes = req.body.bookDescription;
+    var bookgenre = req.body.bookGenre;
     var writerID = req.user._id.toString();
     var writerName = req.user.username;
     var book = {
         'bookname': bookname,
         'bookdes': bookdes,
+        'bookgenre': bookgenre,
         'writerID': writerID,
         'writerName': writerName
     };
@@ -157,9 +159,39 @@ exports.publishBook = function (req, res) {
                 });
         });
     });
+    console.log("publish function");
     console.log(book);
-    res.send('published!');
+
+    //console.log(typeof (book._id));
+
 };
+
+
+exports.updateBookInfo =function (book_Id,info,res) {
+    var new_bookname = info.bookname;
+    var new_bookdes = info.bookDescription;
+    var new_bookGenre = info.bookGenre;
+
+    MongoClient.connect(mongodbUrl,function (err,db) {
+        var books = db.collection('Books');
+        console.log("update function");
+
+        books.updateOne(
+            {"_id": new ObjectId(book_Id)},
+            {
+                $set: {
+                    "bookname": new_bookname, "bookdes": new_bookdes, "bookgenre": new_bookGenre
+                }
+            }
+        ).then(function (res) {
+            console.log(res);
+            db.close();
+        });
+    });
+
+    res.send("updated!");
+
+}
 
 exports.queryAllBook = function () {
     return MongoClient.connect(mongodbUrl).then(function (db) {

@@ -1,6 +1,5 @@
-<a data-toggle="collapse" href="#publish-book"
-   class="btn btn-default btn-md" role="button" xmlns="http://www.w3.org/1999/html">Publish a new Book</a>
-<form id="publish-book" class="collapse" action="/publishBook" method="post">
+
+<form id="publish-book"  action="/publishBook" method="post">
     <div>
         <label>Book Name:</label>
         <input type="text" name="bookname"/>
@@ -10,6 +9,21 @@
         <textarea type="text" name="bookDescription"/></textarea>
     </div>
     <div>
+        <label>Book Genre:</label>
+        <br></br>
+        <input id = "bg_fiction" type = "checkbox" name="bookGenre" value="Fiction"/>Fiction
+        <input id = "bg_romance" type = "checkbox" name = "bookGenre" value="Romance"/>Romance
+        <input id = "bg_horror" type = "checkbox" name = "bookGenre" value="Horror"/>Horror
+        <input id = "bg_detective" type = "checkbox" name = "bookGenre" value="Detective"/>Detective
+        <input id = "bg_fantasy" type = "checkbox" name = "bookGenre" value="Fantasy"/>Fantasy
+        <input id = "bg_poetry" type = "checkbox" name = "bookGenre" value="Poetry"/>Poetry
+        <input id = "bg_prose" type = "checkbox" name = "bookGenre" value="Prose"/>Prose
+        <input id = "bg_crime" type = "checkbox" name = "bookGenre" value="Crime"/>Crime
+        <input id = "bg_comedy" type = "checkbox" name = "bookGenre" value="Comedy"/>Comedy
+        <input id = "bg_other" type = "checkbox" name = "bookGenre" value="Other"/>Other
+    </div>
+    <div>
         <input type="submit" class="btn btn-primary btn-sm" value="Publish!"/>
     </div>
+
 </form>

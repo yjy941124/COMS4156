@@ -1,6 +1,27 @@
 # COMS4156
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### March 24 2017 - Jinyang
+Bug fix
+- Now only writer can publish page(previously publish is not visible to reader, but reader can still access through directly type in URL
+- Now only the correct writer can update a new chapter
+
+TODO:
+- UI
+- Some detail implementation(Stuff like add a home button for every page)
+- Subscription(Waiting on Yulong)
+
+### March 23 2017 - Ruijue
+Implement two new features. 
+1. Add book genre(s) when publish, show in index and chapters page 
+2. Edit book information in chapters page
+
+TODO:
+1. ~~Verify whether new book name is unique~~
+2. Change checkbox style for book genres
+3. Only allow writer of the book to edit book info and update new chapter (done)
+4. ~~See earlier TODOs.~~
+
 ### March 23 2017 - Jinyang
 Note: Reverted to bb9b99f branch.
 Implemented some new features
@@ -13,7 +34,7 @@ Implemented some new features.
 
 TODO:
 - Implement Subscription.
-- See earlier TODOs.
+- ~~See earlier TODOs.~~
 - 
 ### March 17 2017 - Jinyang
 Implemented some new features.
@@ -21,8 +42,8 @@ Implemented some new features.
 - All published books can be viewed at home page. Only bookname and writerName are shown.
 
 TODO:
-- add publish chapter under each book feature. (@query parameter look up)
-- Right now, any user can still access "/publish" regardless of its role. Need to limit access only to writers.
+- ~~add publish chapter under each book feature. (@query parameter look up)~~
+- ~~Right now, any user can still access "/publish" regardless of its role. Need to limit access only to writers.~~
 - ~~Start to build user profile page. (@query parameter again)~~
 ### March 16 2017 - Jinyang
 I have made several updates so far and here's a quick summary of what has been changed from Mar 2.
