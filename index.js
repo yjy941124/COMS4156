@@ -203,15 +203,21 @@ app.get('/publish', function (req, res) {
 app.post('/publishBook', funct.publishBook);
 //TODO look up query parameter. add get for each book.
 
+//profile method to be revised, because we need to display bookname of books subscribed by this user
+//profile.ejs also needs to be modified
 app.get('/profile/:userId', function (req, res) {
     var userId = req.params.userId;
     var userRole = req.user.role;
+    var user=req.user;
+    console.log("============");
+    console.log(user._id);
     console.log("Viewing user "+userId+"'s profile");
     funct.queryPublicationFromWriter(userId).then(function (publications) {
         res.render('profile', {
             userID: req.params.userId,
             userRole: userRole,
-            publication: publications
+            publication: publications,
+            user:user
         });
     });
 });
@@ -221,28 +227,39 @@ app.get('/profile/:userId', function (req, res) {
  are subject to change.*/
 app.get('/books/:bookId', function (req, res) {
     var bookId = req.params.bookId;
-    var user=req.user;
-    var userId=req.user._id;
-    if (typeof user=="undefined"){
-        console.log("Anonymous user is checking book "+bookId);
-    }
-    else{
-        console.log("User "+userId+"is checking book"+bookId);
-    }
-    console.log("the bookId that's being queried is "+bookId);
-    console.log("the userId that's being queried is "+userId);
-
-    //fetch book and user from bookId and userId, then render chapters page
-    funct.queryBookinfoFromID(bookId).then(function(item){
-        var book=item;
-        funct.queryUserBasedOnID(userId).then(function(user){
+    var user = req.user;
+    if (typeof user == "undefined") {
+        console.log("Anonymous user is checking book " + bookId);
+        console.log("the bookId that's being queried is " + bookId);
+        //if user is anonymous
+        //fetch book from bookId
+        funct.queryBookinfoFromID(bookId).then(function(item){
             res.render('chapters',{
-                user:user,
-                bookID:bookId,
-                book:book
+                bookID: bookId,
+                book:item,
+                user:req.user
             });
         });
-    });
+
+    }
+    else {
+        console.log("User " + user._id + "is checking book" + bookId);
+        console.log("the userId that's being queried is " + user._id);
+        console.log("the bookId that's being queried is " + bookId);
+        //if user is registered
+        // fetch book and user from bookId and userId, then render chapters page
+        var userId=req.user._id;
+        funct.queryBookinfoFromID(bookId).then(function (item) {
+            var book = item;
+            funct.queryUserBasedOnID(userId).then(function (user) {
+                res.render('chapters', {
+                    user: user,
+                    bookID: bookId,
+                    book: book
+                });
+            });
+        });
+    }
 });
 
 app.get('/books/:bookId/uploadNewChapter', function (req, res) {
@@ -278,6 +295,14 @@ app.get('/service/subscribeBook/:bookId',function(req,res){
     console.log(userId);
     console.log(bookId);
     funct.insertNewSubscriptionToUser(userId,bookId,req,res);
+});
+
+//get method, user unsubscribe book
+app.get('/service/unsubscribeBook/:bookId',function(req,res){
+    var bookId=req.params.bookId;
+    var userId=req.user._id;
+    console.log("User "+userId+" is unsubscribing book "+bookId);
+    funct.deleteSubscriptionFromUser(userId,bookId,req,res);
 });
 
 //===============PORT=================

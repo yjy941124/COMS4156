@@ -277,6 +277,7 @@ exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
     })
 }*/
 
+//insert one book to a user's subscription
 exports.insertNewSubscriptionToUser=function(user_id,book_id,req,res){
     MongoClient.connect(mongodbUrl).then(function(db){
         var users=db.collection('Users');
@@ -296,6 +297,27 @@ exports.insertNewSubscriptionToUser=function(user_id,book_id,req,res){
                 }).then(function(){
             res.redirect('/');
         })
+    });
+};
+
+//delete one user's subscription
+exports.deleteSubscriptionFromUser=function(user_id, book_id, req, res){
+    MongoClient.connect(mongodbUrl).then(function(db){
+        var users=db.collection('Users');
+        users.findOneAndUpdate(
+                {'_id':new ObjectId(user_id)},
+                {$pull:{
+                    subscriptions:{
+                        bookId: book_id
+                    }
+                }},
+                {upsert:true})
+                .then(function(){
+                    console.log("unsubscription is a success");
+                    db.close();
+                }).then(function(){
+                    res.redirect('/');
+        });
     });
 };
 
