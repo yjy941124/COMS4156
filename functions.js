@@ -347,7 +347,7 @@ exports.insertNewSubscriptionToUser = function (user_id, book_id, req, res) {
                     .then(function () {
                         db.close();
                     }).then(function () {
-                    res.redirect('/profile/'+user_id);
+                    res.redirect('/books/'+book_id);
                 })
             });
     });
@@ -370,7 +370,7 @@ exports.deleteSubscriptionFromUser = function (user_id, book_id, req, res) {
             .then(function () {
                 db.close();
             }).then(function () {
-            res.redirect('/profile/'+user_id);
+            res.redirect('/books/'+book_id);
         });
     });
 };
