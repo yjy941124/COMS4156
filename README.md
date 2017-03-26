@@ -1,6 +1,11 @@
 # COMS4156
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### March 25 2017 - Jinyang Yu
+Iteration 1 is almost done!
+After many bug fixes(not recorded), we have implemented every feature in iteration 1. The remaining jobs are well documenting each function, delete console.log, and other small details. There are no outstanding features or significant bug as of now. (There may be small bugs that we are not yet aware of).
+
+
 ### March 24 2017 - Yulong Qiao
 Subcription and Unsubscription function finished:
 - chapters page have three buttons - upload chapter, subscribe and unsubscribe
@@ -9,7 +14,7 @@ Subcription and Unsubscription function finished:
 - If a user is a **writer**, and the book that he is browing is written by him (the writerID of book equals id of user), then *upload new chapter* button is shown to him, and he can click on it and upload new things.
 
 TODO:
-- the booknames of one user's subscription should be shown on that user's profile page as anchors.
+- ~~the booknames of one user's subscription should be shown on that user's profile page as anchors.~~
 
 ### March 24 2017 - Jinyang
 Bug fix
@@ -18,8 +23,8 @@ Bug fix
 
 TODO:
 - UI
-- Some detail implementation(Stuff like add a home button for every page)
-- Subscription(Waiting on Yulong)
+- ~~Some detail implementation(Stuff like add a home button for every page)~~
+- ~~Subscription(Waiting on Yulong)~~
 
 ### March 23 2017 - Ruijue
 Implement two new features. 
@@ -29,7 +34,7 @@ Implement two new features.
 TODO:
 1. ~~Verify whether new book name is unique~~
 2. Change checkbox style for book genres
-3. Only allow writer of the book to edit book info and update new chapter (done)
+3. ~~Only allow writer of the book to edit book info and update new chapter (done)~~
 4. ~~See earlier TODOs.~~
 
 ### March 23 2017 - Jinyang
