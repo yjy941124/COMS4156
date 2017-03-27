@@ -1,10 +1,10 @@
 
 <div id="container">
     This is the chapter page.
-
+    <a href="/">Back to Home Page</a>
     <p hidden id="parse-book-id"><%=bookID%></p>
     <p hidden id="parse-user"><%=user%>></p>
-    <p><%=book.bookname%></p>
+    <p>Book: <%=book.bookname%></p>
     <p>Author: <%=book.writerName%></p>
     <p hidden id="parse-author-id"><%=book.writerID%></p>
     <p>Genre: <% if(book.bookgenre!=null){%>
@@ -72,11 +72,11 @@
                 </div>
                 <div class="modal-body">
                     <label>Book Name: </label>
-                    <input type="text" name="bookname" value="<%= book.bookname%>" />
+                    <input id="bookname" type="text" name="bookname" value="<%= book.bookname%>" />
                     <br></br>
 
                     <label>Book Description: </label>
-                    <textarea type="text" name="bookDescription"><%= book.bookdes%></textarea>
+                    <textarea id="bookDescription" type="text" name="bookDescription"><%= book.bookdes%></textarea>
                     <br></br>
 
                     <label>Book Genre: </label>

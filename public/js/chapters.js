@@ -18,10 +18,30 @@ $(document).ready(function () {
     $(document).on("click", "#close", function(){
         $('#bookinfo_modal').css("display","none");
     });
-    $(document).on("click", "#save_bookchange", function(){
-        $('#bookinfo_modal').css("display","none");
-    });
+    // $(document).on("click", "#save_bookchange", function(){
+    //     $('#bookinfo_modal').css("display","none");
+    // });
     $(document).on("click", "#cancel_bookchange", function(){
         $('#bookinfo_modal').css("display","none");
+    });
+    $('#save_bookchange').click(function(e) {
+        var isValid = true;
+        $('input[type="text"]').each(function() {
+            if ($.trim($(this).val()) == '') {
+                isValid = false;
+                $(this).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+            }
+            else {
+                $(this).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+        });
+        if (isValid == false)
+            e.preventDefault();
     });
 });

@@ -1,6 +1,22 @@
 # COMS4156
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### March 26 2017 - Yulong Qiao
+functions added:
+- book page now have a *return to home* button
+constrains added:
+- When a writer publish a new book or editing book infomation
+  - **bookname** cannot be empty
+  - **book description** and **genre** can be left blank
+- after editing book info, user now redirect back to book page
+
+big bug fixed and multiple functions modified - the update bookinfo bug, you might have to db.dropDatabase() to verify it.
+- after editing book info, the book infos shown at homepage and profile page are synced, and displayed correctly
+
+
+
+
+
 ### March 25 2017 - Jinyang Yu
 Iteration 1 is almost done!
 After many bug fixes(not recorded), we have implemented every feature in iteration 1. The remaining jobs are well documenting each function, delete console.log, and other small details. There are no outstanding features or significant bug as of now. (There may be small bugs that we are not yet aware of).

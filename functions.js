@@ -188,16 +188,27 @@ exports.publishBook = function (req, res) {
     })
 };*/
 
-
-exports.updateBookInfo = function (book_Id, info, res) {
+//update book info, needs to update 2 things
+// 1. update Users.publications's bookname
+// 2. update books
+exports.updateBookInfo = function (book_Id, user_Id, info, res) {
     var new_bookname = info.bookname;
     var new_bookdes = info.bookDescription;
     var new_bookGenre = info.bookGenre;
-
     MongoClient.connect(mongodbUrl, function (err, db) {
         var books = db.collection('Books');
+        var users=db.collection('Users');
         console.log("update function");
-
+        users.updateOne(
+                {"_id": new ObjectId(user_Id),
+                "publication.book_id": new ObjectId(book_Id)},
+                {
+                    $set:{
+                       "publication.$.bookname": new_bookname
+                    }
+                },
+                {upsert:true}
+        ).then(function(){
         books.updateOne(
             {"_id": new ObjectId(book_Id)},
             {
@@ -206,15 +217,11 @@ exports.updateBookInfo = function (book_Id, info, res) {
                 }
             }
         ).then(function (res) {
-
-
             db.close();
-        });
+        });})
     });
-
-    res.send("updated!");
-
-}
+    res.redirect('/books/'+book_Id);
+};
 
 exports.queryAllBook = function () {
     return MongoClient.connect(mongodbUrl).then(function (db) {

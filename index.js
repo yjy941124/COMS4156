@@ -132,10 +132,13 @@ app.use(function (req, res, next) {
 
 //===============ROUTES=================
 //displays our homepage
+//bug here
 app.get('/', function (req, res) {
     funct.queryAllBook().then(function (items) {
 
         var user = req.user;
+        //var userId=req.user._id;
+        //var user = funct.queryUserBasedOnID(userId);
         var bookIDs = [];
         var bookList = items;
         bookList.forEach(function (elem) {
@@ -224,22 +227,28 @@ app.post('/publishBook', function (req, res) {
 });
 //TODO look up query parameter. add get for each book.
 
-//profile method to be revised, because we need to display bookname of books subscribed by this user
-//profile.ejs also needs to be modified
+//0326 Yulong - bug fixed
+//since we add the function of editing bookinfo, then if we direct send user in the session
+//stuff displayed at profile page would still be exactly the same before edit
+//need to query the user again
 app.get('/profile/:userId', function (req, res) {
     var userId = req.params.userId;
     var userRole = req.user.role;
-    var user = req.user;
-
-    funct.queryPublicationFromWriter(userId).then(function (set) {
-        res.render('profile', {
-            userID: req.params.userId,
-            userRole: userRole,
-            publication: set.publication,
-            subscription: set.subscription,
-            user: user
+    //var user = req.user;
+    funct.queryUserBasedOnID(userId).then(function(item){
+        var user=item;
+        funct.queryPublicationFromWriter(userId).then(function(set){
+            console.log("publication is");
+            console.log("=================")
+            console.log(set.publication);
+            res.render('profile',{
+                userID:req.params.userId,
+                userRole:userRole,
+                publication: set.publication,
+                subscription: set.subscription,
+                user: user
+            });
         });
-
     });
 });
 
@@ -248,7 +257,6 @@ app.get('/profile/:userId', function (req, res) {
  are subject to change.*/
 app.get('/books/:bookId', function (req, res) {
     var bookId = req.params.bookId;
-
     var user = req.user;
     if (typeof user == "undefined") {
         //if user is anonymous
@@ -292,9 +300,12 @@ app.post('/service/uploadNewChapter', function (req, res) {
 
 
 // update book information
+// bug here
 app.post('/books/:bookId/update', function (req, res) {
     var bookId = req.params.bookId;
-    funct.updateBookInfo(bookId, req.body, res);
+    var userId=req.user._id;
+    console.log("updating " + bookId + "'s bookinfo");
+    funct.updateBookInfo(bookId,userId,req.body, res);
 });
 
 
