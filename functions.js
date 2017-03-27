@@ -106,20 +106,20 @@ exports.queryBookandUser = function (bookid, userid) {
         }).then(function (book) {
             results.push(book);
             return results
-        }).then(function(results){
+        }).then(function (results) {
             users.findOne({
                 '_id': new ObjectId(userid)
-            }).then(function(user){
+            }).then(function (user) {
                 results.push(user);
                 return results;
 
-            }).then(function(item){
+            }).then(function (item) {
                 return item;
             });
-        }).then(function(item){
+        }).then(function (item) {
             return item;
         });
-    }).then(function(item){
+    }).then(function (item) {
         return item;
     });
 };
@@ -137,12 +137,13 @@ exports.publishBook = function (req, res) {
         'writerID': writerID,
         'writerName': writerName
     };
-    MongoClient.connect(mongodbUrl, function (err, db) {
+    var book_id;
+    return MongoClient.connect(mongodbUrl).then( function (db) {
         var books = db.collection('Books');
         var users = db.collection('Users');
-        books.insertOne(book).then(function (result) {
-            var book_id = (result.ops)[0]._id;
-            users.updateOne(
+        return books.insertOne(book).then(function (result) {
+            book_id = (result.ops)[0]._id;
+            return users.updateOne(
                 {_id: new ObjectId(writerID)},
                 {
                     $push: {
@@ -156,23 +157,44 @@ exports.publishBook = function (req, res) {
                 .then(function () {
                     console.log("Update success");
                     db.close();
+                    return book_id;
                 });
+
         });
     });
-    console.log("publish function");
-    console.log(book);
-
-    //console.log(typeof (book._id));
-
 };
+/*exports.insertNewChapterToABook = function (req, res) {
+    var book_id = req.body.bookid[0];
+    MongoClient.connect(mongodbUrl).then(function (db) {
+        var books = db.collection('Books');
+        books.findOneAndUpdate(
+            {'_id': new ObjectId(book_id)},
+            {
+                $push: {
+                    chapters: {
+                        _id: ObjectId(),
+                        title: req.body.title,
+                        content: req.body.chapterContent
+                    }
+                }
+            },
+            {upsert: true})
+            .then(function () {
+                console.log('chapter update success');
+                db.close();
+            })
+    }).then(function () {
+        res.redirect('/books/' + book_id);
+    })
+};*/
 
 
-exports.updateBookInfo =function (book_Id,info,res) {
+exports.updateBookInfo = function (book_Id, info, res) {
     var new_bookname = info.bookname;
     var new_bookdes = info.bookDescription;
     var new_bookGenre = info.bookGenre;
 
-    MongoClient.connect(mongodbUrl,function (err,db) {
+    MongoClient.connect(mongodbUrl, function (err, db) {
         var books = db.collection('Books');
         console.log("update function");
 
@@ -184,7 +206,8 @@ exports.updateBookInfo =function (book_Id,info,res) {
                 }
             }
         ).then(function (res) {
-            console.log(res);
+
+
             db.close();
         });
     });
@@ -198,8 +221,7 @@ exports.queryAllBook = function () {
         var books = db.collection('Books');
         return books.find({}).toArray();
     }).then(function (items) {
-        console.log("All books available on Forever Read are...");
-        console.log(items);
+
         return items;
     });
 };
@@ -209,8 +231,11 @@ exports.queryPublicationFromWriter = function (user_id) {
         var users = db.collection('Users');
         return users.findOne({'_id': new ObjectId(user_id)})
             .then(function (result) {
-                console.log(result.publication);
-                return result.publication;
+                var publicationAndSubscriptionSet = {
+                    'publication' : result.publication,
+                    'subscription' : result. subscriptions
+                }
+                return publicationAndSubscriptionSet;
             })
     }).then(function (items) {
         return items;
@@ -221,11 +246,11 @@ exports.queryPublicationFromWriter = function (user_id) {
 // to query all chapters from one book
 
 
-exports.queryChaptersFromBook = function (book_id){
-    return MongoClient.connect(mongodbUrl).then(function(db){
-        var books=db.collection('Books');
-        return books.findOne({'_id':new Object(book_id)})
-            .then(function(result){
+exports.queryChaptersFromBook = function (book_id) {
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+        var books = db.collection('Books');
+        return books.findOne({'_id': new Object(book_id)})
+            .then(function (result) {
                 return result.chapters;
             })
     }).then(function (items) {
@@ -237,54 +262,56 @@ exports.queryUserBasedOnID = function (user_id) {
     return MongoClient.connect(mongodbUrl).then(function (db) {
         var users = db.collection('Users');
         return users.findOne({'_id': new ObjectId(user_id)})
-                .then(function (result) {
-                    return result;
-                })
+            .then(function (result) {
+                return result;
+            })
     }).then(function (user) {
         return user;
     });
 };
 
-exports.queryBookinfoFromID = function(book_id){
-    return MongoClient.connect(mongodbUrl).then (function(db){
-        var books=db.collection('Books');
-        return books.findOne({'_id':new ObjectId(book_id)})
-            .then(function(result){
-                console.log(result);
+exports.queryBookinfoFromID = function (book_id) {
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+        var books = db.collection('Books');
+        return books.findOne({'_id': new ObjectId(book_id)})
+            .then(function (result) {
+
                 return result;
             })
-    }).then(function(items){
+    }).then(function (items) {
         return items;
     });
 };
 exports.insertNewChapterToABook = function (req, res) {
-  var book_id = req.body.bookid[0];
-  MongoClient.connect(mongodbUrl).then (function (db) {
-      var books = db.collection('Books');
-      books.findOneAndUpdate(
-          {'_id' : new ObjectId(book_id)},
-          {$push : {
-              chapters : {
-                  _id:ObjectId(),
-                  title: req.body.title,
-                  content: req.body.chapterContent
-              }
-          }},
-      {upsert: true})
-          .then(function () {
-              console.log('chapter update success');
-              db.close();
-          })
-  }).then(function () {
-      res.redirect('/books/'+book_id);
-  })
+    var book_id = req.body.bookid[0];
+    MongoClient.connect(mongodbUrl).then(function (db) {
+        var books = db.collection('Books');
+        books.findOneAndUpdate(
+            {'_id': new ObjectId(book_id)},
+            {
+                $push: {
+                    chapters: {
+                        _id: ObjectId(),
+                        title: req.body.title,
+                        content: req.body.chapterContent
+                    }
+                }
+            },
+            {upsert: true})
+            .then(function () {
+                console.log('chapter update success');
+                db.close();
+            })
+    }).then(function () {
+        res.redirect('/books/' + book_id);
+    })
 };
 
 exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
     return MongoClient.connect(mongodbUrl).then(function (db) {
         var books = db.collection('Books');
-        return books.findOne({'_id':new ObjectId(bookId)})
-            .then(function (result) {//console.log(result.chapters[chapterIdx]);
+        return books.findOne({'_id': new ObjectId(bookId)})
+            .then(function (result) {
                 return [result.chapters[chapterIdx], result.chapters.length];
             })
     }).then(function (item) {
@@ -293,62 +320,57 @@ exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
     })
 };
 
-/*exports.addNewChapterUsingBookID = function (book_id) {
-    MongoClient.connect(mongodbUrl).then (function (db) {
-        var books = db.collection('Books');
-        return books.updateOne(
-            {_id: new ObjectId(book_id)},
-            {
-                $push:{
-                    chapters:{
-                        'title' :
-                    }
-                }
-            }
-            )
-    })
-}*/
 
 //insert one book to a user's subscription
-exports.insertNewSubscriptionToUser=function(user_id,book_id,req,res){
-    MongoClient.connect(mongodbUrl).then(function(db){
-        var users=db.collection('Users');
-        users.findOneAndUpdate(
-                {'_id': new ObjectId(user_id)},
-                {$push: {
-                    subscriptions: {
-                        _id:ObjectId(),
-                        bookId: book_id
-                    }
-                }
-                },
-                {upsert:true})
-                .then(function(){
-                    console.log("insert subscription is a success");
-                    db.close();
-                }).then(function(){
-            res.redirect('/');
-        })
+exports.insertNewSubscriptionToUser = function (user_id, book_id, req, res) {
+    MongoClient.connect(mongodbUrl).then(function (db) {
+        var users = db.collection('Users');
+        var books = db.collection('Books');
+        var bookname;
+        books.findOne({'_id' : new ObjectId(book_id)})
+            .then(function (item) {
+
+                bookname = (item.bookname);
+
+                users.findOneAndUpdate(
+                    {'_id': new ObjectId(user_id)},
+                    {
+                        $push: {
+                            subscriptions: {
+                                _id: ObjectId(),
+                                bookId: book_id,
+                                bookname: bookname
+                            }
+                        }
+                    },
+                    {upsert: true})
+                    .then(function () {
+                        db.close();
+                    }).then(function () {
+                    res.redirect('/books/'+book_id);
+                })
+            });
     });
 };
 
 //delete one user's subscription
-exports.deleteSubscriptionFromUser=function(user_id, book_id, req, res){
-    MongoClient.connect(mongodbUrl).then(function(db){
-        var users=db.collection('Users');
+exports.deleteSubscriptionFromUser = function (user_id, book_id, req, res) {
+    MongoClient.connect(mongodbUrl).then(function (db) {
+        var users = db.collection('Users');
         users.findOneAndUpdate(
-                {'_id':new ObjectId(user_id)},
-                {$pull:{
-                    subscriptions:{
+            {'_id': new ObjectId(user_id)},
+            {
+                $pull: {
+                    subscriptions: {
                         bookId: book_id
                     }
-                }},
-                {upsert:true})
-                .then(function(){
-                    console.log("unsubscription is a success");
-                    db.close();
-                }).then(function(){
-                    res.redirect('/');
+                }
+            },
+            {upsert: true})
+            .then(function () {
+                db.close();
+            }).then(function () {
+            res.redirect('/books/'+book_id);
         });
     });
 };

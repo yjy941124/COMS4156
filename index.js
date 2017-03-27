@@ -134,17 +134,11 @@ app.use(function (req, res, next) {
 //displays our homepage
 app.get('/', function (req, res) {
     funct.queryAllBook().then(function (items) {
-        console.log("here");
+
         var user = req.user;
         var bookIDs = [];
         var bookList = items;
-        if (user!=null && user.subscriptions!=null){
-            for(var i = 0; i < user.subscriptions.length; i++){
-                console.log(user.subscriptions[i].bookId);
-            }}
-        //bookList is an array consisting of _id for each book in DB
         bookList.forEach(function (elem) {
-            //assert that each bookIDs element is typeof String
             bookIDs.push(elem._id.toString());
         });
         res.render('home', {
@@ -152,8 +146,7 @@ app.get('/', function (req, res) {
             bookList: bookList,
             bookIDs: bookIDs
         });
-        console.log("print bookIDs array in corresponding order: ");
-        console.log(bookIDs);
+
     }, function (err) {
         console.log("error occurs, details: " + err);
     });
@@ -185,9 +178,7 @@ function renderHomeHelper(req, res) {
         var user = req.user;
         var bookIDs = [];
         var bookList = items;
-        //bookList is an array consisting of _id for each book in DB
         bookList.forEach(function (elem) {
-            //assert that each bookIDs element is typeof String
             bookIDs.push(elem._id.toString());
         });
         res.render('home', {
@@ -195,8 +186,6 @@ function renderHomeHelper(req, res) {
             bookList: bookList,
             bookIDs: bookIDs
         });
-        console.log("print bookIDs array in corresponding order: ");
-        console.log(bookIDs);
     }, function (err) {
         console.log("error occurs, details: " + err);
     });
@@ -222,10 +211,16 @@ app.get('/publish', function (req, res) {
 //writer publish a book
 app.post('/publishBook', function (req, res) {
     if (req.user != null) {
-        funct.publishBook(req, res);
+        funct.publishBook(req, res)
+            .then(function (book_id) {
+                res.redirect('books/'+book_id);
+            });
+
+    }
+    else {
+        renderHomeHelper(req, res);
     }
 
-    renderHomeHelper(req, res);
 });
 //TODO look up query parameter. add get for each book.
 
@@ -234,17 +229,17 @@ app.post('/publishBook', function (req, res) {
 app.get('/profile/:userId', function (req, res) {
     var userId = req.params.userId;
     var userRole = req.user.role;
-    var user=req.user;
-    console.log("============");
-    console.log(user._id);
-    console.log("Viewing user "+userId+"'s profile");
-    funct.queryPublicationFromWriter(userId).then(function (publications) {
+    var user = req.user;
+
+    funct.queryPublicationFromWriter(userId).then(function (set) {
         res.render('profile', {
             userID: req.params.userId,
             userRole: userRole,
-            publication: publications,
-            user:user
+            publication: set.publication,
+            subscription: set.subscription,
+            user: user
         });
+
     });
 });
 
@@ -256,15 +251,13 @@ app.get('/books/:bookId', function (req, res) {
 
     var user = req.user;
     if (typeof user == "undefined") {
-        console.log("Anonymous user is checking book " + bookId);
-        console.log("the bookId that's being queried is " + bookId);
         //if user is anonymous
         //fetch book from bookId
-        funct.queryBookinfoFromID(bookId).then(function(item){
-            res.render('chapters',{
+        funct.queryBookinfoFromID(bookId).then(function (item) {
+            res.render('chapters', {
                 bookID: bookId,
-                book:item,
-                user:req.user
+                book: item,
+                user: req.user
             });
 
 
@@ -272,12 +265,7 @@ app.get('/books/:bookId', function (req, res) {
 
     }
     else {
-        console.log("User " + user._id + "is checking book" + bookId);
-        console.log("the userId that's being queried is " + user._id);
-        console.log("the bookId that's being queried is " + bookId);
-        //if user is registered
-        // fetch book and user from bookId and userId, then render chapters page
-        var userId=req.user._id;
+        var userId = req.user._id;
         funct.queryBookinfoFromID(bookId).then(function (item) {
             var book = item;
             funct.queryUserBasedOnID(userId).then(function (user) {
@@ -306,7 +294,7 @@ app.post('/service/uploadNewChapter', function (req, res) {
 // update book information
 app.post('/books/:bookId/update', function (req, res) {
     var bookId = req.params.bookId;
-    funct.updateBookInfo(bookId,req.body,res);
+    funct.updateBookInfo(bookId, req.body, res);
 });
 
 
@@ -314,9 +302,9 @@ app.get('/books/:bookId/:chapterIdx', function (req, res) {
     var chapterIdx = parseInt(req.params.chapterIdx);
     var bookId = req.params.bookId;
 
-    funct.queryOneChapterFromBook(chapterIdx, bookId).then(function(chapterInfos) {
+    funct.queryOneChapterFromBook(chapterIdx, bookId).then(function (chapterInfos) {
 
-        res.render('chapter',{
+        res.render('chapter', {
             chapter: chapterInfos[0],
             bookId: bookId,
             chapterIdx: chapterIdx,
@@ -326,20 +314,18 @@ app.get('/books/:bookId/:chapterIdx', function (req, res) {
 });
 
 //get method, user subscribe book
-app.get('/service/subscribeBook/:bookId',function(req,res){
-    var userId=req.user._id;
-    var bookId=req.params.bookId;
-    console.log(userId);
-    console.log(bookId);
-    funct.insertNewSubscriptionToUser(userId,bookId,req,res);
+app.get('/service/subscribeBook/:bookId', function (req, res) {
+    var userId = req.user._id;
+    var bookId = req.params.bookId;
+    funct.insertNewSubscriptionToUser(userId, bookId, req, res);
 });
 
 //get method, user unsubscribe book
-app.get('/service/unsubscribeBook/:bookId',function(req,res){
-    var bookId=req.params.bookId;
-    var userId=req.user._id;
-    console.log("User "+userId+" is unsubscribing book "+bookId);
-    funct.deleteSubscriptionFromUser(userId,bookId,req,res);
+app.get('/service/unsubscribeBook/:bookId', function (req, res) {
+    var bookId = req.params.bookId;
+    var userId = req.user._id;
+
+    funct.deleteSubscriptionFromUser(userId, bookId, req, res);
 });
 
 //===============PORT=================
