@@ -18,7 +18,7 @@ function IDGenerator() {
     return id;
 }
 
-//used in local-signup strategy
+// used in local-signup strategy
 exports.localReg = function (username, password, role) {
     var deferred = Q.defer();
     var userID = IDGenerator;
@@ -90,40 +90,45 @@ exports.localAuth = function (username, password) {
     return deferred.promise;
 };
 
-/* Not in use
- * Query book object and user object in a nested manner
- * input: (bookid,userid)
- * output: an array [book,user]
- */
-exports.queryBookandUser = function (bookid, userid) {
-    var results = [];
-    return MongoClient.connect(mongodbUrl, function (err, db) {
-        //var results = [];
-        var books = db.collection('Books');
-        var users = db.collection('Users');
-        books.findOne({
-            '_id': new ObjectId(bookid)
-        }).then(function (book) {
-            results.push(book);
-            return results
-        }).then(function (results) {
-            users.findOne({
-                '_id': new ObjectId(userid)
-            }).then(function (user) {
-                results.push(user);
-                return results;
+ //  Not in use
+ //  Query book object and user object in a nested manner
+ //  input: (bookid,userid)
+ //  output: an array [book,user]
 
-            }).then(function (item) {
-                return item;
-            });
-        }).then(function (item) {
-            return item;
-        });
-    }).then(function (item) {
-        return item;
-    });
-};
+// exports.queryBookandUser = function (bookid, userid) {
+//     var results = [];
+//     return MongoClient.connect(mongodbUrl, function (err, db) {
+//         //var results = [];
+//         var books = db.collection('Books');
+//         var users = db.collection('Users');
+//         books.findOne({
+//             '_id': new ObjectId(bookid)
+//         }).then(function (book) {
+//             results.push(book);
+//             return results
+//         }).then(function (results) {
+//             users.findOne({
+//                 '_id': new ObjectId(userid)
+//             }).then(function (user) {
+//                 results.push(user);
+//                 return results;
+//
+//             }).then(function (item) {
+//                 return item;
+//             });
+//         }).then(function (item) {
+//             return item;
+//         });
+//     }).then(function (item) {
+//         return item;
+//     });
+// };
 
+// publish book
+// 1. form new object book={bookname, bookdes, bookgenre, writerID, writerName}
+//    insert book to collection db.Books in foreverRead database
+// 2. form new object as {book_id, bookname}, insert to collection db.Users.publication with Users._id==writerID
+// note that db.Users.publication is an array of objects
 exports.publishBook = function (req, res) {
     var bookname = req.body.bookname;
     var bookdes = req.body.bookDescription;
@@ -163,34 +168,10 @@ exports.publishBook = function (req, res) {
         });
     });
 };
-/*exports.insertNewChapterToABook = function (req, res) {
-    var book_id = req.body.bookid[0];
-    MongoClient.connect(mongodbUrl).then(function (db) {
-        var books = db.collection('Books');
-        books.findOneAndUpdate(
-            {'_id': new ObjectId(book_id)},
-            {
-                $push: {
-                    chapters: {
-                        _id: ObjectId(),
-                        title: req.body.title,
-                        content: req.body.chapterContent
-                    }
-                }
-            },
-            {upsert: true})
-            .then(function () {
-                console.log('chapter update success');
-                db.close();
-            })
-    }).then(function () {
-        res.redirect('/books/' + book_id);
-    })
-};*/
 
-//update book info, needs to update 2 things
-// 1. update Users.publications's bookname
-// 2. update books
+// update book info
+// 1. in db.Users.publication (publication is an array of objects), look up the object with Users._id == req.user._id, and update bookname in this object
+// 2. in db.Books, locate the object with Books._id == book_Id, update attribute bookname, bookdes and bookgenre in this object
 exports.updateBookInfo = function (book_Id, user_Id, info, res) {
     var new_bookname = info.bookname;
     var new_bookdes = info.bookDescription;
@@ -223,6 +204,7 @@ exports.updateBookInfo = function (book_Id, user_Id, info, res) {
     res.redirect('/books/'+book_Id);
 };
 
+// query all objects in db.Books, return in form of array
 exports.queryAllBook = function () {
     return MongoClient.connect(mongodbUrl).then(function (db) {
         var books = db.collection('Books');
@@ -233,6 +215,8 @@ exports.queryAllBook = function () {
     });
 };
 
+// query publication and subscription of one particular user with Users._id==user_id
+// return an object of {publication, subscription}
 exports.queryPublicationFromWriter = function (user_id) {
     return MongoClient.connect(mongodbUrl).then(function (db) {
         var users = db.collection('Users');
@@ -250,9 +234,7 @@ exports.queryPublicationFromWriter = function (user_id) {
 };
 
 
-// to query all chapters from one book
-
-
+// query all chapters from one object in db.Books with Book._id==book_id
 exports.queryChaptersFromBook = function (book_id) {
     return MongoClient.connect(mongodbUrl).then(function (db) {
         var books = db.collection('Books');
@@ -265,6 +247,7 @@ exports.queryChaptersFromBook = function (book_id) {
     })
 };
 
+// query user object in db.Users with Users._id==user_id
 exports.queryUserBasedOnID = function (user_id) {
     return MongoClient.connect(mongodbUrl).then(function (db) {
         var users = db.collection('Users');
@@ -277,6 +260,7 @@ exports.queryUserBasedOnID = function (user_id) {
     });
 };
 
+// query book object in db.Users with Books._id==book_id
 exports.queryBookinfoFromID = function (book_id) {
     return MongoClient.connect(mongodbUrl).then(function (db) {
         var books = db.collection('Books');
@@ -289,6 +273,8 @@ exports.queryBookinfoFromID = function (book_id) {
         return items;
     });
 };
+
+// insert new object to db.Books.chapters as {_id, title, content} with Books._id=book_id
 exports.insertNewChapterToABook = function (req, res) {
     var book_id = req.body.bookid[0];
     MongoClient.connect(mongodbUrl).then(function (db) {
@@ -314,6 +300,7 @@ exports.insertNewChapterToABook = function (req, res) {
     })
 };
 
+// query one chapter of Books.chapters with Books_id=bookId
 exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
     return MongoClient.connect(mongodbUrl).then(function (db) {
         var books = db.collection('Books');
@@ -328,7 +315,9 @@ exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
 };
 
 
-//insert one book to a user's subscription
+// insert new subscription to user
+// checking db.Books, find bookname of object with Books._id==book_id
+// finding Users object in db.Users with Users._id==user_id, insert new object {_id,bookId,bookname} to .subscriptions
 exports.insertNewSubscriptionToUser = function (user_id, book_id, req, res) {
     MongoClient.connect(mongodbUrl).then(function (db) {
         var users = db.collection('Users');
@@ -336,9 +325,7 @@ exports.insertNewSubscriptionToUser = function (user_id, book_id, req, res) {
         var bookname;
         books.findOne({'_id' : new ObjectId(book_id)})
             .then(function (item) {
-
                 bookname = (item.bookname);
-
                 users.findOneAndUpdate(
                     {'_id': new ObjectId(user_id)},
                     {
@@ -360,7 +347,8 @@ exports.insertNewSubscriptionToUser = function (user_id, book_id, req, res) {
     });
 };
 
-//delete one user's subscription
+// delete one subscription object from user
+// finding Users object in db.Users with Users._id==user_id, delete object.subscriptions with BookId==book_id
 exports.deleteSubscriptionFromUser = function (user_id, book_id, req, res) {
     MongoClient.connect(mongodbUrl).then(function (db) {
         var users = db.collection('Users');
