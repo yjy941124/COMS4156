@@ -18,23 +18,3 @@ $(document).ready(function () {
 
 });
 
-function getUserProfile(queryURL) {
-    $.ajax({
-        type: 'GET',
-        url: queryURL,
-        //data: JSON.stringify({"value" : privateKey}), // or JSON.stringify ({name: 'jonas'}),
-        success: function(data) {
-
-            console.log('here');
-            console.log(data);
-
-        }, error: function (err) {
-            console.log(err);
-        },
-        contentType: "application/json",
-        dataType: 'json'
-    });
-}
-
-
-

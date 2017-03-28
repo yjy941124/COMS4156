@@ -1,5 +1,6 @@
 <div id="container">
     This is the profile page.
+    <a href="/">Back to Home Page</a>
     <p hidden id="parse-user-id"><%=userID%></p>
     <p hidden id="parse-user-role"><%=userRole%></p>
     <% if (publication != undefined) {%>
@@ -7,18 +8,38 @@
         <p>Here is the book you published.</p>
         <table class="100%">
             <tr>
-                <</a>th>Book Name</th>
+                <th>Book Name</th>
 
 
             </tr>
             <% for(var i = 0; i < publication.length; i++) { %>
             <tr>
-                <th><%= publication[i].bookname.toString() %></th>
+                <th>
+                    <a href= <%= "/books/"+publication[i].book_id.toString() %>> <%= publication[i].bookname.toString()%></a></th>
+                </th>
             </tr>
             <% } %>
         </table>
     </div>
     <%}%>
 
+    <% if (subscription!= null){%>
     <p>Here is the book you subscribed.</p>
+
+    <table class="100%">
+        <tr>
+            <th>Book Name</th>
+
+
+        </tr>
+        <% for(var i = 0; i < subscription.length; i++) { %>
+        <tr>
+            <th>
+                <a href= <%= "/books/"+subscription[i].bookId.toString() %>> <%= subscription[i].bookname.toString()%></a></th>
+            </th>
+        </tr>
+        <% } %>
+    </table>
+
+    <%}%>
 </div>

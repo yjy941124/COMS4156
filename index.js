@@ -38,6 +38,7 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (obj, done) {
+
     console.log("deserializing " + obj);
     done(null, obj);
 });
@@ -131,30 +132,24 @@ app.use(function (req, res, next) {
 
 //===============ROUTES=================
 //displays our homepage
+//bug here
 app.get('/', function (req, res) {
     funct.queryAllBook().then(function (items) {
+
         var user = req.user;
+        //var userId=req.user._id;
+        //var user = funct.queryUserBasedOnID(userId);
         var bookIDs = [];
         var bookList = items;
-        //bookList is an array consisting of _id for each book in DB
         bookList.forEach(function (elem) {
-            //assert that each bookIDs element is typeof String
             bookIDs.push(elem._id.toString());
         });
-        /* bookList schema{
-         * _id
-         * bookname
-         * bookdes
-         * writerID
-         * writerName
-         */
         res.render('home', {
             user: user,
             bookList: bookList,
             bookIDs: bookIDs
         });
-        console.log("print bookIDs array in corresponding order: ");
-        console.log(bookIDs);
+
     }, function (err) {
         console.log("error occurs, details: " + err);
     });
@@ -181,6 +176,23 @@ app.post('/login', passport.authenticate('local-signin', {
     })
 );
 
+function renderHomeHelper(req, res) {
+    funct.queryAllBook().then(function (items) {
+        var user = req.user;
+        var bookIDs = [];
+        var bookList = items;
+        bookList.forEach(function (elem) {
+            bookIDs.push(elem._id.toString());
+        });
+        res.render('home', {
+            user: user,
+            bookList: bookList,
+            bookIDs: bookIDs
+        });
+    }, function (err) {
+        console.log("error occurs, details: " + err);
+    });
+}
 //logs user out of site, deleting them from the session, and returns to homepage
 app.get('/logout', function (req, res) {
     var name = req.user.username;
@@ -191,25 +203,53 @@ app.get('/logout', function (req, res) {
 });
 //render publish page
 app.get('/publish', function (req, res) {
-    res.render('publish');
+    if (req.user == null) {
+        renderHomeHelper(req, res);
+    }
+    else {
+        res.render('publish');
+    }
+
 });
 //writer publish a book
-app.post('/publishBook', funct.publishBook);
+app.post('/publishBook', function (req, res) {
+    if (req.user != null) {
+        funct.publishBook(req, res)
+            .then(function (book_id) {
+                res.redirect('books/'+book_id);
+            });
+
+    }
+    else {
+        renderHomeHelper(req, res);
+    }
+
+});
 //TODO look up query parameter. add get for each book.
 
+//0326 Yulong - bug fixed
+//since we add the function of editing bookinfo, then if we direct send user in the session
+//stuff displayed at profile page would still be exactly the same before edit
+//need to query the user again
 app.get('/profile/:userId', function (req, res) {
-
     var userId = req.params.userId;
     var userRole = req.user.role;
-    console.log('============');
-    funct.queryPublicationFromWriter(userId).then(function (publications) {
-        res.render('profile', {
-            userID: req.params.userId,
-            userRole: userRole,
-            publication: publications
+    //var user = req.user;
+    funct.queryUserBasedOnID(userId).then(function(item){
+        var user=item;
+        funct.queryPublicationFromWriter(userId).then(function(set){
+            console.log("publication is");
+            console.log("=================")
+            console.log(set.publication);
+            res.render('profile',{
+                userID:req.params.userId,
+                userRole:userRole,
+                publication: set.publication,
+                subscription: set.subscription,
+                user: user
+            });
         });
     });
-
 });
 
 /* since we have a render-for-all situation, I only render bookId to fetch all chapters */
@@ -217,14 +257,35 @@ app.get('/profile/:userId', function (req, res) {
  are subject to change.*/
 app.get('/books/:bookId', function (req, res) {
     var bookId = req.params.bookId;
-    funct.queryBookinfoFromID(bookId).then(function (item) {
-        res.render('chapters', {
-            bookID: bookId,
-            book: item
-        });
-    });
-});
+    var user = req.user;
+    if (typeof user == "undefined") {
+        //if user is anonymous
+        //fetch book from bookId
+        funct.queryBookinfoFromID(bookId).then(function (item) {
+            res.render('chapters', {
+                bookID: bookId,
+                book: item,
+                user: req.user
+            });
 
+
+        });
+
+    }
+    else {
+        var userId = req.user._id;
+        funct.queryBookinfoFromID(bookId).then(function (item) {
+            var book = item;
+            funct.queryUserBasedOnID(userId).then(function (user) {
+                res.render('chapters', {
+                    user: user,
+                    bookID: bookId,
+                    book: book
+                });
+            });
+        });
+    }
+});
 
 app.get('/books/:bookId/uploadNewChapter', function (req, res) {
     var bookID = req.params.bookId;
@@ -237,25 +298,45 @@ app.post('/service/uploadNewChapter', function (req, res) {
     funct.insertNewChapterToABook(req, res);
 });
 
+
 // update book information
+// bug here
 app.post('/books/:bookId/update', function (req, res) {
     var bookId = req.params.bookId;
-    funct.updateBookInfo(bookId,req.body,res);
+    var userId=req.user._id;
+    console.log("updating " + bookId + "'s bookinfo");
+    funct.updateBookInfo(bookId,userId,req.body, res);
 });
+
 
 app.get('/books/:bookId/:chapterIdx', function (req, res) {
     var chapterIdx = parseInt(req.params.chapterIdx);
     var bookId = req.params.bookId;
 
-    funct.queryOneChapterFromBook(chapterIdx, bookId).then(function(chapterInfos) {
+    funct.queryOneChapterFromBook(chapterIdx, bookId).then(function (chapterInfos) {
 
-        res.render('chapter',{
+        res.render('chapter', {
             chapter: chapterInfos[0],
             bookId: bookId,
             chapterIdx: chapterIdx,
             chapterMax: chapterInfos[1] - 1
         });
     })
+});
+
+//get method, user subscribe book
+app.get('/service/subscribeBook/:bookId', function (req, res) {
+    var userId = req.user._id;
+    var bookId = req.params.bookId;
+    funct.insertNewSubscriptionToUser(userId, bookId, req, res);
+});
+
+//get method, user unsubscribe book
+app.get('/service/unsubscribeBook/:bookId', function (req, res) {
+    var bookId = req.params.bookId;
+    var userId = req.user._id;
+
+    funct.deleteSubscriptionFromUser(userId, bookId, req, res);
 });
 
 //===============PORT=================

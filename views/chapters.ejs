@@ -1,17 +1,40 @@
+
 <div id="container">
     This is the chapter page.
-    <p id="parse-book-id"><%=bookID%></p>
-    <p>Book Title: <%=book.bookname%></p>
+    <a href="/">Back to Home Page</a>
+    <p hidden id="parse-book-id"><%=bookID%></p>
+    <p hidden id="parse-user"><%=user%>></p>
+    <p>Book: <%=book.bookname%></p>
     <p>Author: <%=book.writerName%></p>
+    <p hidden id="parse-author-id"><%=book.writerID%></p>
     <p>Genre: <% if(book.bookgenre!=null){%>
         <%= book.bookgenre.toString()%>
         <% } else {%> N/A  <% }%></p>
     <p>Book Description: <%=book.bookdes%></p>
 
+    <% if (user!=null){%>
+
+    <!--testing -->
+    <% var isSubscribed =false %>
+    <% if (user.subscriptions!=null){%>
+    <% for(var i = 0; i < user.subscriptions.length; i++) {%>
+    <% if (bookID==user.subscriptions[i].bookId){%>
+    <% isSubscribed=true}}}%>
+    <!-- use jQuery to subscribe or unsubscribe-->
+    <% if (isSubscribed==true){%>
+    <a id='unsubscribe-book' href='/' class='btn btn-default btn-md' role='button'>Unsubscribe this book</a>
+    <%}else{%>
+    <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe this book</a><br>
+    <%}%>
+    <%}%>
+
+    <%if (user != undefined) {%>
+    <%if (user._id == book.writerID) {%>
     <button id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md'> Edit Book Information </button><p></p>
 
     <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a>
-
+    <%}}%>
+    
     <table id='table-for-chapter-menu' class="100%">
         <thead>
         <tr>
@@ -49,11 +72,11 @@
                 </div>
                 <div class="modal-body">
                     <label>Book Name: </label>
-                    <input type="text" name="bookname" value="<%= book.bookname%>" />
+                    <input id="bookname" type="text" name="bookname" value="<%= book.bookname%>" />
                     <br></br>
 
                     <label>Book Description: </label>
-                    <textarea type="text" name="bookDescription"><%= book.bookdes%></textarea>
+                    <textarea id="bookDescription" type="text" name="bookDescription"><%= book.bookdes%></textarea>
                     <br></br>
 
                     <label>Book Genre: </label>
