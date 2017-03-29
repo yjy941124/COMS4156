@@ -1,9 +1,19 @@
 # COMS4156
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### Match 28 2017 - Yulong Qiao
+functions added:
+- publish page now have a *return to home* button
+
+comments added:
+- now every function of index.js and functions.js have proper comments
+- some Lines of Code intended for testing and debugging are deleted
+
 ### March 26 2017 - Yulong Qiao
 functions added:
 - book page now have a *return to home* button
+
+
 constrains added:
 - When a writer publish a new book or editing book infomation
   - **bookname** cannot be empty

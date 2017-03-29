@@ -130,15 +130,11 @@ app.use(function (req, res, next) {
  app.engine('handlebars', hbs.engine);
  app.set('view engine', 'handlebars');*/
 
-//===============ROUTES=================
-//displays our homepage
-//bug here
+// ===============ROUTES=================
+// homepage, display all books stored in database
 app.get('/', function (req, res) {
     funct.queryAllBook().then(function (items) {
-
         var user = req.user;
-        //var userId=req.user._id;
-        //var user = funct.queryUserBasedOnID(userId);
         var bookIDs = [];
         var bookList = items;
         bookList.forEach(function (elem) {
@@ -149,19 +145,17 @@ app.get('/', function (req, res) {
             bookList: bookList,
             bookIDs: bookIDs
         });
-
     }, function (err) {
         console.log("error occurs, details: " + err);
     });
 });
 
-//displays our signup page
+// display signin page, where you can either signin or signup a new account
 app.get('/signin', function (req, res) {
     res.render('signin');
 });
 
-//sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
-
+// sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
 app.post('/local-reg', function (req, res) {
     passport.authenticate('local-signup', {
         successRedirect: '/',
@@ -169,13 +163,14 @@ app.post('/local-reg', function (req, res) {
     })(req, res);
 });
 
-//sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page
+// sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page
 app.post('/login', passport.authenticate('local-signin', {
         successRedirect: '/',
         failureRedirect: '/signin'
     })
 );
 
+// helper function, called when render homepage
 function renderHomeHelper(req, res) {
     funct.queryAllBook().then(function (items) {
         var user = req.user;
@@ -193,7 +188,8 @@ function renderHomeHelper(req, res) {
         console.log("error occurs, details: " + err);
     });
 }
-//logs user out of site, deleting them from the session, and returns to homepage
+
+// logs user out of site, deleting them from the session, and returns to homepage
 app.get('/logout', function (req, res) {
     var name = req.user.username;
     console.log("LOGGIN OUT " + req.user.username);
@@ -201,7 +197,8 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
     req.session.notice = "You have successfully been logged out " + name + "!";
 });
-//render publish page
+
+// publish page, where user can publish new book
 app.get('/publish', function (req, res) {
     if (req.user == null) {
         renderHomeHelper(req, res);
@@ -209,28 +206,23 @@ app.get('/publish', function (req, res) {
     else {
         res.render('publish');
     }
-
 });
-//writer publish a book
+
+// when publish form is submitted, post method '/publishBook' is called.
 app.post('/publishBook', function (req, res) {
     if (req.user != null) {
         funct.publishBook(req, res)
             .then(function (book_id) {
                 res.redirect('books/'+book_id);
             });
-
     }
     else {
         renderHomeHelper(req, res);
     }
 
 });
-//TODO look up query parameter. add get for each book.
 
-//0326 Yulong - bug fixed
-//since we add the function of editing bookinfo, then if we direct send user in the session
-//stuff displayed at profile page would still be exactly the same before edit
-//need to query the user again
+// profile page, where user can check books published by him/her and books subscribed by him/her
 app.get('/profile/:userId', function (req, res) {
     var userId = req.params.userId;
     var userRole = req.user.role;
@@ -238,9 +230,6 @@ app.get('/profile/:userId', function (req, res) {
     funct.queryUserBasedOnID(userId).then(function(item){
         var user=item;
         funct.queryPublicationFromWriter(userId).then(function(set){
-            console.log("publication is");
-            console.log("=================")
-            console.log(set.publication);
             res.render('profile',{
                 userID:req.params.userId,
                 userRole:userRole,
@@ -258,9 +247,8 @@ app.get('/profile/:userId', function (req, res) {
 app.get('/books/:bookId', function (req, res) {
     var bookId = req.params.bookId;
     var user = req.user;
+    // if user is anonymous
     if (typeof user == "undefined") {
-        //if user is anonymous
-        //fetch book from bookId
         funct.queryBookinfoFromID(bookId).then(function (item) {
             res.render('chapters', {
                 bookID: bookId,
@@ -272,6 +260,7 @@ app.get('/books/:bookId', function (req, res) {
         });
 
     }
+    // if user is registered
     else {
         var userId = req.user._id;
         funct.queryBookinfoFromID(bookId).then(function (item) {
@@ -287,6 +276,7 @@ app.get('/books/:bookId', function (req, res) {
     }
 });
 
+// get method called when user wants to upload new chapter, render uploadNewChapter.ejs
 app.get('/books/:bookId/uploadNewChapter', function (req, res) {
     var bookID = req.params.bookId;
     res.render('uploadNewChapter', {
@@ -294,13 +284,13 @@ app.get('/books/:bookId/uploadNewChapter', function (req, res) {
     });
 });
 
+// function insertNewChapterToABook called, when new chapter is inserted to database, and user is redirected to chapters page
 app.post('/service/uploadNewChapter', function (req, res) {
     funct.insertNewChapterToABook(req, res);
 });
 
 
-// update book information
-// bug here
+// function updateBookInfo called, attributes of one book in database is altered, and user is redirected to chapters page
 app.post('/books/:bookId/update', function (req, res) {
     var bookId = req.params.bookId;
     var userId=req.user._id;
@@ -308,7 +298,7 @@ app.post('/books/:bookId/update', function (req, res) {
     funct.updateBookInfo(bookId,userId,req.body, res);
 });
 
-
+// display chapter content in one book
 app.get('/books/:bookId/:chapterIdx', function (req, res) {
     var chapterIdx = parseInt(req.params.chapterIdx);
     var bookId = req.params.bookId;
@@ -324,18 +314,17 @@ app.get('/books/:bookId/:chapterIdx', function (req, res) {
     })
 });
 
-//get method, user subscribe book
+// user subscribe book, add item to user.subscription in database
 app.get('/service/subscribeBook/:bookId', function (req, res) {
     var userId = req.user._id;
     var bookId = req.params.bookId;
     funct.insertNewSubscriptionToUser(userId, bookId, req, res);
 });
 
-//get method, user unsubscribe book
+//get method, user unsubscribe book, delete item in user.subscription in database
 app.get('/service/unsubscribeBook/:bookId', function (req, res) {
     var bookId = req.params.bookId;
     var userId = req.user._id;
-
     funct.deleteSubscriptionFromUser(userId, bookId, req, res);
 });
 
