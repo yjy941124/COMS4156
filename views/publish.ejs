@@ -2,7 +2,7 @@
 <form id="publish-book"  action="/publishBook" method="post">
     <div>
         <label>Book Name:</label>
-        <input type="text" name="bookname"/>
+        <input id="book-name" type="text" name="bookname"/>
     </div>
     <div>
         <label>Book Description:</label>
@@ -23,7 +23,8 @@
         <input id = "bg_other" type = "checkbox" name = "bookGenre" value="Other"/>Other
     </div>
     <div>
-        <input id="submit-publish-form" type="submit" class="btn btn-primary btn-sm" value="Publish!"/>
+        <input id="submit-publish-form" type="submit" class="btn btn-primary btn-sm"
+               onclick="return empty()" value="Publish!"/>
     </div>
 
 </form>
