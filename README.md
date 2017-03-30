@@ -1,7 +1,14 @@
 # COMS4156
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
-### Match 28 2017 - Yulong Qiao
+### March 30 2017 - Jinyang Yu
+bug fix:
+- Cannot publish/edit an empty book name.
+
+TODO:
+- Add types of alerts.
+
+### March 28 2017 - Yulong Qiao
 functions added:
 - publish page now have a *return to home* button
 
@@ -13,7 +20,6 @@ comments added:
 functions added:
 - book page now have a *return to home* button
 
-
 constrains added:
 - When a writer publish a new book or editing book infomation
   - **bookname** cannot be empty
@@ -22,10 +28,6 @@ constrains added:
 
 big bug fixed and multiple functions modified - the update bookinfo bug, you might have to db.dropDatabase() to verify it.
 - after editing book info, the book infos shown at homepage and profile page are synced, and displayed correctly
-
-
-
-
 
 ### March 25 2017 - Jinyang Yu
 Iteration 1 is almost done!
