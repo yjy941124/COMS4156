@@ -299,7 +299,7 @@ app.post('/books/:bookId/update', function (req, res) {
 });
 
 // display chapter content in one book
-app.get('/books/:bookId/:chapterIdx', function (req, res) {
+app.get('/books/:bookId/chapter/:chapterIdx', function (req, res) {
     var chapterIdx = parseInt(req.params.chapterIdx);
     var bookId = req.params.bookId;
 

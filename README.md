@@ -1,6 +1,19 @@
 # COMS4156
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### March 30 2017 - Yulong Qiao & Ruijue Ji
+Last Day of Iteration 1, today's modifications:
+
+bug fixed:
+- two app.get() method in *index.js*: app.get('/books/:bookId/:chapterIdx') and app.get('/books/:bookId/uploadNewChapter') may **confuse** each other, rendering wrong page.
+Now the uploadNewChapter address change to '/books/:bookId/chapter/:chapterIdx', I think it's time to make rules that no two ':params' can be put adjacent to each other
+
+functions added:
+- former question: receive 404 when including js with src="../public/js/publish.js", fixed with src="../../public/js/publish.js"
+- to get rid redundant code
+  - every non-empty input tags a class "publish-non-empty" 
+  - every ejs with some non-empty inputs subscribes to publish.js 
+
 ### March 30 2017 - Jinyang Yu
 bug fix:
 - Cannot publish/edit an empty book name.

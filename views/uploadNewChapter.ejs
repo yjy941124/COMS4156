@@ -1,19 +1,18 @@
+<a href=<%="/books/"+bookID%>>Back to this book's page</a>
 <p>Here you can upload a new chapter to your book</p>
 <form id="chapter-form" action="/service/uploadNewChapter" method="post">
     <div>
         <label>title:</label>
-        <input type="text" name="title"/>
+        <input class="publish-non-empty" id="chapter-title-input" type="text" name="title"/>
     </div>
     <div>
         <label>Content:</label>
         <textarea type="text" name="chapterContent"/></textarea>
     </div>
     <div>
-
         <input type="hidden" name="bookid" value="<%=bookID%>"/>
+        <input hidden type="text" name="bookid">
+        <input id="new-chapter-submit" type="submit" onclick="return empty()" class="btn btn-primary btn-sm" value="ChapterPublish"/>
     </div>
-    <div>
-        <input type="submit" class="btn btn-primary btn-sm" value="ChapterPublish"/>
-    </div>
-    <input hidden type="text" name="bookid">
 </form>
+<script type="text/javascript" src="../../public/js/publish.js" defer></script>
