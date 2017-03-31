@@ -55,7 +55,7 @@
             <th>
                 <% var chapterID= book.chapters[i].toString() %>
                 <p hidden id="parse-book-id"><%=bookID%></p>
-                <a href= <%= "/books/"+bookID +'/'+i %>> <%= book.chapters[i].title%></a></th>
+                <a href= <%= "/books/"+bookID +'/chapter/'+i %>> <%= book.chapters[i].title%></a></th>
         </tr>
         <% }} %>
         </tbody>
