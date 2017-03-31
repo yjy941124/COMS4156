@@ -32,7 +32,8 @@ function empty() {
     for (var i=0;i<document.getElementsByClassName('publish-non-empty').length;i++) {
         x = document.getElementsByClassName('publish-non-empty')[i].value;
         if (x == "") {
-            alert("Some fields can not be left empty");
+            // alert("Some fields can not be left empty");
+            $('.alert').show();
             return false;
         }
     }
