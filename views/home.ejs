@@ -4,6 +4,7 @@
         border-collapse: collapse;
     }
 </style>
+
 <div class="container">
     <% if (user != null) { %>
     <p hidden id="parse-user"><%= (user.role).toString() %></p>
@@ -56,13 +57,14 @@
         <p>You can <a href="/logout">Log Out</a> here.</p>
 
     </div>
-    <div id="publish-page"></div>
     <div id="profile">
         <a id="profile-redirect-url" href="/profile" class="btn btn-primary btn-lg" role="button">
             <span class="glyphicon glyphicon-user"></span>
-            Profile Page
+                Profile Page
         </a>
     </div>
+    <p></p>
+    <div id="publish-page"></div>
     <p hidden id="parse-user-id"><%= (user._id) %></p>
     <!--Don't implement now, maybe useful for later features.
   <div class="panel panel-default">
@@ -92,7 +94,7 @@
     <div id="render-for-all">
         <h1>Welcome to Forever Read</h1>
         <p>You can view books here!</p>
-        <table class="100%">
+        <table class="100%" id = "book-table">
             <thead>
             <tr>
                 <th>Book Name</th>
@@ -123,4 +125,4 @@
 </div>
 
 <script type="text/javascript" src="../public/js/home.js" defer></script>
-
+<link href="../public/css/home.css" rel="stylesheet" type="text/css">

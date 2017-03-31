@@ -1,0 +1,23 @@
+#render-for-all{
+    text-align: center;
+}
+
+.h1{
+    text-align: center;
+}
+
+#book-table{
+    margin: auto;
+}
+
+#publish-page{
+    text-align: center;
+}
+
+#profile{
+    text-align: center
+}
+
+#publish-profile{
+    margin-inside: 20px;
+}
