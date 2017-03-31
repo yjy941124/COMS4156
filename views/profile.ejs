@@ -1,12 +1,14 @@
 <div id="container">
-    This is the profile page.
-    <a href="/">Back to Home Page</a>
+    <h1 id = "profile-title">Profile Page</h1>
+    <p></p>
+    <a href="/" id = "back">Back to Home Page</a>
     <p hidden id="parse-user-id"><%=userID%></p>
     <p hidden id="parse-user-role"><%=userRole%></p>
     <% if (publication != undefined) {%>
+    <br></br>
     <div id="publication-list">
-        <p>Here is the book you published.</p>
-        <table class="100%">
+        <p id = "s1">Here is the book you published:</p>
+        <table class="100%" id = "book-table">
             <tr>
                 <th>Book Name</th>
 
@@ -26,7 +28,7 @@
     <% if (subscription!= null){%>
     <p>Here is the book you subscribed.</p>
 
-    <table class="100%">
+    <table class="100%" id = "subscribed-book-table">
         <tr>
             <th>Book Name</th>
 
@@ -43,3 +45,6 @@
 
     <%}%>
 </div>
+
+<link href="../public/css/profile.css" rel="stylesheet" type="text/css">
+
