@@ -21,3 +21,11 @@ $(document).ready(function () {
             e.preventDefault();
     });
 });
+function empty() {
+    var x;
+    x = document.getElementById("book-name").value;
+    if (x == "") {
+        alert("Book name cannot be empty!");
+        return false;
+    }
+}

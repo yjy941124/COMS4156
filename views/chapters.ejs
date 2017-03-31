@@ -72,7 +72,7 @@
                 </div>
                 <div class="modal-body">
                     <label>Book Name: </label>
-                    <input id="bookname" type="text" name="bookname" value="<%= book.bookname%>" />
+                    <input id="book-name" type="text" name="bookname" value="<%= book.bookname%>" />
                     <br></br>
 
                     <label>Book Description: </label>
@@ -106,8 +106,9 @@
                     <%}%>
                 </div>
                 <div class="modal-footer">
-                    <input type = "submit" id = "save_bookchange" class = 'btn btn-default btn-sm' value="Save Changes"/>
+                    <input type = "submit" id = "save_bookchange" onclick="return empty()" class = 'btn btn-default btn-sm' value="Save Changes"/>
                     <input type = "button" id = "cancel_bookchange" class = 'btn btn-default btn-sm' value="Cancel"/>
+
 
                 </div>
             </div>
