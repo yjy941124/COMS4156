@@ -1,5 +1,11 @@
 <h1 id = "title">Upload New Chapter</h1>
 <a id = "back" href=<%="/books/"+bookID%>>Back to this book's page</a>
+<div class="container">
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        Some field can not be left empty
+    </div>
+</div>
 <p>Here you can upload a new chapter to your book</p>
 <form id="chapter-form" action="/service/uploadNewChapter" method="post">
     <div>
@@ -18,5 +24,4 @@
 </form>
 
 <script type="text/javascript" src="../../public/js/publish.js" defer></script>
-
-<link href="../public/css/uploadNewChapter.css" rel="stylesheet" type="text/css">
+<link href="../../public/css/uploadNewChapter.css" rel="stylesheet" type="text/css">
