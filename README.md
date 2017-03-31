@@ -16,6 +16,7 @@ functions added:
 
 UI improvement:
 - web frontend UI improved a lot!
+- instead of direct poping-up alert, *uploadNewChapter* and *publish* now have bootstrap alert, leaving signin web business to discuss
 
 ### March 30 2017 - Jinyang Yu
 bug fix:
