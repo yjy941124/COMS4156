@@ -200,7 +200,7 @@ app.get('/logout', function (req, res) {
 
 // publish page, where user can publish new book
 app.get('/publish', function (req, res) {
-    if (req.user == null) {
+    if (req.user.role != "writer") {
         renderHomeHelper(req, res);
     }
     else {
