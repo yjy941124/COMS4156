@@ -1,4 +1,5 @@
-<a href=<%="/books/"+bookID%>>Back to this book's page</a>
+<h1 id = "title">Upload New Chapter</h1>
+<a id = "back" href=<%="/books/"+bookID%>>Back to this book's page</a>
 <p>Here you can upload a new chapter to your book</p>
 <form id="chapter-form" action="/service/uploadNewChapter" method="post">
     <div>
@@ -15,4 +16,7 @@
         <input id="new-chapter-submit" type="submit" onclick="return empty()" class="btn btn-primary btn-sm" value="ChapterPublish"/>
     </div>
 </form>
+
 <script type="text/javascript" src="../../public/js/publish.js" defer></script>
+
+<link href="../public/css/uploadNewChapter.css" rel="stylesheet" type="text/css">
