@@ -12,7 +12,10 @@ functions added:
 - former question: receive 404 when including js with src="../public/js/publish.js", fixed with src="../../public/js/publish.js"
 - to get rid redundant code
   - every non-empty input tags a class "publish-non-empty" 
-  - every ejs with some non-empty inputs subscribes to publish.js 
+  - every ejs with some non-empty inputs subscribes to publish.js
+
+UI improvement:
+- web frontend UI improved a lot!
 
 ### March 30 2017 - Jinyang Yu
 bug fix:
