@@ -38,7 +38,7 @@ describe('Books', function () {
 describe('Users', function () {
     describe('#Sign up', function () {
         it("signs up a new user", function () {
-            funct.localReg('testwriter','testwriter','writer');
+            funct.localReg('testwriter1','testwriter','writer');
             MongoClient.connect(mongodbUrl).then(function (db) {
                 var users = db.collection('Users');
                 users.findOne({
@@ -50,6 +50,18 @@ describe('Users', function () {
     describe('#Sign in', function () {
         it("signs in an old user", function () {
             funct.localAuth('testwriter','testwriter');
+        })
+    });
+    describe('#Subscribe', function () {
+        it("Subscribes a book", function () {
+            var subscription = false;
+            expect(unitfunc.subscribeBook(subscription)).to.equal(true);
+        })
+    });
+    describe('#Unsubscribe', function () {
+        it("Unsubscribes a book", function () {
+            var subscription = true;
+            expect(unitfunc.unsubscribeBook(subscription)).to.equal(false);
         })
     });
 });
