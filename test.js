@@ -9,6 +9,8 @@ var funct = require("./functions");
 var mongodbUrl = 'mongodb://' + config.mongodbHost + ':27017/test';
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
+var request = require('request');
+
 
 describe('Books', function () {
     describe('#PublishNewBook', function () {
@@ -49,6 +51,18 @@ describe('Users', function () {
         it("signs in an old user", function () {
             funct.localAuth('testwriter','testwriter');
         })
+    });
+});
+
+describe("Integration test",function() {
+    describe("render homepage", function () {
+        var url = "http://localhost:5000";
+        it("returns status code 200", function () {
+            request(url, function (error, response, body) {
+                expect(response.statusCode).to.equal(200);
+                done();
+            })
+        });
     });
 });
 
