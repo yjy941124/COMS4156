@@ -21,3 +21,15 @@ exports.publishChapter = function(chpname,chpcontent, writerID, writerName) {
     };
     return chapter;
 };
+
+
+exports.updateBookInfo = function(book){
+    book.bookname = 'testbookname';
+    return book;
+};
+
+
+// Integration Test
+exports.publishBook = function(){
+
+}
