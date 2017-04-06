@@ -9,6 +9,7 @@
   "dependencies": {
     "bcryptjs": "^0.7.12",
     "body-parser": "*",
+    "chai": "^3.5.0",
     "cookie-parser": "^1.4.3",
     "ejs": "^2.5.5",
     "express": "*",
@@ -16,6 +17,7 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.1",
     "method-override": "^2.3.7",
+    "mocha": "^3.2.0",
     "mongodb": "^2.2.11",
     "morgan": "^1.8.1",
     "passport": "^0.2.0",
@@ -23,6 +25,7 @@
     "passport-google": "^0.3.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.2",
-    "q": "^1.0.1"
+    "q": "^1.0.1",
+    "request": "^2.81.0"
   }
 }
