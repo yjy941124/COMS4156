@@ -26,6 +26,7 @@
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.2",
     "q": "^1.0.1",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "sinon": "^2.1.0"
   }
 }
