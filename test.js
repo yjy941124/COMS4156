@@ -14,10 +14,19 @@ describe('Books', function () {
             expect(book.bookname).to.equal('a');
         })
     });
-    describe('#EditBook', function () {
-        it("edits book info", function () {
+    describe('#PublishNewChapter', function () {
+        it("publishes a new chapter", function () {
             var chapter = unitfunc.publishChapter('a', 'b', 'c', 'd');
             expect(chapter.chpname).to.equal('a');
         })
-    })
+    });
+
 });
+describe('Users', function () {
+    describe('#Sign up', function () {
+        it("signs up a new user", function () {
+            funct.localReg('testwriter','testwriter','writer');
+
+        })
+    })
+})
