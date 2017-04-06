@@ -23,8 +23,8 @@ exports.publishChapter = function(chpname,chpcontent, writerID, writerName) {
 };
 
 
-exports.updateBookInfo = function(book){
-    book.bookname = 'testbookname';
+exports.updateBookInfo = function(book, editedbookname){
+    book.bookname = editedbookname;
     return book;
 };
 

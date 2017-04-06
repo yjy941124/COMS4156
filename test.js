@@ -23,6 +23,14 @@ describe('Books', function () {
             expect(chapter.chpname).to.equal('a');
         })
     });
+    describe('#EditBookInfo', function () {
+        it("Edits a book's info", function () {
+            var book = unitfunc.publishBook('a','b','c','d','e');
+            var newbook = unitfunc.updateBookInfo(book,'editedname');
+            expect(newbook.bookname).to.equal('editedname');
+        })
+    });
+    
 
 });
 describe('Users', function () {
@@ -33,16 +41,15 @@ describe('Users', function () {
                 var users = db.collection('Users');
                 users.findOne({
                     'username': 'testwriter'
-                }).then(function (user) {
-                    expect(user.username).to.equal('testwriter');
                 })
             })
         })
     });
     describe('#Sign in', function () {
         it("signs in an old user", function () {
-
+            funct.localAuth('testwriter','testwriter');
         })
-    })
+    });
 });
+
 
