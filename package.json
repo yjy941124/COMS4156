@@ -4,7 +4,8 @@
   "description": "COMS4156 Final Project",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "mocha"
   },
   "dependencies": {
     "bcryptjs": "^0.7.12",
