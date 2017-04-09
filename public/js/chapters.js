@@ -28,7 +28,4 @@ $(document).ready(function () {
     // $(document).on("click", "#cancel_bookchange", function(){
     //     $('#bookinfo_modal').css("display","none");
     // });
-    $('.modal').on('hidden.bs.modal', function(){
-        $(this).find('form')[0].reset();
-    });
 });
