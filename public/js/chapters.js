@@ -12,44 +12,20 @@ $(document).ready(function () {
     var updateBookInfoUrl = '/books/' + book_id + '/update';
     $('#edit-book-info').attr("action", updateBookInfoUrl);
     /* Open and Close Edit Book Info Panel */
-    $(document).on("click", "#editbook_btn", function(){
-        $('#bookinfo_modal').css("display","block");
-    });
-    $(document).on("click", "#close", function(){
-        $('#bookinfo_modal').css("display","none");
-    });
-    // $(document).on("click", "#save_bookchange", function(){
+    // Problem: since js now only choose to display modal css or hide modal css
+    // pick a scene: if user edit book info, empty bookname, then click submit, then click cancel
+    // then go back to edit bookinfo again, the bookname will be empty
+    // Problem: in collaboration with publish.js: the alert banner won't show up multiple times
+    // $(document).on("click", "#editbook_btn", function(){
+    //     $('#bookinfo_modal').css("display","block");
+    // });
+    // // $(document).on("click", "#close", function(){
+    // //     $('#bookinfo_modal').css("display","none");
+    // // });
+    // // $(document).on("click", "#save_bookchange", function(){
+    // //     $('#bookinfo_modal').css("display","none");
+    // // });
+    // $(document).on("click", "#cancel_bookchange", function(){
     //     $('#bookinfo_modal').css("display","none");
     // });
-    $(document).on("click", "#cancel_bookchange", function(){
-        $('#bookinfo_modal').css("display","none");
-    });
-    $('#save_bookchange').click(function(e) {
-        var isValid = true;
-        $('input[type="text"]').each(function() {
-            if ($.trim($(this).val()) == '') {
-                isValid = false;
-                $(this).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-            }
-            else {
-                $(this).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-        });
-        if (isValid == false)
-            e.preventDefault();
-    });
 });
-function empty() {
-    var x;
-    x = document.getElementById("book-name").value;
-    if (x == "") {
-        alert("Book name cannot be empty!");
-        return false;
-    }
-}
