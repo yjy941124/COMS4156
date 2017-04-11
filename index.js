@@ -327,6 +327,11 @@ app.get('/service/unsubscribeBook/:bookId', function (req, res) {
     var userId = req.user._id;
     funct.deleteSubscriptionFromUser(userId, bookId, req, res);
 });
+app.get('/service/deleteBook/:bookId', function (req, res) {
+    var book_id = req.param.bookId;
+    funct.deleteBook(book_id);
+    res.send('book has been deleted!');
+});
 
 //===============PORT=================
 var port = process.env.PORT || 5000;
