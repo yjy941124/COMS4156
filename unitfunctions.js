@@ -27,8 +27,14 @@ exports.updateBookInfo = function(book, editedbookname){
     book.bookname = editedbookname;
     return book;
 };
-
-
+exports.subscribeBook = function (subscription) {
+    subscription = true;
+    return subscription;
+};
+exports.unsubscribeBook = function (subscription) {
+    subscription = false;
+    return subscription;
+};
 // Integration Test
 exports.publishBookIntegration = function(){
 

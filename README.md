@@ -1,5 +1,20 @@
-# COMS4156
+# COMS4156 [![Build Status](https://travis-ci.org/yjy941124/Forever-Read.svg?branch=master)](https://travis-ci.org/yjy941124/Forever-Read)
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
+
+### April 8 2017 - Yulong Qiao
+- Revised logic of all non-empty publish process, include uploadNewChapter, edit bookinfo and publish new book(all subscribed to publish.js)
+- Complete modal - alert - border part
+### April 7 2017 -  Yulong Qiao 
+First day after Iteration 1 demo:
+- functions added:
+  - within editbook information, the nonempty alert is setup
+- problem spotted and functions revised:
+  - at chapters.ejs, problems within modal:
+    - when edit book info, when someone enter an empty bookname, click submit, he/she will receive a nonempty alert, then he clicked cancel, then back to edit bookinfo again, then content in modal will be what he edit before(empty bookname with alert and red border)[**PARTIALLY FIXED**]
+
+TODO:
+- ~~fixed the whole modal - alert - border issue~~
+- find a way to save content spacing and forms, maybe turn to Quill
 
 ### March 30 2017 - Yulong Qiao & Ruijue Ji
 Last Day of Iteration 1, today's modifications:

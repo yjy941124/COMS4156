@@ -10,3 +10,7 @@
 #table-for-chapter-menu{
     margin: auto;
 }
+
+.alert{
+    display: none;
+}

@@ -31,7 +31,7 @@
 
     <%if (user != undefined) {%>
     <%if (user._id == book.writerID) {%>
-    <button id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md'> Edit Book Information </button><p></p>
+    <button type="button" id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md' data-toggle="modal" data-target="#bookinfo_modal"> Edit Book Information </button><p></p>
 
     <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><p></p>
     <%}}%>
@@ -63,17 +63,23 @@
     </table>
 
     <!--Edit Book Information Modal-->
-    <form id="edit-book-info" action="/service" method="post">
 
-        <div id = "bookinfo_modal" name = "book_modal" class = "modal">
+        <div id = "bookinfo_modal" name = "book_modal" class = "modal fade">
+            <form id="edit-book-info" action="/service" method="post">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span class="close" id="close">&times;</span>
+                    <div class="container">
+                        <div id="non-empty-alert" class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-hide="alert">&times;</button>
+                            Some field can not be left empty
+                        </div>
+                    </div>
+                    <!--<span class="close" id="close">x</span>-->
                     <h2>Edit Book Information</h2>
                 </div>
                 <div class="modal-body">
                     <label>Book Name: </label>
-                    <input id="book-name" type="text" name="bookname" value="<%= book.bookname%>" />
+                    <input type="text" class="publish-non-empty" id="book-name" type="text" name="bookname" value="<%= book.bookname%>" />
                     <br></br>
 
                     <label>Book Description: </label>
@@ -108,14 +114,14 @@
                 </div>
                 <div class="modal-footer">
                     <input type = "submit" id = "save_bookchange" onclick="return empty()" class = 'btn btn-default btn-sm' value="Save Changes"/>
-                    <input type = "button" id = "cancel_bookchange" class = 'btn btn-default btn-sm' value="Cancel"/>
-
-
+                    <button type="button" id = "cancel_bookchange" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
+            </form>
 
         </div>
-    </form>
+    <!--</form>-->
 </div>
 <script type="text/javascript" src="../public/js/chapters.js" defer></script>
+<script type="text/javascript" src="../public/js/publish.js" defer></script>
 <link href="../public/css/chapters.css" rel="stylesheet" type="text/css">
