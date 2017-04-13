@@ -1,7 +1,9 @@
 /* chapters */
 var book_idForFunction;
+var bookid;
 $(document).ready(function () {
     var book_id=$("#parse-book-id").html();
+    bookid = book_id;
     book_idForFunction = book_id;
     var uploadChapterUrl = '/books/' + book_id + '/uploadNewChapter';
     var subscribeBookUrl='/service/' + 'subscribeBook/' + book_id ;
@@ -28,4 +30,19 @@ $(document).ready(function () {
     // $(document).on("click", "#cancel_bookchange", function(){
     //     $('#bookinfo_modal').css("display","none");
     // });
+
 });
+function deletebook() {
+    $.ajax({
+        type: 'GET',
+        url: '/service/deleteBook/'+bookid,
+        success: function(res) {
+            window.location.href = '/';
+
+        }, error: function (err) {
+            console.log(err);
+        },
+        contentType: "application/json",
+        dataType: 'text'
+    });
+}

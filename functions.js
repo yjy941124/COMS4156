@@ -387,17 +387,19 @@ exports.deleteSubscriptionFromUser = function (user_id, book_id, req, res) {
     });
 };
 exports.deleteBook = function (book_id) {
-    MongoClient.connect(mongodbUrl).then(function (db) {
+
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+
         var books = db.collection('Books');
         var users = db.collection('Users');
-        users.find(
-            {"subscriptions.$.bookId" : book_id},
-            {$pull: {
-                subscriptions: {
-                    bookId : book_id
-                }
-            }}
-        )
+        users.updateMany(
+            {},
+            {$pull:{"subscriptions":{"bookId":book_id.toString()},
+                "publication":{"book_id":new ObjectId(book_id)}}},
+            {upsert: true}
+        ).then(function () {
+            books.deleteOne({"_id" : new ObjectId(book_id)});
+        })
     })
 };
 
