@@ -1,5 +1,8 @@
 
 <div id="chapter">
+    <p hidden id="parse-book-id"><%=bookId%></p>
+    <p hidden id="parse-chapter-id"><%=chapterId%></p>
+
     <label id="title">Title: <%=chapter.title%></label>
     <br>
     <label id="content">Content: <%=chapter.content%></label>
@@ -10,7 +13,12 @@
     <%if (parseInt(chapterIdx) != chapterMax) {%>
     <a href= <%= "/books/"+ bookId + '/chapter/' + (parseInt(chapterIdx) + 1).toString()%>>Next Chapter</a>
     <%}%>
+    <%if (user != null) {%>
+    <%if (user.role == "admin" || user.role == "writer") {%>
+    <button type="button" id = "delete-chapter" class='btn btn-default btn-md' onclick="deleteChapter()"> Delete this chapter </button><p></p><button type="button" id = "delete-book" class='btn btn-default btn-md' onclick="deletebook(bookID)"> Edit Book Information </button><p></p>
+    <%}}%>
+
 </div>
 
-
-<link href="../public/css/chapter.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/public/js/chapter.js" defer></script>
+<link href="/public/css/chapter.css" rel="stylesheet" type="text/css">

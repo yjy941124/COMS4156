@@ -1,6 +1,24 @@
 # COMS4156 [![Build Status](https://travis-ci.org/yjy941124/Forever-Read.svg?branch=master)](https://travis-ci.org/yjy941124/Forever-Read)
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### April 13 2017 - Jinyang Yu
+- Finish Admin mode
+- Get a fundamental UI for nav-bar.
+- Add rank and category display
+TODO:
+- Commenting
+- Rank
+- Category
+- Previous readme
+### April 12 2017 - Jinyang Yu
+- Add admin mode.
+- Admin is created directly through mongodb - there is no sign up page for admin. 
+- Admin can delete entire book.
+
+TODO:
+- ~~~Admin can delete chapters.~~~
+- Edit chapters.
+
 ### April 8 2017 - Yulong Qiao
 - Revised logic of all non-empty publish process, include uploadNewChapter, edit bookinfo and publish new book(all subscribed to publish.js)
 - Complete modal - alert - border part
