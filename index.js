@@ -255,10 +255,7 @@ app.get('/books/:bookId', function (req, res) {
                 book: item,
                 user: req.user
             });
-
-
         });
-
     }
     // if user is registered
     else {
@@ -302,11 +299,13 @@ app.post('/books/:bookId/update', function (req, res) {
 app.get('/books/:bookId/chapter/:chapterIdx', function (req, res) {
     var chapterIdx = parseInt(req.params.chapterIdx);
     var bookId = req.params.bookId;
-
+    var user = req.user;
     funct.queryOneChapterFromBook(chapterIdx, bookId).then(function (chapterInfos) {
 
         res.render('chapter', {
+            user : user,
             chapter: chapterInfos[0],
+            chapterId : chapterInfos[0]._id,
             bookId: bookId,
             chapterIdx: chapterIdx,
             chapterMax: chapterInfos[1] - 1
@@ -332,7 +331,14 @@ app.get('/service/deleteBook/:bookId', function (req, res) {
     funct.deleteBook(book_id).then(function () {
         res.send('book has been deleted!');
     });
-
+});
+app.get('/service/deleteChapter/:bookId/:chapterId', function (req, res) {
+    console.log('here');
+    var book_id = req.params.bookId;
+    var chapter_id = req.params.chapterId;
+    funct.deleteChapterFromOneBook(book_id, chapter_id).then(function () {
+        res.send('this chapter has been deleted');
+    })
 });
 
 //===============PORT=================

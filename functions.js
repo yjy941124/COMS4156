@@ -205,18 +205,18 @@ exports.updateBookInfo = function (book_Id, user_Id, info, res) {
             )
         })
             .then(function () {
-            books.updateOne(
-                {"_id": new ObjectId(book_Id)},
-                {
-                    $set: {
-                        "bookname": new_bookname, "bookdes": new_bookdes, "bookgenre": new_bookGenre
+                books.updateOne(
+                    {"_id": new ObjectId(book_Id)},
+                    {
+                        $set: {
+                            "bookname": new_bookname, "bookdes": new_bookdes, "bookgenre": new_bookGenre
+                        }
                     }
-                }
-            )
-                .then(function (res) {
-                db.close();
-            });
-        })
+                )
+                    .then(function (res) {
+                        db.close();
+                    });
+            })
     });
     res.redirect('/books/' + book_Id);
 };
@@ -326,7 +326,6 @@ exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
                 return [result.chapters[chapterIdx], result.chapters.length];
             })
     }).then(function (item) {
-
         return item;
     })
 };
@@ -394,32 +393,29 @@ exports.deleteBook = function (book_id) {
         var users = db.collection('Users');
         users.updateMany(
             {},
-            {$pull:{"subscriptions":{"bookId":book_id.toString()},
-                "publication":{"book_id":new ObjectId(book_id)}}},
+            {
+                $pull: {
+                    "subscriptions": {"bookId": book_id.toString()},
+                    "publication": {"book_id": new ObjectId(book_id)}
+                }
+            },
             {upsert: true}
         ).then(function () {
-            books.deleteOne({"_id" : new ObjectId(book_id)});
+            books.deleteOne({"_id": new ObjectId(book_id)});
+        }).then(function () {
+            db.close();
         })
     })
 };
 
-/*.then(function () {
-    users.updateOne(
-        {"subscriptions.$.bookId": book_id},
-        {
-            $pull: {
-                subscriptions: {
-                    bookId: book_id
-                }
-            }
-        },
-        {upsert: true})
-})
-    .then(function () {
-        books.deleteOne(
-            {"_id" : new ObjectId(book_id)}
-        )
-    })*/
-
-
-
+exports.deleteChapterFromOneBook = function (book_id, chapter_id) {
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+        var books = db.collection('Books');
+        books.updateOne(
+            {"_id": new ObjectId(book_id)},
+            {$pull: {"chapters": {"_id": new ObjectId(chapter_id)}}}
+        ).then(function () {
+            db.close();
+        })
+    })
+};
