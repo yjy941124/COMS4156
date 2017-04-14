@@ -3,92 +3,78 @@
         border: 1px solid black;
         border-collapse: collapse;
     }
+    html, body { margin: 0; padding: 0 }
 </style>
+<body>
 
-<div class="container">
-    <% if (user != null) { %>
-    <p hidden id="parse-user"><%= (user.role).toString() %></p>
-    <% } %>
-    <!--nav bar do not render right now-->
-    <!--<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Forever Read</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Rank</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Comedy</a></li>
+                            <li><a href="#">Crime</a></li>
+                            <li><a href="#">Detective</a></li>
+                            <li><a href="#">Fantasy</a></li>
+                            <li><a href="#">Fiction</a></li>
+                            <li><a href="#">Horror</a></li>
+                            <li><a href="#">Other</a></li>
+                            <li><a href="#">Poetry</a></li>
+                            <li><a href="#">Prose</a></li>
+                            <li><a href="#">Horro</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
 
-      &lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;
-      &lt;!&ndash;The following code is for the nav-bar&ndash;&gt;
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <% if (user != null) {%>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome, <%=user.username%> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
 
-      &lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right navbar-text">
-          <li>
-              <% if (user != null) { %>
-            <p class="navbar-text">
-              <strong>Hi,</strong>
+                            <li><a id="profile-redirect-url" href="/profile" >
+                                Profile
+                            </a></li>
+                            <% if (user.role == "writer") {%>
+                            <li><a id='publish' href='/publish'>Publish</a></li>
+                            <%}%>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout">Log Out</a></li>
 
-                <%= user.username %>, You are a <%= user.role %>
-            </p>
-
-          </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a href="/logout">Log Out</a>
-          </li>
-            <% } else { %>
-          <a href="/signin">Sign In</a>
-          </li>
-            <% } %>
-        </ul>
-      </div>&lt;!&ndash; /.navbar-collapse &ndash;&gt;
-    </div>&lt;!&ndash; /.container-fluid &ndash;&gt;
-  </nav>-->
+                        </ul>
+                    </li>
+                    <%}else {%>
+                    <li><a href="/signin">
+                            Sign in or Sign up
+                        </a></li>
+                    <%}%>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
     <div id="book-list"></div>
-
-    <% if (user != null) { %>
-    <div class="jumbotron">
-        <p>Welcome, <%= user.username %>, you are logged in as a <%= user.role %></p>
-        <p>You can <a href="/logout">Log Out</a> here.</p>
-
-    </div>
-    <div id="profile">
-        <a id="profile-redirect-url" href="/profile" class="btn btn-primary btn-lg" role="button">
-            <span class="glyphicon glyphicon-user"></span>
-                Profile Page
-        </a>
-    </div>
-    <p></p>
-    <div id="publish-page"></div>
-    <p hidden id="parse-user-id"><%= (user._id) %></p>
-    <!--Don't implement now, maybe useful for later features.
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Profile Information</h3>
-    </div>
-    <div class="panel-body">
-      <p>Username: <%= user.username %></p>
-
-    </div>
-  </div>-->
-
-    <% } else { %>
-    <div class="jumbotron">
-        <p>
-            <a href="/signin" class="btn btn-primary btn-lg" role="button">
-                <span class="glyphicon glyphicon-user"></span>
-                Click here to sign in or register an account!
-            </a>
-        </p>
-    </div>
-
-    <% } %>
-
 
     <!-- this div may be changed to render only for registered user (writer, reader, admin) later-->
     <div id="render-for-all">
@@ -122,7 +108,26 @@
             </tbody>
         </table>
     </div>
-</div>
+    <% if (user != null) { %>
+    <p hidden id="parse-user"><%= (user.role).toString() %></p>
+    <% } %>
+    <!--<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right navbar-text">
+            <li> haha</li>
+    </div>&lt;!&ndash; /.container-fluid &ndash;&gt;
+  </nav>-->
 
 <script type="text/javascript" src="../public/js/home.js" defer></script>
 <link href="../public/css/home.css" rel="stylesheet" type="text/css">

@@ -90,10 +90,10 @@ exports.localAuth = function (username, password) {
     return deferred.promise;
 };
 
- //  Not in use
- //  Query book object and user object in a nested manner
- //  input: (bookid,userid)
- //  output: an array [book,user]
+//  Not in use
+//  Query book object and user object in a nested manner
+//  input: (bookid,userid)
+//  output: an array [book,user]
 
 // exports.queryBookandUser = function (bookid, userid) {
 //     var results = [];
@@ -143,7 +143,7 @@ exports.publishBook = function (req, res) {
         'writerName': writerName
     };
     var book_id;
-    return MongoClient.connect(mongodbUrl).then( function (db) {
+    return MongoClient.connect(mongodbUrl).then(function (db) {
         var books = db.collection('Books');
         var users = db.collection('Users');
         return books.insertOne(book).then(function (result) {
@@ -178,30 +178,47 @@ exports.updateBookInfo = function (book_Id, user_Id, info, res) {
     var new_bookGenre = info.bookGenre;
     MongoClient.connect(mongodbUrl, function (err, db) {
         var books = db.collection('Books');
-        var users=db.collection('Users');
+        var users = db.collection('Users');
         console.log("update function");
         users.updateOne(
-                {"_id": new ObjectId(user_Id),
-                "publication.book_id": new ObjectId(book_Id)},
-                {
-                    $set:{
-                       "publication.$.bookname": new_bookname
-                    }
-                },
-                {upsert:true}
-        ).then(function(){
-        books.updateOne(
-            {"_id": new ObjectId(book_Id)},
+            {
+                "_id": new ObjectId(user_Id),
+                "publication.book_id": new ObjectId(book_Id)
+            },
             {
                 $set: {
-                    "bookname": new_bookname, "bookdes": new_bookdes, "bookgenre": new_bookGenre
+                    "publication.$.bookname": new_bookname
                 }
-            }
-        ).then(function (res) {
-            db.close();
-        });})
+            },
+            {upsert: true}
+        ).then(function () {
+            users.updateOne(
+                {
+                    "_id": new ObjectId(user_Id),
+                    "subscriptions.bookId": book_Id
+                },
+                {
+                    $set: {
+                        "subscriptions.$.bookname": new_bookname
+                    }
+                }
+            )
+        })
+            .then(function () {
+                books.updateOne(
+                    {"_id": new ObjectId(book_Id)},
+                    {
+                        $set: {
+                            "bookname": new_bookname, "bookdes": new_bookdes, "bookgenre": new_bookGenre
+                        }
+                    }
+                )
+                    .then(function (res) {
+                        db.close();
+                    });
+            })
     });
-    res.redirect('/books/'+book_Id);
+    res.redirect('/books/' + book_Id);
 };
 
 // query all objects in db.Books, return in form of array
@@ -223,8 +240,8 @@ exports.queryPublicationFromWriter = function (user_id) {
         return users.findOne({'_id': new ObjectId(user_id)})
             .then(function (result) {
                 var publicationAndSubscriptionSet = {
-                    'publication' : result.publication,
-                    'subscription' : result. subscriptions
+                    'publication': result.publication,
+                    'subscription': result.subscriptions
                 }
                 return publicationAndSubscriptionSet;
             })
@@ -309,7 +326,6 @@ exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
                 return [result.chapters[chapterIdx], result.chapters.length];
             })
     }).then(function (item) {
-
         return item;
     })
 };
@@ -323,7 +339,7 @@ exports.insertNewSubscriptionToUser = function (user_id, book_id, req, res) {
         var users = db.collection('Users');
         var books = db.collection('Books');
         var bookname;
-        books.findOne({'_id' : new ObjectId(book_id)})
+        books.findOne({'_id': new ObjectId(book_id)})
             .then(function (item) {
                 bookname = (item.bookname);
                 users.findOneAndUpdate(
@@ -341,7 +357,7 @@ exports.insertNewSubscriptionToUser = function (user_id, book_id, req, res) {
                     .then(function () {
                         db.close();
                     }).then(function () {
-                    res.redirect('/books/'+book_id);
+                    res.redirect('/books/' + book_id);
                 })
             });
     });
@@ -365,11 +381,41 @@ exports.deleteSubscriptionFromUser = function (user_id, book_id, req, res) {
             .then(function () {
                 db.close();
             }).then(function () {
-            res.redirect('/books/'+book_id);
+            res.redirect('/books/' + book_id);
         });
     });
 };
+exports.deleteBook = function (book_id) {
 
+    return MongoClient.connect(mongodbUrl).then(function (db) {
 
+        var books = db.collection('Books');
+        var users = db.collection('Users');
+        users.updateMany(
+            {},
+            {
+                $pull: {
+                    "subscriptions": {"bookId": book_id.toString()},
+                    "publication": {"book_id": new ObjectId(book_id)}
+                }
+            },
+            {upsert: true}
+        ).then(function () {
+            books.deleteOne({"_id": new ObjectId(book_id)});
+        }).then(function () {
+            db.close();
+        })
+    })
+};
 
-
+exports.deleteChapterFromOneBook = function (book_id, chapter_id) {
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+        var books = db.collection('Books');
+        books.updateOne(
+            {"_id": new ObjectId(book_id)},
+            {$pull: {"chapters": {"_id": new ObjectId(chapter_id)}}}
+        ).then(function () {
+            db.close();
+        })
+    })
+};
