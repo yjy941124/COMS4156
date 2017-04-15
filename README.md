@@ -1,6 +1,20 @@
 # COMS4156 [![Build Status](https://travis-ci.org/yjy941124/Forever-Read.svg?branch=master)](https://travis-ci.org/yjy941124/Forever-Read)
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### April 14 2017 - Yulong Qiao
+bug fix:
+- starter-template.css and select-style.css in *layout.ejs* works correctly in chapter page
+- remove second button of edit book info in chapters page
+
+navbar:
+- click *ForeverRead* to return homepage
+- click *Profile* to go to profile page
+- Search in *Category* by different genres
+
+Undergoing:
+- Rich text is soon up to use
+
+
 ### April 13 2017 - Jinyang Yu
 - Finish Admin mode
 - Get a fundamental UI for nav-bar.
@@ -8,15 +22,16 @@ This is the final project of COMS 4156, co-authored by four members from the cla
 TODO:
 - Commenting
 - Rank
-- Category
+- ~~Category~~
 - Previous readme
+
 ### April 12 2017 - Jinyang Yu
 - Add admin mode.
 - Admin is created directly through mongodb - there is no sign up page for admin. 
 - Admin can delete entire book.
 
 TODO:
-- ~~~Admin can delete chapters.~~~
+- ~~Admin can delete chapters.~~
 - Edit chapters.
 
 ### April 8 2017 - Yulong Qiao

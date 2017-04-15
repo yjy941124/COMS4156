@@ -1,12 +1,4 @@
-<style>
-    table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-    html, body { margin: 0; padding: 0 }
-</style>
 <body>
-
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -17,26 +9,28 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Forever Read</a>
+                <!--clicking 'ForeverRead' go back to home page-->
+                <a class="navbar-brand" href="/">Forever Read</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                    <!--rank method to discussed-->
                     <li><a href="#">Rank</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Comedy</a></li>
-                            <li><a href="#">Crime</a></li>
-                            <li><a href="#">Detective</a></li>
-                            <li><a href="#">Fantasy</a></li>
-                            <li><a href="#">Fiction</a></li>
-                            <li><a href="#">Horror</a></li>
-                            <li><a href="#">Other</a></li>
-                            <li><a href="#">Poetry</a></li>
-                            <li><a href="#">Prose</a></li>
-                            <li><a href="#">Horro</a></li>
+                            <li><a href="/service/searchBookByGenre/Comedy">Comedy</a></li>
+                            <li><a href="/service/searchBookByGenre/Crime">Crime</a></li>
+                            <li><a href="/service/searchBookByGenre/Detective">Detective</a></li>
+                            <li><a href="/service/searchBookByGenre/Fantasy">Fantasy</a></li>
+                            <li><a href="/service/searchBookByGenre/Fiction">Fiction</a></li>
+                            <li><a href="/service/searchBookByGenre/Horror">Horror</a></li>
+                            <li><a href="/service/searchBookByGenre/Other">Other</a></li>
+                            <li><a href="/service/searchBookByGenre/Poetry">Poetry</a></li>
+                            <li><a href="/service/searchBookByGenre/Prose">Prose</a></li>
+                            <li><a href="/service/searchBookByGenre/Romance">Romance</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -110,6 +104,7 @@
     </div>
     <% if (user != null) { %>
     <p hidden id="parse-user"><%= (user.role).toString() %></p>
+    <p hidden id="parse-user-id"><%= user._id%></p>
     <% } %>
     <!--<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -129,5 +124,5 @@
     </div>&lt;!&ndash; /.container-fluid &ndash;&gt;
   </nav>-->
 
-<script type="text/javascript" src="../public/js/home.js" defer></script>
-<link href="../public/css/home.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../../public/js/home.js" defer></script>
+<link href="../../public/css/home.css" rel="stylesheet" type="text/css">

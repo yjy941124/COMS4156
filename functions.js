@@ -419,3 +419,14 @@ exports.deleteChapterFromOneBook = function (book_id, chapter_id) {
         })
     })
 };
+
+// query all objects in db.Books by bookgenre, return in form of array
+exports.queryAllBookByGenre = function (genreType) {
+    var genre = genreType;
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+        var books = db.collection('Books');
+        return books.find({"bookgenre": genre}).toArray();
+    }).then(function (items) {
+        return items;
+    });
+};

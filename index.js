@@ -320,18 +320,22 @@ app.get('/service/subscribeBook/:bookId', function (req, res) {
     funct.insertNewSubscriptionToUser(userId, bookId, req, res);
 });
 
-//get method, user unsubscribe book, delete item in user.subscription in database
+// get method, user unsubscribe book, delete item in user.subscription in database
 app.get('/service/unsubscribeBook/:bookId', function (req, res) {
     var bookId = req.params.bookId;
     var userId = req.user._id;
     funct.deleteSubscriptionFromUser(userId, bookId, req, res);
 });
+
+// get method, delete the book with bookId match
 app.get('/service/deleteBook/:bookId', function (req, res) {
     var book_id = req.params.bookId;
     funct.deleteBook(book_id).then(function () {
         res.send('book has been deleted!');
     });
 });
+
+// get method, delete the one chapter within a book
 app.get('/service/deleteChapter/:bookId/:chapterId', function (req, res) {
     console.log('here');
     var book_id = req.params.bookId;
@@ -340,6 +344,29 @@ app.get('/service/deleteChapter/:bookId/:chapterId', function (req, res) {
         res.send('this chapter has been deleted');
     })
 });
+
+//get method, search books by genre
+app.get('/service/searchBookByGenre/:genreType', function (req, res) {
+    var genreType = req.params.genreType;
+    funct.queryAllBookByGenre(genreType).then(function(items){
+        console.log("the books of genreType: " + genreType + " are");
+        console.log(items);
+        var user = req.user;
+        var bookIDs = [];
+        var bookList = items;
+        bookList.forEach(function (elem) {
+            bookIDs.push(elem._id.toString());
+        });
+        res.render('home',{
+            user: user,
+            bookList: bookList,
+            bookIDs: bookIDs
+        });
+    }, function (err) {
+        console.log("error occurs, details: "+ err);
+    });
+});
+
 
 //===============PORT=================
 var port = process.env.PORT || 5000;
