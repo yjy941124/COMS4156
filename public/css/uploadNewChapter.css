@@ -7,3 +7,7 @@
     display: none;
 }
 
+#editor-container {
+    height: 375px;
+    width: 100%;
+}

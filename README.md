@@ -11,8 +11,10 @@ navbar:
 - click *Profile* to go to profile page
 - Search in *Category* by different genres
 
-Undergoing:
-- Rich text is soon up to use
+Rich text supprt:
+- uploadNewChapter and render chapter page supported
+
+
 
 
 ### April 13 2017 - Jinyang Yu
@@ -47,7 +49,7 @@ First day after Iteration 1 demo:
 
 TODO:
 - ~~fixed the whole modal - alert - border issue~~
-- find a way to save content spacing and forms, maybe turn to Quill
+- ~~find a way to save content spacing and forms, maybe turn to Quill~~
 
 ### March 30 2017 - Yulong Qiao & Ruijue Ji
 Last Day of Iteration 1, today's modifications:

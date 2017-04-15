@@ -9,13 +9,18 @@
 <p>Here you can upload a new chapter to your book</p>
 <form id="chapter-form" action="/service/uploadNewChapter" method="post">
     <div>
-        <label>title:</label>
+        <label for="title">Chapter Title:</label>
+        <div>
         <input class="publish-non-empty" id="chapter-title-input" type="text" name="title"/>
+        </div>
     </div>
-    <div>
-        <label>Content:</label>
-        <textarea type="text" name="chapterContent"/></textarea>
-    </div>
+    <!--<div>-->
+        <!--<label>Content:</label>-->
+        <!--<textarea type="text" name="chapterContent"/></textarea>-->
+    <!--</div>-->
+    <label for="chapterContent">Chapter Content</label>
+    <input type="text" hidden name="chapterContent">
+    <div id = "editor-container" class = "container"></div>
     <div>
         <input type="hidden" name="bookid" value="<%=bookID%>"/>
         <input hidden type="text" name="bookid">
@@ -25,3 +30,5 @@
 
 <script type="text/javascript" src="../../public/js/publish.js" defer></script>
 <link href="../../public/css/uploadNewChapter.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../../public/js/uploadNewChapter.js" defer></script>
+
