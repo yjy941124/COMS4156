@@ -18,7 +18,8 @@
     <%}%>
     <%if (user != null) {%>
     <%if (user.role == "admin" || user.role == "writer") {%>
-    <button type="button" id = "delete-chapter" class='btn btn-default btn-md' onclick="deleteChapter()"> Delete this chapter </button><p></p><button type="button" id = "delete-book" class='btn btn-default btn-md' onclick="deletebook(bookID)"> Edit Book Information </button><p></p>
+    <button type="button" id = "delete-chapter" class='btn btn-default btn-md' onclick="deleteChapter()"> Delete this chapter </button>
+    <a id='edit-chapter' href='/' class='btn btn-default btn-md' role='button'>Edit this chapter</a><p></p>
     <%}}%>
 
 </div>

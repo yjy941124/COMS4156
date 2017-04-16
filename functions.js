@@ -430,3 +430,42 @@ exports.queryAllBookByGenre = function (genreType) {
         return items;
     });
 };
+
+// query one chapter in db.Books
+exports.queryOneChapterFromBookByChapterId = function (bookId, chapterId){
+    return MongoClient.connect(mongodbUrl).then(function(db){
+        var books = db.collection('Books');
+        console.log("=====");
+        console.log(bookId);
+        console.log(chapterId);
+        return books.findOne(
+                {'_id': new ObjectId(bookId)},
+                {'chapters': { $elemMatch: {_id: new ObjectId(chapterId)} } }).then(function(result){
+                    return result.chapters[0];
+        })
+    }).then (function(items){
+        return items;
+    });
+};
+
+
+// save edited chapter into db.Books
+exports.insertEditedChapterToABook = function(bookId, chapterId, chapterTitle, chapterContent, req, res) {
+    return MongoClient.connect(mongodbUrl).then(function(db) {
+        var books = db.collection('Books');
+        books.updateOne(
+                {"_id": new ObjectId(bookId),
+                    "chapters._id": new ObjectId(chapterId)
+                },
+                {
+                    $set:{
+                        "chapters.$.title": chapterTitle,
+                        "chapters.$.content": chapterContent
+                    }
+                },
+                {upsert: true}
+        )
+    }).then(function(){
+        res.redirect('/books/' + bookId);
+    });
+};

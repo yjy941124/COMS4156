@@ -4,8 +4,17 @@
 
 
 $(document).ready(function () {
+    var chapter_id = $('#parse-chapter-id').html();
+    var book_id=$("#parse-book-id").html();
+    // var editChapterUrl = '/books/' + book_id + '/chapter/' + chapter_id + '/editChapter';
+    // var editChapterUrl  = '/test/'
+    var editChapterUrl = '/books/' + book_id + '/chapter/editChapter/' + chapter_id;
+    console.log(editChapterUrl);
+    $('#edit-chapter').attr("href", editChapterUrl);
 
-})
+
+
+});
 function deleteChapter() {
     var book_id=$("#parse-book-id").html();
     var chapter_id = $("#parse-chapter-id").html();
@@ -25,7 +34,6 @@ function deleteChapter() {
 
 var content_string = document.querySelector('#parse-editor-delta').innerHTML;
 var contentJson = JSON.parse(content_string);
-console.log(content_string);
 
 var quill = new Quill('#editor-container', {
     // modules: {

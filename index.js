@@ -368,6 +368,37 @@ app.get('/service/searchBookByGenre/:genreType', function (req, res) {
 });
 
 
+//get method, render edit chapter page
+app.get('/books/:bookId/chapter/editChapter/:chapterId', function(req, res) {
+    var bookId = req.params.bookId;
+    var chapterId = req.params.chapterId;
+    var user = req.user;
+    funct.queryOneChapterFromBookByChapterId(bookId, chapterId).then(function(chapter){
+        res.render('editChapter',{
+            user: user,
+            chapter: chapter,
+            bookID: bookId,
+            chapterId: chapterId
+        });
+    }, function (err) {
+        console.log("error occurs details: "+ err);
+    });
+});
+
+// post method, save edited chapter content into database
+app.post('/service/editChapter', function(req, res) {
+    var bookId = req.body.bookid;
+    var chapterTitle = req.body.title;
+    var chapterContent = req.body.chapterContent;
+    var chapterId = req.body.chapterId;
+    console.log(chapterTitle);
+    console.log(chapterContent);
+    console.log(chapterId);
+    console.log(bookId);
+    funct.insertEditedChapterToABook(bookId, chapterId, chapterTitle, chapterContent, req, res);
+});
+
+
 //===============PORT=================
 var port = process.env.PORT || 5000;
 app.listen(port);

@@ -14,6 +14,9 @@ navbar:
 Rich text supprt:
 - uploadNewChapter and render chapter page supported
 
+added:
+- Edit chapters
+
 
 
 
@@ -34,7 +37,7 @@ TODO:
 
 TODO:
 - ~~Admin can delete chapters.~~
-- Edit chapters.
+- ~~Edit chapters.~~
 
 ### April 8 2017 - Yulong Qiao
 - Revised logic of all non-empty publish process, include uploadNewChapter, edit bookinfo and publish new book(all subscribed to publish.js)
