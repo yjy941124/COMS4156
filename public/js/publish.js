@@ -11,7 +11,7 @@ $(document).ready(function () {
         $(this).find('form')[0].reset();
     });
 
-    $('#submit-publish-form,#new-chapter-submit, #save_bookchange').click(function(e) {
+    $('#submit-publish-form,#new-chapter-submit, #save_bookchange, #edit-chapter-submit').click(function(e) {
         var isValid = true;
         $('input[type="text"].publish-non-empty').each(function() {
 
