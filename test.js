@@ -32,7 +32,6 @@ describe('Books', function () {
             expect(newbook.bookname).to.equal('editedname');
         })
     });
-    
 
 });
 describe('Users', function () {
