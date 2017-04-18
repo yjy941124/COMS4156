@@ -286,6 +286,8 @@ app.get('/books/:bookId/uploadNewChapter', function (req, res) {
 
 // function insertNewChapterToABook called, when new chapter is inserted to database, and user is redirected to chapters page
 app.post('/service/uploadNewChapter', function (req, res) {
+    console.log(req.body);
+    console.log(req.body.chapterContent);
     funct.insertNewChapterToABook(req, res);
 });
 

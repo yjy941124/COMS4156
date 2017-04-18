@@ -49,10 +49,6 @@ $(document).ready(function () {
         $('#non-empty-alert').hide();
     })
 
-    var user_id = $("#parse-user-id").html();
-    var profileRedirectURL = "/profile/" + user_id;
-    $("#profile-redirect-url").attr("href", profileRedirectURL);
-
 });
 function empty() {
     var x;

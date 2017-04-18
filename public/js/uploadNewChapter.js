@@ -20,8 +20,9 @@ var quill = new Quill('#editor-container', {
     theme: 'snow'
 });
 
-var form = document.querySelector('form');
+var form = document.querySelector('#chapter-form');
 form.onsubmit = function() {
     var chapterContent = document.querySelector('input[name=chapterContent]');
+    console.log(quill.getContents());
     chapterContent.value = JSON.stringify(quill.getContents());
 };
