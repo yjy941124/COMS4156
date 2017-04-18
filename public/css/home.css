@@ -1,9 +1,24 @@
+#banner{
+    background: url(../banner.jpeg)no-repeat;
+    background-size: 100%;
+    height: 400px;
+}
+
 #render-for-all{
     text-align: center;
 }
 
-.h1{
-    text-align: center;
+#webtitle{
+    padding-left: 50px;
+    padding-top: 250px;
+    color: white;
+    text-align: left;
+}
+
+#webdes{
+    text-align: left;
+    color: white;
+    padding-left: 50px;
 }
 
 #book-table{
