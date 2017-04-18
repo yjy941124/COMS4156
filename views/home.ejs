@@ -109,7 +109,9 @@
         </table>
     </div>
     <% if (user != null) { %>
+
     <p hidden id="parse-user"><%= (user.role).toString() %></p>
+    <p hidden id="parse-user-id"><%= (user._id).toString() %></p>
     <% } %>
     <!--<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
