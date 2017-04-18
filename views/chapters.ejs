@@ -26,8 +26,7 @@
     <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe this book</a><br></br>
     <%}%>
     <%if (user.role == "admin" || user.role == "writer") {%>
-    <button type="button" id = "delete-book" class='btn btn-default btn-md' onclick="deletebook()"> Delete this book </button><p></p><button type="button" id = "delete-book" class='btn btn-default btn-md' onclick="deletebook(bookID)"> Edit Book Information </button><p></p>
-
+    <button type="button" id = "delete-book" class='btn btn-default btn-md' onclick="deletebook()"> Delete this book </button>
     <%}%>
     <%}%>
 

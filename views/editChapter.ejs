@@ -1,0 +1,36 @@
+<h1 id = "title">Edit Chapter</h1>
+<a id = "back" href=<%="/books/"+bookID%>>Back to this book's page</a>
+<div class="container">
+    <div id="non-empty-alert" class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-hide="alert">&times;</button>
+        Some field can not be left empty
+    </div>
+</div>
+<p>Edit this chapter </p>
+<form id="chapter-form" action="/service/editChapter" method="post">
+    <div>
+        <label for="title">Chapter Title:</label>
+        <div>
+            <input class="publish-non-empty" id="chapter-title-input" type="text" name="title" value="<%=chapter.title%>"/>
+        </div>
+    </div>
+    <!--<div>-->
+    <!--<label>Content:</label>-->
+    <!--<textarea type="text" name="chapterContent"/></textarea>-->
+    <!--</div>-->
+    <p hidden id="parse-editor-delta"><%=chapter.content%></p>
+    <label for="chapterContent">Chapter Content</label>
+    <input type="text" hidden name="chapterContent">
+    <div id = "editor-container" class = "container"></div>
+    <div>
+        <input type="hidden" name="bookid" value="<%=bookID%>"/>
+        <!--<input hidden type="text" name="bookid">-->
+        <input hidden type="text" name="chapterId" value="<%=chapter._id%>">
+        <input id="edit-chapter-submit" type="submit" onclick="return empty()" class="btn btn-primary btn-sm" value="editChapterPublish"/>
+    </div>
+</form>
+
+<script type="text/javascript" src="../../../../public/js/publish.js" defer></script>
+<link href="../../../../public/css/editChapter.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../../../../public/js/editChapter.js" defer></script>
+

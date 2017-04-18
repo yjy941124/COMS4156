@@ -5,7 +5,10 @@
 
     <label id="title">Title: <%=chapter.title%></label>
     <br>
-    <label id="content">Content: <%=chapter.content%></label>
+    <!--<label id="content">Content: <%=chapter.content%></label>-->
+    <p hidden id="parse-editor-delta"><%=chapter.content%></p>
+    <div id = "editor-container" class = "container"></div>
+    <div></div>
     <%if (parseInt(chapterIdx) != 0) {%>
     <a href= <%= "/books/"+ bookId + '/chapter/' + (parseInt(chapterIdx) - 1).toString()%>>Previous Chapter</a>
     <%}%>
@@ -15,10 +18,11 @@
     <%}%>
     <%if (user != null) {%>
     <%if (user.role == "admin" || user.role == "writer") {%>
-    <button type="button" id = "delete-chapter" class='btn btn-default btn-md' onclick="deleteChapter()"> Delete this chapter </button><p></p><button type="button" id = "delete-book" class='btn btn-default btn-md' onclick="deletebook(bookID)"> Edit Book Information </button><p></p>
+    <button type="button" id = "delete-chapter" class='btn btn-default btn-md' onclick="deleteChapter()"> Delete this chapter </button>
+    <a id='edit-chapter' href='/' class='btn btn-default btn-md' role='button'>Edit this chapter</a><p></p>
     <%}}%>
 
 </div>
 
-<script type="text/javascript" src="/public/js/chapter.js" defer></script>
-<link href="/public/css/chapter.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../../../public/js/chapter.js" defer></script>
+<link href="../../../public/css/chapter.css" rel="stylesheet" type="text/css">
