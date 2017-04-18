@@ -213,7 +213,7 @@ app.post('/publishBook', function (req, res) {
     if (req.user != null) {
         funct.publishBook(req, res)
             .then(function (book_id) {
-                res.redirect('books/'+book_id);
+                res.redirect('books/' + book_id);
             });
     }
     else {
@@ -227,12 +227,12 @@ app.get('/profile/:userId', function (req, res) {
     var userId = req.params.userId;
     var userRole = req.user.role;
     //var user = req.user;
-    funct.queryUserBasedOnID(userId).then(function(item){
-        var user=item;
-        funct.queryPublicationFromWriter(userId).then(function(set){
-            res.render('profile',{
-                userID:req.params.userId,
-                userRole:userRole,
+    funct.queryUserBasedOnID(userId).then(function (item) {
+        var user = item;
+        funct.queryPublicationFromWriter(userId).then(function (set) {
+            res.render('profile', {
+                userID: req.params.userId,
+                userRole: userRole,
                 publication: set.publication,
                 subscription: set.subscription,
                 user: user
@@ -290,9 +290,9 @@ app.post('/service/uploadNewChapter', function (req, res) {
 // function updateBookInfo called, attributes of one book in database is altered, and user is redirected to chapters page
 app.post('/books/:bookId/update', function (req, res) {
     var bookId = req.params.bookId;
-    var userId=req.user._id;
+    var userId = req.user._id;
     console.log("updating " + bookId + "'s bookinfo");
-    funct.updateBookInfo(bookId,userId,req.body, res);
+    funct.updateBookInfo(bookId, userId, req.body, res);
 });
 
 // display chapter content in one book
@@ -303,9 +303,9 @@ app.get('/books/:bookId/chapter/:chapterIdx', function (req, res) {
     funct.queryOneChapterFromBook(chapterIdx, bookId).then(function (chapterInfos) {
 
         res.render('chapter', {
-            user : user,
+            user: user,
             chapter: chapterInfos[0],
-            chapterId : chapterInfos[0]._id,
+            chapterId: chapterInfos[0]._id,
             bookId: bookId,
             chapterIdx: chapterIdx,
             chapterMax: chapterInfos[1] - 1
