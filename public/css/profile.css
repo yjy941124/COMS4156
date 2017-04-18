@@ -1,3 +1,41 @@
+
+@import 'https://fonts.googleapis.com/css?family=Lora:400,400i,700|Raleway:300,600,700,900';
+
+#banner{
+    padding: 0;
+    padding-top: 10px;
+    margin: 0;
+    background: url(../banner2.jpeg)no-repeat;
+    background-size: cover;
+    background-position: center}
+
+#nav{
+    background: rgba(255,255,255,0.6);
+    margin-top: 30px
+}
+
+
+#webtitle{
+    font-family: 'Raleway', sans-serif;
+    text-transform: uppercase;
+    font-weight: 900;
+    color: white;
+    padding-left: 50px;
+    padding-top: 80px;
+    text-align: left;
+}
+
+#webdes{
+    font-family: 'Lora', serif;
+    font-style: italic;
+    text-align: left;
+    color: white;
+    padding-left: 50px;
+    padding-bottom: 40px;
+    font-size: medium;
+}
+
+
 #profile-title{
     text-align: center;
 }

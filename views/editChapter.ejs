@@ -1,3 +1,89 @@
+<% if (user != null) { %>
+
+<p hidden id="parse-user"><%= (user.role).toString() %></p>
+
+<p hidden id="parse-user-id"><%= (user._id).toString() %></p>
+
+<% } %>
+
+
+<div id = "banner">
+    <h1 id = "webtitle">Forever Read</h1>
+    <p id = "webdes">Write, Read, Communicate and Grow, Whenever You Like</p>
+
+    <nav class="navbar navbar-default" id = "nav">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!--clicking 'ForeverRead' go back to home page-->
+                <a class="navbar-brand" href="/">Forever Read</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                    <!--rank method to discussed-->
+                    <li><a href="#">Rank</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/service/searchBookByGenre/Comedy">Comedy</a></li>
+                            <li><a href="/service/searchBookByGenre/Crime">Crime</a></li>
+                            <li><a href="/service/searchBookByGenre/Detective">Detective</a></li>
+                            <li><a href="/service/searchBookByGenre/Fantasy">Fantasy</a></li>
+                            <li><a href="/service/searchBookByGenre/Fiction">Fiction</a></li>
+                            <li><a href="/service/searchBookByGenre/Horror">Horror</a></li>
+                            <li><a href="/service/searchBookByGenre/Other">Other</a></li>
+                            <li><a href="/service/searchBookByGenre/Poetry">Poetry</a></li>
+                            <li><a href="/service/searchBookByGenre/Prose">Prose</a></li>
+                            <li><a href="/service/searchBookByGenre/Romance">Romance</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <% if (user != null) {%>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome, <%=user.username%> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+
+                            <li><a id="profile-redirect-url" href="/profile" >
+                                    Profile
+                                </a></li>
+                            <% if (user.role == "writer") {%>
+                            <li><a id='publish' href='/publish'>Publish</a></li>
+                            <%}%>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout">Log Out</a></li>
+
+                        </ul>
+                    </li>
+                    <%}else {%>
+                    <li><a href="/signin">
+                            Sign in or Sign up
+                        </a></li>
+                    <%}%>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</div>
+
+
+
 <h1 id = "title">Edit Chapter</h1>
 <a id = "back" href=<%="/books/"+bookID%>>Back to this book's page</a>
 <div class="container">

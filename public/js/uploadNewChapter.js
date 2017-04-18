@@ -1,3 +1,14 @@
+
+$(document).ready(function () {
+
+    var user_id = $("#parse-user-id").html();
+    var profileRedirectURL = "/profile/" + user_id;
+    $("#profile-redirect-url").attr("href", profileRedirectURL);
+
+});
+
+
+
 var quill = new Quill('#editor-container', {
     modules: {
         toolbar: [

@@ -200,11 +200,12 @@ app.get('/logout', function (req, res) {
 
 // publish page, where user can publish new book
 app.get('/publish', function (req, res) {
+    var user = req.user;
     if (req.user.role != "writer") {
         renderHomeHelper(req, res);
     }
     else {
-        res.render('publish');
+        res.render('publish',{user:user});
     }
 });
 
@@ -276,8 +277,10 @@ app.get('/books/:bookId', function (req, res) {
 // get method called when user wants to upload new chapter, render uploadNewChapter.ejs
 app.get('/books/:bookId/uploadNewChapter', function (req, res) {
     var bookID = req.params.bookId;
+    var user = req.user;
     res.render('uploadNewChapter', {
-        bookID: bookID
+        bookID: bookID,
+        user:user
     });
 });
 

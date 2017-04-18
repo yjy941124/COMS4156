@@ -12,6 +12,9 @@ $(document).ready(function () {
     console.log(editChapterUrl);
     $('#edit-chapter').attr("href", editChapterUrl);
 
+    var user_id = $("#parse-user-id").html();
+    var profileRedirectURL = "/profile/" + user_id;
+    $("#profile-redirect-url").attr("href", profileRedirectURL);
 
 
 });
