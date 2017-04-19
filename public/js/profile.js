@@ -9,5 +9,7 @@ $(document).ready(function () {
     }
     var book_id=$("#parse-book-id").html();
 
+    var profileRedirectURL = "/profile/" + user_id;
+    $("#profile-redirect-url").attr("href", profileRedirectURL);
 
 });
