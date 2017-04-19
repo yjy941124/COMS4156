@@ -10,7 +10,9 @@ $(document).ready(function () {
     $('.modal').on('hidden.bs.modal', function(){
         $(this).find('form')[0].reset();
     });
-
+    var user_id = $("#parse-user-id").html();
+    var profileRedirectURL = "/profile/" + user_id;
+    $("#profile-redirect-url").attr("href", profileRedirectURL);
     $('#submit-publish-form,#new-chapter-submit, #save_bookchange, #edit-chapter-submit').click(function(e) {
         var isValid = true;
         $('input[type="text"].publish-non-empty').each(function() {
