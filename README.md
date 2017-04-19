@@ -6,6 +6,9 @@ Function adjustment:
 - initially at homepage, booklists are displayed in alphabetical order
 - when clicked rank, booklists are displayed according to the number subscribed
 
+Search added:
+- search function, entries will be prompted with typeahead.js
+
 ### April 18 2017 - Ruijue Ji
 UI improvement:
 -  Now navbar displays on every page
