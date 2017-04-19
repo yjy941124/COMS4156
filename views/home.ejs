@@ -76,6 +76,7 @@
     <!-- this div may be changed to render only for registered user (writer, reader, admin) later-->
     <div id="render-for-all">
         <p>You can view books here!</p>
+        <p id="parse-bookList" hidden><%-JSON.stringify(bookList)%></p>
         <table class="100%" id = "book-table">
             <thead>
             <tr>
@@ -86,22 +87,26 @@
             </tr>
             </thead>
 
-            <tbody>
-            <% for(var i = 0; i < bookList.length; i++) {%>
-            <tr>
-                <th>
-                    <% var bookID= bookIDs[i].toString() %>
-                    <p hidden id="parse-book-id"><%=bookID%></p>
-                    <a href= <%= "/books/"+bookIDs[i].toString() %>> <%= bookList[i].bookname.toString() %></a></th>
-                <th><%= bookList[i].writerName.toString() %></th>
-                <% if(bookList[i].bookgenre!=null){%>
-                <th><%= bookList[i].bookgenre.toString()%></th>
-                <% } else {%>
-                <th>N/A</th>
-                <% }%>
-            </tr>
-            <% } %>
+            <tbody id="booklist-display">
+
             </tbody>
+
+            <!--<tbody>-->
+            <!--<% for(var i = 0; i < bookList.length; i++) {%>-->
+            <!--<tr>-->
+                <!--<th>-->
+                    <!--<% var bookID= bookIDs[i].toString() %>-->
+                    <!--<p hidden id="parse-book-id"><%=bookID%></p>-->
+                    <!--<a href= <%= "/books/"+bookIDs[i].toString() %>> <%= bookList[i].bookname.toString() %></a></th>-->
+                <!--<th><%= bookList[i].writerName.toString() %></th>-->
+                <!--<% if(bookList[i].bookgenre!=null){%>-->
+                <!--<th><%= bookList[i].bookgenre.toString()%></th>-->
+                <!--<% } else {%>-->
+                <!--<th>N/A</th>-->
+                <!--<% }%>-->
+            <!--</tr>-->
+            <!--<% } %>-->
+            <!--</tbody>-->
         </table>
     </div>
     <% if (user != null) { %>
