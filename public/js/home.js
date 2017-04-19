@@ -12,8 +12,15 @@ $(document).ready(function () {
     $("#book-redirect-url").attr("href",bookRedirectURL);
     $("#profile-redirect-url").attr("href", profileRedirectURL);
     sortResults('bookname', true);
+    // $('#rank-display').click(function(e){
+    //     sortResults('subscribedNumber',true);
+    // })
 });
 
+function sortBySubscribedNumber(){
+    sortResults('subscribedNumber',false);
+
+}
 
 // parse bookList to an Array of JSON elements
 var bookList = $('#parse-bookList').html();

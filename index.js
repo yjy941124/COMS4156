@@ -322,14 +322,14 @@ app.get('/books/:bookId/chapter/:chapterIdx', function (req, res) {
 app.get('/service/subscribeBook/:bookId', function (req, res) {
     var userId = req.user._id;
     var bookId = req.params.bookId;
-    funct.insertNewSubscriptionToUser(userId, bookId, req, res);
+    funct.insertNewSubscription(userId, bookId, req, res);
 });
 
 // get method, user unsubscribe book, delete item in user.subscription in database
 app.get('/service/unsubscribeBook/:bookId', function (req, res) {
     var bookId = req.params.bookId;
     var userId = req.user._id;
-    funct.deleteSubscriptionFromUser(userId, bookId, req, res);
+    funct.deleteSubscription(userId, bookId, req, res);
 });
 
 // get method, delete the book with bookId match

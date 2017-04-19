@@ -4,6 +4,7 @@ This is the final project of COMS 4156, co-authored by four members from the cla
 ### April 18 2017 - Yulong Qiao
 Function adjustment:
 - initially at homepage, booklists are displayed in alphabetical order
+- when clicked rank, booklists are displayed according to the number subscribed
 
 ### April 18 2017 - Ruijue Ji
 UI improvement:
@@ -34,7 +35,7 @@ added:
 - Add rank and category display
 TODO:
 - Commenting
-- Rank
+- ~~Rank~~
 - ~~Category~~
 - Previous readme
 

@@ -140,7 +140,8 @@ exports.publishBook = function (req, res) {
         'bookdes': bookdes,
         'bookgenre': bookgenre,
         'writerID': writerID,
-        'writerName': writerName
+        'writerName': writerName,
+        'subscribedNumber':0
     };
     var book_id;
     return MongoClient.connect(mongodbUrl).then(function (db) {
@@ -334,13 +335,20 @@ exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
 // insert new subscription to user
 // checking db.Books, find bookname of object with Books._id==book_id
 // finding Users object in db.Users with Users._id==user_id, insert new object {_id,bookId,bookname} to .subscriptions
-exports.insertNewSubscriptionToUser = function (user_id, book_id, req, res) {
+exports.insertNewSubscription = function (user_id, book_id, req, res) {
     MongoClient.connect(mongodbUrl).then(function (db) {
         var users = db.collection('Users');
         var books = db.collection('Books');
         var bookname;
+        books.updateOne(
+                {'_id': new ObjectId(book_id)},
+                {$inc:{
+                    'subscribedNumber':1
+                }}
+                );
         books.findOne({'_id': new ObjectId(book_id)})
             .then(function (item) {
+                console.log('the subsribed number of this book is ' + item.subscribedNumber);
                 bookname = (item.bookname);
                 users.findOneAndUpdate(
                     {'_id': new ObjectId(user_id)},
@@ -365,9 +373,16 @@ exports.insertNewSubscriptionToUser = function (user_id, book_id, req, res) {
 
 // delete one subscription object from user
 // finding Users object in db.Users with Users._id==user_id, delete object.subscriptions with BookId==book_id
-exports.deleteSubscriptionFromUser = function (user_id, book_id, req, res) {
+exports.deleteSubscription = function (user_id, book_id, req, res) {
     MongoClient.connect(mongodbUrl).then(function (db) {
         var users = db.collection('Users');
+        var books = db.collection('Books');
+        books.updateOne(
+                {'_id': new ObjectId(book_id)},
+                {$inc:{
+                    'subscribedNumber':-1
+                }}
+        );
         users.findOneAndUpdate(
             {'_id': new ObjectId(user_id)},
             {
