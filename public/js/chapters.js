@@ -31,6 +31,11 @@ $(document).ready(function () {
     //     $('#bookinfo_modal').css("display","none");
     // });
 
+
+    var user_id = $("#parse-user-id").html();
+    var profileRedirectURL = "/profile/" + user_id;
+    $("#profile-redirect-url").attr("href", profileRedirectURL);
+
 });
 function deletebook() {
     $.ajax({
