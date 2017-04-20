@@ -225,14 +225,14 @@ app.post('/publishBook', function (req, res) {
 
 // profile page, where user can check books published by him/her and books subscribed by him/her
 app.get('/profile/:userId', function (req, res) {
-    if (req.user == null)
     var userId = req.params.userId;
-
     var userRole = req.user.role;
     //var user = req.user;
     funct.queryUserBasedOnID(userId).then(function (item) {
         var user = item;
         funct.queryPublicationFromWriter(userId).then(function (set) {
+            console.log(set);
+            console.log('here');
             res.render('profile', {
                 userID: req.params.userId,
                 userRole: userRole,

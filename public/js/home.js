@@ -15,6 +15,16 @@ $(document).ready(function () {
     // $('#rank-display').click(function(e){
     //     sortResults('subscribedNumber',true);
     // })
+
+    $('.form-group .typeahead').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+        },
+        {
+            name: 'states',
+            source: substringMatcher(bookNameListForMatch)
+        });
 });
 
 function sortBySubscribedNumber(){
@@ -39,6 +49,7 @@ function showResults () {
     var html = '';
     for (var e in bookListArray) {
         var bookDirectUrl = '/books/'+ bookListArray[e]._id.toString();
+        var authorURL = '/profile/' + bookListArray[e].writerID.toString();
         console.log(bookDirectUrl);
         var bookname = bookListArray[e].bookname.toString();
         var bookgenre = bookListArray[e].bookgenre;
@@ -48,7 +59,7 @@ function showResults () {
         console.log(bookname);
         html += '<tr>'
             +'<td>' + '<a href=' + bookDirectUrl + '>' + bookname + '</a>' + '</td>'
-            +'<td>'+bookListArray[e].writerName+'</td>'
+            +'<td>'+'<a href=' + authorURL + '>' + bookListArray[e].writerName+ '</a>' +'</td>'
             +'<td>'+bookgenre+'</td>'
             +'</tr>';
     }
@@ -62,7 +73,7 @@ bookListArray.forEach(function(elem){
 });
 
 console.log(bookNameListForMatch);
-
+//<a href= <%= "/profile/"+bookList[i].writerID.toString() %>><%= bookList[i].writerName.toString() %></a>
 var substringMatcher = function(strs) {
     return function findMatches(q, cb) {
         var matches, substringRegex;
@@ -85,13 +96,4 @@ var substringMatcher = function(strs) {
     };
 };
 
-$('.form-group .typeahead').typeahead({
-            hint: true,
-            highlight: true,
-            minLength: 1
-        },
-        {
-            name: 'states',
-            source: substringMatcher(bookNameListForMatch)
-        });
 
