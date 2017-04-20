@@ -324,7 +324,7 @@ exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
         var books = db.collection('Books');
         return books.findOne({'_id': new ObjectId(bookId)})
             .then(function (result) {
-                return [result.chapters[chapterIdx], result.chapters.length];
+                return [result.chapters[chapterIdx], result.chapters.length, result.writerID];
             })
     }).then(function (item) {
         return item;
@@ -495,4 +495,22 @@ exports.searchBookByName = function(bookNameSearched){
     }).then(function(items){
         return items;
     });
+
+exports.insertCommentToABook = function (bookId, comment) {
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+        var book = db.collection('Books');
+        books.updateOne(
+            {
+                "_id" : new ObjectId(bookId)
+            },
+            {
+                $push: {
+                    comments:{
+                        comment:comment
+                    }
+                }
+            },
+            {upsert: true}
+        )
+    })
 };

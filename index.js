@@ -225,7 +225,9 @@ app.post('/publishBook', function (req, res) {
 
 // profile page, where user can check books published by him/her and books subscribed by him/her
 app.get('/profile/:userId', function (req, res) {
+    if (req.user == null)
     var userId = req.params.userId;
+
     var userRole = req.user.role;
     //var user = req.user;
     funct.queryUserBasedOnID(userId).then(function (item) {
@@ -313,7 +315,8 @@ app.get('/books/:bookId/chapter/:chapterIdx', function (req, res) {
             chapterId: chapterInfos[0]._id,
             bookId: bookId,
             chapterIdx: chapterIdx,
-            chapterMax: chapterInfos[1] - 1
+            chapterMax: chapterInfos[1] - 1,
+            writerId : chapterInfos[2]
         });
     })
 });
@@ -396,12 +399,9 @@ app.post('/service/editChapter', function(req, res) {
     var chapterTitle = req.body.title;
     var chapterContent = req.body.chapterContent;
     var chapterId = req.body.chapterId;
-    console.log(chapterTitle);
-    console.log(chapterContent);
-    console.log(chapterId);
-    console.log(bookId);
     funct.insertEditedChapterToABook(bookId, chapterId, chapterTitle, chapterContent, req, res);
 });
+
 
 app.post('/service/searchBookName', function(req, res){
     var bookNameSearched = req.body.bookNameSearched;
@@ -420,6 +420,15 @@ app.post('/service/searchBookName', function(req, res){
         });
     }, function (err) {
         console.log("error occurs, details: " + err);
+    })
+});
+
+
+app.post('/service/postComment', function (req, res) {
+    var comment = req.body.commentContent;
+    var bookId = req.body.bookid;
+    funct.insertCommentToABook(bookId, comment).then(function () {
+        res.redirect('/books/'+bookId);
     })
 });
 

@@ -98,7 +98,7 @@
     <a href= <%= "/books/"+ bookId + '/chapter/' + (parseInt(chapterIdx) + 1).toString()%>>Next Chapter</a>
     <%}%>
     <%if (user != null) {%>
-    <%if (user.role == "admin" || user.role == "writer") {%>
+    <%if (user.role == "admin" || user._id.toString() == writerId) {%>
     <button type="button" id = "delete-chapter" class='btn btn-default btn-md' onclick="deleteChapter()"> Delete this chapter </button>
     <a id='edit-chapter' href='/' class='btn btn-default btn-md' role='button'>Edit this chapter</a><p></p>
     <%}}%>
