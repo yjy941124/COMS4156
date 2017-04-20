@@ -1,6 +1,18 @@
 # COMS4156 [![Build Status](https://travis-ci.org/yjy941124/Forever-Read.svg?branch=master)](https://travis-ci.org/yjy941124/Forever-Read)
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### April 18 2017 - Yulong Qiao
+Function adjustment:
+- initially at homepage, booklists are displayed in alphabetical order
+- when clicked rank, booklists are displayed according to the number subscribed
+
+Search added:
+- search function, entries will be prompted with typeahead.js
+
+### April 18 2017 - Ruijue Ji
+UI improvement:
+-  Now navbar displays on every page
+
 ### April 14 2017 - Yulong Qiao
 bug fix:
 - starter-template.css and select-style.css in *layout.ejs* works correctly in chapter page
@@ -26,7 +38,7 @@ added:
 - Add rank and category display
 TODO:
 - Commenting
-- Rank
+- ~~Rank~~
 - ~~Category~~
 - Previous readme
 

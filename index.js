@@ -325,14 +325,14 @@ app.get('/books/:bookId/chapter/:chapterIdx', function (req, res) {
 app.get('/service/subscribeBook/:bookId', function (req, res) {
     var userId = req.user._id;
     var bookId = req.params.bookId;
-    funct.insertNewSubscriptionToUser(userId, bookId, req, res);
+    funct.insertNewSubscription(userId, bookId, req, res);
 });
 
 // get method, user unsubscribe book, delete item in user.subscription in database
 app.get('/service/unsubscribeBook/:bookId', function (req, res) {
     var bookId = req.params.bookId;
     var userId = req.user._id;
-    funct.deleteSubscriptionFromUser(userId, bookId, req, res);
+    funct.deleteSubscription(userId, bookId, req, res);
 });
 
 // get method, delete the book with bookId match
@@ -402,6 +402,28 @@ app.post('/service/editChapter', function(req, res) {
     funct.insertEditedChapterToABook(bookId, chapterId, chapterTitle, chapterContent, req, res);
 });
 
+
+app.post('/service/searchBookName', function(req, res){
+    var bookNameSearched = req.body.bookNameSearched;
+    console.log(bookNameSearched);
+    funct.searchBookByName(bookNameSearched).then(function(items){
+        var user = req.user;
+        var bookIDs = [];
+        var bookList = items;
+        bookList.forEach(function (elem) {
+            bookIDs.push(elem._id.toString());
+        });
+        res.render('home', {
+            user: user,
+            bookList: bookList,
+            bookIDs: bookIDs
+        });
+    }, function (err) {
+        console.log("error occurs, details: " + err);
+    })
+});
+
+
 app.post('/service/postComment', function (req, res) {
     var comment = req.body.commentContent;
     var bookId = req.body.bookid;
@@ -409,6 +431,7 @@ app.post('/service/postComment', function (req, res) {
         res.redirect('/books/'+bookId);
     })
 });
+
 
 //===============PORT=================
 var port = process.env.PORT || 5000;
