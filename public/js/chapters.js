@@ -47,9 +47,7 @@ $(document).ready(function () {
         var about = document.querySelector('input[name=commentContent]');
         console.log(JSON.stringify(quill.getContents));
         about.value = JSON.stringify(quill.getContents());
-        return false;
     };
-
 
 });
 function deletebook() {

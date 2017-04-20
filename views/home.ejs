@@ -93,7 +93,7 @@
                     <% var bookID= bookIDs[i].toString() %>
                     <p hidden id="parse-book-id"><%=bookID%></p>
                     <a href= <%= "/books/"+bookIDs[i].toString() %>> <%= bookList[i].bookname.toString() %></a></th>
-                <th><%= bookList[i].writerName.toString() %></th>
+                <th><a href= <%= "/profile/"+bookList[i].writerID.toString() %>><%= bookList[i].writerName.toString() %></a></th>
                 <% if(bookList[i].bookgenre!=null){%>
                 <th><%= bookList[i].bookgenre.toString()%></th>
                 <% } else {%>

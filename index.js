@@ -225,7 +225,9 @@ app.post('/publishBook', function (req, res) {
 
 // profile page, where user can check books published by him/her and books subscribed by him/her
 app.get('/profile/:userId', function (req, res) {
+    if (req.user == null)
     var userId = req.params.userId;
+
     var userRole = req.user.role;
     //var user = req.user;
     funct.queryUserBasedOnID(userId).then(function (item) {
@@ -403,9 +405,9 @@ app.post('/service/editChapter', function(req, res) {
 app.post('/service/postComment', function (req, res) {
     var comment = req.body.commentContent;
     var bookId = req.body.bookid;
-    console.log(comment);
-    console.log(bookId);
-    //funct.insertCommentToABook(bookId, comment)
+    funct.insertCommentToABook(bookId, comment).then(function () {
+        res.redirect('/books/'+bookId);
+    })
 });
 
 //===============PORT=================
