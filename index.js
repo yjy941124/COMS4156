@@ -313,7 +313,8 @@ app.get('/books/:bookId/chapter/:chapterIdx', function (req, res) {
             chapterId: chapterInfos[0]._id,
             bookId: bookId,
             chapterIdx: chapterIdx,
-            chapterMax: chapterInfos[1] - 1
+            chapterMax: chapterInfos[1] - 1,
+            writerId : chapterInfos[2]
         });
     })
 });
@@ -396,13 +397,16 @@ app.post('/service/editChapter', function(req, res) {
     var chapterTitle = req.body.title;
     var chapterContent = req.body.chapterContent;
     var chapterId = req.body.chapterId;
-    console.log(chapterTitle);
-    console.log(chapterContent);
-    console.log(chapterId);
-    console.log(bookId);
     funct.insertEditedChapterToABook(bookId, chapterId, chapterTitle, chapterContent, req, res);
 });
 
+app.post('/service/postComment', function (req, res) {
+    var comment = req.body.commentContent;
+    var bookId = req.body.bookid;
+    console.log(comment);
+    console.log(bookId);
+    //funct.insertCommentToABook(bookId, comment)
+});
 
 //===============PORT=================
 var port = process.env.PORT || 5000;
