@@ -497,9 +497,9 @@ exports.searchBookByName = function(bookNameSearched) {
     });
 };
 
-exports.insertCommentToABook = function (bookId, comment) {
+exports.insertCommentToABook = function (bookId, comment, username) {
     return MongoClient.connect(mongodbUrl).then(function (db) {
-        var book = db.collection('Books');
+        var books = db.collection('Books');
         books.updateOne(
             {
                 "_id" : new ObjectId(bookId)
@@ -507,7 +507,8 @@ exports.insertCommentToABook = function (bookId, comment) {
             {
                 $push: {
                     comments:{
-                        comment:comment
+                        comment:comment,
+                        commenter: username
                     }
                 }
             },
