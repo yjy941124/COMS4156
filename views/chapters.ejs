@@ -248,6 +248,7 @@
 
         </div>
     <!--</form>-->
+    <%if (book.comments != null) {%>
     <div id="comments">
         <p>Comments are below:</p>
         <%for (var i = 0; i < book.comments.length; i++) {%>
@@ -256,6 +257,7 @@
         <p>---------------</p>
         <%}%>
     </div>
+    <%}%>
     <div id="form-container" class="container">
         <form id="comment-form" action="/service/postComment" method="post">
             <input type="text" hidden name="commentContent">
