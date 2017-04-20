@@ -53,15 +53,25 @@ function showResults () {
         console.log(bookDirectUrl);
         var bookname = bookListArray[e].bookname.toString();
         var bookgenre = bookListArray[e].bookgenre;
+        var user_id = $('#parse-user-id').html();
         if (bookgenre == null){
             bookgenre = 'N/A';
         }
         console.log(bookname);
-        html += '<tr>'
-            +'<td>' + '<a href=' + bookDirectUrl + '>' + bookname + '</a>' + '</td>'
-            +'<td>'+'<a href=' + authorURL + '>' + bookListArray[e].writerName+ '</a>' +'</td>'
-            +'<td>'+bookgenre+'</td>'
-            +'</tr>';
+        console.log(user_id);
+        if (user_id !== undefined){
+            html += '<tr>'
+                    +'<td>' + '<a href=' + bookDirectUrl + '>' + bookname + '</a>' + '</td>'
+                    +'<td>'+'<a href=' + authorURL + '>' + bookListArray[e].writerName+ '</a>' +'</td>'
+                    +'<td>'+bookgenre+'</td>'
+                    +'</tr>';}
+        else{
+            html += '<tr>'
+                    +'<td>' + '<a href=' + bookDirectUrl + '>' + bookname + '</a>' + '</td>'
+                    +'<td>'+ bookListArray[e].writerName + '</td>'
+                    +'<td>'+bookgenre+'</td>'
+                    +'</tr>';
+        }
     }
     $('#booklist-display').html(html);
 }
