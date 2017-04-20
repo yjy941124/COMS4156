@@ -486,15 +486,16 @@ exports.insertEditedChapterToABook = function(bookId, chapterId, chapterTitle, c
 };
 
 // search book by name
-exports.searchBookByName = function(bookNameSearched){
+exports.searchBookByName = function(bookNameSearched) {
     var bookNameSearched = bookNameSearched;
     console.log("book searched is " + bookNameSearched);
-    return MongoClient.connect(mongodbUrl).then(function(db) {
+    return MongoClient.connect(mongodbUrl).then(function (db) {
         var books = db.collection('Books');
-        return books.find({ 'bookname':{$regex: bookNameSearched}}).toArray();
-    }).then(function(items){
+        return books.find({'bookname': {$regex: bookNameSearched}}).toArray();
+    }).then(function (items) {
         return items;
     });
+};
 
 exports.insertCommentToABook = function (bookId, comment) {
     return MongoClient.connect(mongodbUrl).then(function (db) {
