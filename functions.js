@@ -8,6 +8,15 @@ var mongodbUrl = 'mongodb://' + config.mongodbHost + ':27017/foreverRead';
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 
+var nodemailer = require('nodemailer');
+var smtpTransport = nodemailer.createTransport({
+   service: "Gmail",
+   auth: {
+       user: "forever.read.platform@gmail.com",
+       pass: "foreverread"
+   }
+});
+
 function IDGenerator() {
     var id = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -340,12 +349,22 @@ exports.insertNewSubscription = function (user_id, book_id, req, res) {
         var users = db.collection('Users');
         var books = db.collection('Books');
         var bookname;
+        var username;
+        var useremail;
+
         books.updateOne(
                 {'_id': new ObjectId(book_id)},
                 {$inc:{
                     'subscribedNumber':1
                 }}
                 );
+
+        users.findOne({'_id': new ObjectId(user_id)})
+            .then(function (to_user) {
+            username = (to_user.username);
+            useremail = (to_user.email.toString());
+        });
+
         books.findOne({'_id': new ObjectId(book_id)})
             .then(function (item) {
                 console.log('the subsribed number of this book is ' + item.subscribedNumber);
@@ -367,6 +386,21 @@ exports.insertNewSubscription = function (user_id, book_id, req, res) {
                     }).then(function () {
                     res.redirect('/books/' + book_id);
                 })
+
+
+                smtpTransport.sendMail({
+                   from: "forever.read.platform@gmail.com",
+                   to: useremail,
+                   subject: "Forever-Read: Successful Subscription",
+                   text: "Congratulations " + username + "! You have successfully subscribed to " + bookname + "!",
+                }, function(error){
+                   if(error){
+                       console.log(error);
+                   }else{
+                       console.log("Message sent");
+                   }
+                   smtpTransport.close();
+                });
             });
     });
 };
