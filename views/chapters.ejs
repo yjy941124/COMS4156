@@ -131,7 +131,7 @@
     <% } %>
 
     <p>Book: <%=book.bookname%></p>
-    <p>Author: <%=book.writerName%></p>
+    <p>Author: <a href=<%="/profile/"+book.writerID.toString()%> ><%=book.writerName%></a></p>
     <p hidden id="parse-author-id"><%=book.writerID%></p>
     <p>Genre: <% if(book.bookgenre!=null){%>
         <%= book.bookgenre.toString()%>
@@ -248,9 +248,16 @@
 
         </div>
     <!--</form>-->
+    <%if (book.comments != null) {%>
     <div id="comments">
-
+        <p>Comments are below:</p>
+        <%for (var i = 0; i < book.comments.length; i++) {%>
+        <p><%=book.comments[i].commenter%></p>
+        <p><%=(JSON.parse(book.comments[i].comment)).ops[0].insert%></p>
+        <p>---------------</p>
+        <%}%>
     </div>
+    <%}%>
     <div id="form-container" class="container">
         <form id="comment-form" action="/service/postComment" method="post">
             <input type="text" hidden name="commentContent">

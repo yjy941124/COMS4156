@@ -91,40 +91,8 @@
             <tbody id="booklist-display">
 
 
-            <tbody>
-            <% for(var i = 0; i < bookList.length; i++) {%>
-            <tr>
-                <th>
-                    <% var bookID= bookIDs[i].toString() %>
-                    <p hidden id="parse-book-id"><%=bookID%></p>
-                    <a href= <%= "/books/"+bookIDs[i].toString() %>> <%= bookList[i].bookname.toString() %></a></th>
-                <th><a href= <%= "/profile/"+bookList[i].writerID.toString() %>><%= bookList[i].writerName.toString() %></a></th>
-                <% if(bookList[i].bookgenre!=null){%>
-                <th><%= bookList[i].bookgenre.toString()%></th>
-                <% } else {%>
-                <th>N/A</th>
-                <% }%>
-            </tr>
-            <% } %>
 
-            </tbody>
 
-            <!--<tbody>-->
-            <!--<% for(var i = 0; i < bookList.length; i++) {%>-->
-            <!--<tr>-->
-                <!--<th>-->
-                    <!--<% var bookID= bookIDs[i].toString() %>-->
-                    <!--<p hidden id="parse-book-id"><%=bookID%></p>-->
-                    <!--<a href= <%= "/books/"+bookIDs[i].toString() %>> <%= bookList[i].bookname.toString() %></a></th>-->
-                <!--<th><%= bookList[i].writerName.toString() %></th>-->
-                <!--<% if(bookList[i].bookgenre!=null){%>-->
-                <!--<th><%= bookList[i].bookgenre.toString()%></th>-->
-                <!--<% } else {%>-->
-                <!--<th>N/A</th>-->
-                <!--<% }%>-->
-            <!--</tr>-->
-            <!--<% } %>-->
-            <!--</tbody>-->
         </table>
     </div>
     <% if (user != null) { %>
@@ -151,7 +119,7 @@
             <li> haha</li>
     </div>&lt;!&ndash; /.container-fluid &ndash;&gt;
   </nav>-->
-    <script type="text/javascript" src="../../public/js/typeahead.js" defer></script>
+    <script type="text/javascript" src="../../public/vendor/js/typeahead.js" defer></script>
 <script type="text/javascript" src="../../public/js/home.js" defer></script>
 <link href="../../public/css/home.css" rel="stylesheet" type="text/css">
 

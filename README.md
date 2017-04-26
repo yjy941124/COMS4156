@@ -1,6 +1,17 @@
 # COMS4156 [![Build Status](https://travis-ci.org/yjy941124/Forever-Read.svg?branch=master)](https://travis-ci.org/yjy941124/Forever-Read)
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### April 25 Yulong Qiao
+localization:
+- Bootstrap, jQuery and typeahead now localized in /public/vender, both css and js
+- **src** and **href** in layout.ejs now changed to local files
+
+### April 19 - April 25 Jinyang Yu
+Bug Fix:
+fixed various bugs which occurs in function integral / UI design
+Functions added:
+- User can now comment on One book
+
 ### April 18 2017 - Yulong Qiao
 Function adjustment:
 - initially at homepage, booklists are displayed in alphabetical order

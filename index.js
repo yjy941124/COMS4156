@@ -225,23 +225,28 @@ app.post('/publishBook', function (req, res) {
 
 // profile page, where user can check books published by him/her and books subscribed by him/her
 app.get('/profile/:userId', function (req, res) {
-    if (req.user == null)
-    var userId = req.params.userId;
+    if (req.user != null) {
 
-    var userRole = req.user.role;
-    //var user = req.user;
-    funct.queryUserBasedOnID(userId).then(function (item) {
-        var user = item;
-        funct.queryPublicationFromWriter(userId).then(function (set) {
-            res.render('profile', {
-                userID: req.params.userId,
-                userRole: userRole,
-                publication: set.publication,
-                subscription: set.subscription,
-                user: user
+        var userId = req.params.userId;
+        var userRole = req.user.role;
+        //var user = req.user;
+        funct.queryUserBasedOnID(userId).then(function (item) {
+            var user = item;
+            funct.queryPublicationFromWriter(userId).then(function (set) {
+                console.log(set);
+                console.log('here');
+                res.render('profile', {
+                    userID: req.params.userId,
+                    userRole: userRole,
+                    publication: set.publication,
+                    subscription: set.subscription,
+                    user: user
+                });
             });
         });
-    });
+    } else {
+        res.send('Please log in!')
+    }
 });
 
 /* since we have a render-for-all situation, I only render bookId to fetch all chapters */
@@ -427,8 +432,16 @@ app.post('/service/searchBookName', function(req, res){
 app.post('/service/postComment', function (req, res) {
     var comment = req.body.commentContent;
     var bookId = req.body.bookid;
-    funct.insertCommentToABook(bookId, comment).then(function () {
+    var userName;
+    if (req.user == null) {
+        userName = 'Anonymous';
+    } else {
+        userName = req.body.username;
+    }
+    console.log(comment);
+    funct.insertCommentToABook(bookId, comment, userName).then(function () {
         res.redirect('/books/'+bookId);
+
     })
 });
 
