@@ -26,6 +26,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 var config = require('./config.js'), //config file contains all tokens and other private info
     funct = require('./functions.js');
+var nodemailer = require('nodemailer');
 
 //test if ignore works.
 
