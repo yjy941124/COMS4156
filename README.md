@@ -1,6 +1,22 @@
 # COMS4156 [![Build Status](https://travis-ci.org/yjy941124/Forever-Read.svg?branch=master)](https://travis-ci.org/yjy941124/Forever-Read)
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### April 27 Yulong Qiao
+attribute changed:
+- add **emailaddr** attribute for every entry in db.Users, thus to continue you have to db.Dropdatabase()
+
+functions added:
+- by utilizing emailJS, we now have achieved two functions:
+  - When a user subscribes a book, he will get an email about this subscription
+  - When one book updates a new chpater, each user subscribed to this book will receive a notification regard this new chapter release
+
+Note:
+To get rid of the credential issue, you mush put ```credential.json``` in root directory, which is available at our Google Drive. And it's ignored by Git to ensure the security of info.
+
+TODO:
+- discuss functions related to email
+- add frontend js for signin/signup, validate email, not empty, etc...
+
 ### April 25 Yulong Qiao
 localization:
 - Bootstrap, jQuery and typeahead now localized in /public/vender, both css and js
