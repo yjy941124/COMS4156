@@ -163,15 +163,15 @@ app.get('/signup', function(req, res) {
 // sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
 app.post('/local-reg', function (req, res) {
     passport.authenticate('local-signup', {
-        successRedirect: '/',
-        failureRedirect: '/signin'
+        successRedirect: '/signup'
+        // failureRedirect: '/signin'
     })(req, res);
 });
 
 // sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page
 app.post('/login', passport.authenticate('local-signin', {
-        successRedirect: '/',
-        failureRedirect: '/signin'
+         successRedirect: '/signin'
+         // failureRedirect: '/signin'
     })
 );
 

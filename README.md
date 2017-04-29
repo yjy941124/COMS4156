@@ -1,6 +1,16 @@
 # COMS4156 [![Build Status](https://travis-ci.org/yjy941124/Forever-Read.svg?branch=master)](https://travis-ci.org/yjy941124/Forever-Read)
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### April 29, Yulong Qiao
+
+Functions added:
+- Now function **signin**'s validator is added, in a hack way.
+  - will prompt instructions
+  
+Files added:
+- jquery's ajax form javascript.
+- **singinValidator** and **signin.js** both for signin function.
+
 ### April 28, Yulong Qiao
 Move on to adjust signin / signup function
 
