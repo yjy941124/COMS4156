@@ -71,7 +71,7 @@ passport.use('local-signup', new LocalStrategy(
     {passReqToCallback: true}, //allows us to pass back the request to the callback
     function (req, username, password, done) {
 
-        funct.localReg(username, password, req.body.role)
+        funct.localReg(username, password, req.body.role, req.body.email)
             .then(function (user) {
                 if (user) {
                     console.log("REGISTERED: " + user.username);
@@ -80,7 +80,7 @@ passport.use('local-signup', new LocalStrategy(
                 }
                 if (!user) {
                     console.log("COULD NOT REGISTER");
-                    req.session.error = 'That username is already in use, please try a different one.'; //inform user could not log them in
+                    req.session.error = 'That username or emailaddress is already in use, please try a different one.'; //inform user could not log them in
                     done(null, user);
                 }
             })
@@ -155,18 +155,23 @@ app.get('/signin', function (req, res) {
     res.render('signin');
 });
 
+// display signup page, where you can signup for a forever read account
+app.get('/signup', function(req, res) {
+    res.render('signup');
+});
+
 // sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
 app.post('/local-reg', function (req, res) {
     passport.authenticate('local-signup', {
-        successRedirect: '/',
-        failureRedirect: '/signin'
+        successRedirect: '/signup'
+        // failureRedirect: '/signup'
     })(req, res);
 });
 
 // sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page
 app.post('/login', passport.authenticate('local-signin', {
-        successRedirect: '/',
-        failureRedirect: '/signin'
+         successRedirect: '/signin'
+         // failureRedirect: '/signin'
     })
 );
 

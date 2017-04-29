@@ -89,6 +89,9 @@
     <a href="/" id = "back">Back to Home Page</a>
     <p hidden id="parse-user-id"><%=userID%></p>
     <p hidden id="parse-user-role"><%=userRole%></p>
+    <% if (user!=null){%>
+    <p>Email Address: <%=user.emailaddr%></p>
+    <%}%>
     <% if (publication != undefined) {%>
     <br></br>
     <div id="publication-list">
