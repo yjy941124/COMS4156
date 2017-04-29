@@ -36,6 +36,19 @@ $(document).ready(function () {
     var profileRedirectURL = "/profile/" + user_id;
     $("#profile-redirect-url").attr("href", profileRedirectURL);
 
+    var quill = new Quill('#editor-container', {
+        placeholder: 'Compose an epic...',
+        theme: 'snow'
+    });
+
+    var form = document.querySelector('#comment-form');
+    form.onsubmit = function() {
+        // Populate hidden form on submit
+        var about = document.querySelector('input[name=commentContent]');
+        console.log(JSON.stringify(quill.getContents));
+        about.value = JSON.stringify(quill.getContents());
+    };
+
 });
 function deletebook() {
     $.ajax({

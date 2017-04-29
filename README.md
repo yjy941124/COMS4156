@@ -1,6 +1,69 @@
 # COMS4156 [![Build Status](https://travis-ci.org/yjy941124/Forever-Read.svg?branch=master)](https://travis-ci.org/yjy941124/Forever-Read)
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### April 29, Yulong Qiao
+
+Full Functions added:
+- Now function **signin**'s validator is added, in a hack way.
+  - will prompt instructions
+- Now function **signup**'s validator is added, in a hack way.
+  - will prompt instructions
+  
+Files added:
+- jquery's ajax form javascript.
+- **singinValidator** and **signin.js** both for signin function.
+- **localRegValidator** and **signup.js** both for signin function.
+
+
+### April 28, Yulong Qiao
+Move on to adjust signin / signup function
+
+Modified:
+- To seperate signin and signup, rename old version *signin.ejs* to *signin.archived.ejs* and *signin.css* to *signin.archived.css*
+- Add **signin.ejs** and **signup.ejs**, modified UI of signIn process
+
+TODO:
+- add frontend files and rules for submitting forms w.r.t. signin and signup
+
+### April 27 Yulong Qiao
+attribute changed:
+- add **emailaddr** attribute for every entry in db.Users, thus to continue you have to db.Dropdatabase()
+
+functions added:
+- by utilizing emailJS, we now have achieved two functions:
+  - When a user subscribes a book, he will get an email about this subscription
+  - When one book updates a new chpater, each user subscribed to this book will receive a notification regard this new chapter release
+
+Note:
+To get rid of the credential issue, you mush put ```credential.json``` in root directory, which is available at our Google Drive. And it's ignored by Git to ensure the security of info.
+
+TODO:
+- discuss functions related to email
+- add frontend js for signin/signup, validate email, not empty, etc...
+
+### April 25 Yulong Qiao
+localization:
+- Bootstrap, jQuery and typeahead now localized in /public/vender, both css and js
+- **src** and **href** in layout.ejs now changed to local files
+
+### April 19 - April 25 Jinyang Yu
+Bug Fix:
+fixed various bugs which occurs in function integral / UI design
+Functions added:
+- User can now comment on One book
+
+### April 18 2017 - Yulong Qiao
+Function adjustment:
+- initially at homepage, booklists are displayed in alphabetical order
+- when clicked rank, booklists are displayed according to the number subscribed
+
+Search added:
+- search function, entries will be prompted with typeahead.js
+
+### April 18 2017 - Ruijue Ji
+UI improvement:
+-  Now navbar displays on every page
+
 ### April 14 2017 - Yulong Qiao
 bug fix:
 - starter-template.css and select-style.css in *layout.ejs* works correctly in chapter page
@@ -26,7 +89,7 @@ added:
 - Add rank and category display
 TODO:
 - Commenting
-- Rank
+- ~~Rank~~
 - ~~Category~~
 - Previous readme
 

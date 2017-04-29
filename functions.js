@@ -8,6 +8,72 @@ var mongodbUrl = 'mongodb://' + config.mongodbHost + ':27017/foreverRead';
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 
+
+// read credential information from credential.json, which is gitignored
+var conf = require('./credential.json');
+
+//setup EmailJS smtp information, note that we store our email sending acct infomation at OS level
+//you can also set up account infomation in .profile or .bashrc
+// export EMAIL_HOST=''
+// export EMAIL_USER=''
+// export EMAIL_PASS=''
+// export EMAIL_FROM=''
+
+var EM = {};
+
+var email = require('emailjs');
+EM.server = email.server.connect({
+    host: conf.host || 'smtp.gmail.com',
+    user: conf.user || 'this-email-address@gmail.com',
+    password: conf.password || '012345',
+    ssl: true
+});
+
+EM.dispatchSubscription = function(account, book, callback){
+    EM.server.send({
+        from: conf.user || 'Forever Read <do-not-reply@gmail.com>',
+        to: account.emailaddr,
+        subject: 'Subscription Alert',
+        text: 'You have subscribed to something interesting in Forever Read',
+        attachment: EM.composeSubscriptionEmail(account, book)
+    },callback);
+};
+
+EM.dispatchChapterUpdate = function(account, book, chapter, callback){
+    EM.server.send({
+        from: conf.user || 'Forever Read <do-not-reply@gmail.com>',
+        to: account.emailaddr,
+        subject: 'The book' + book.bookname + ' just release a new chapter!',
+        text: 'A new chapter is a go!',
+        attachment: EM.composeChapterUpdateEmail(account, book, chapter)
+    },callback);
+};
+
+EM.composeSubscriptionEmail = function(o1, o2){
+    var html = "<html><body>";
+    html += "Hi, " + o1.username + ",<br>";
+    html += "You have subscribed to book " + o2.bookname +"<br>";
+    html += "Log into Forever Read to read more!<br>";
+    html += "Cheers,<br>";
+    html += "Forever Read";
+    html += "</body></html>";
+    return [{data: html, alternative:true}];
+};
+
+EM.composeChapterUpdateEmail = function(o1, o2, o3){
+    var html = "<html><body>";
+    html += 'Hi, ' + o1.username + ",<br>";
+    html += 'You have subscribed to book ' + o2.bookname + '<br>';
+    html += 'It now releases a new chapter ' + o3 + '<br>';
+    html += 'Log into Forever Read to read more!';
+    html += 'Cheers,<br>';
+    html += 'Forever Read';
+    html += '</body></html>';
+    return [{data:html, alternative: true}];
+};
+
+
+
 function IDGenerator() {
     var id = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -19,17 +85,24 @@ function IDGenerator() {
 }
 
 // used in local-signup strategy
-exports.localReg = function (username, password, role) {
+exports.localReg = function (username, password, role, email) {
     var deferred = Q.defer();
     var userID = IDGenerator;
     var IDexist = true;
     MongoClient.connect(mongodbUrl, function (err, db) {
         var collection = db.collection('Users');
-        //check if username is already assigned in our database
-        collection.findOne({'username': username})
+        //check if username or email address is already assigned in our database
+        //if collection.findOne({}) query returns null, then we can register this new user to database
+        collection.findOne({
+            $or:[
+                {'username': username},
+                {'emailaddr': email}
+                ]})
             .then(function (result) {
                 if (null != result) {
-                    console.log("USERNAME ALREADY EXISTS:", result.username);
+                    console.log("USERNAME OR EMAIL ADDRESS ALREADY EXISTS")
+                    console.log("USERNAME:", result.username);
+                    console.log("EMAIL ADDRESS:", result.emailaddr);
                     deferred.resolve(false); // username exists
                 }
                 else {
@@ -37,7 +110,8 @@ exports.localReg = function (username, password, role) {
                     var user = {
                         "username": username,
                         "password": hash,
-                        "role": role
+                        "role": role,
+                        "emailaddr": email
                     };
 
                     console.log("CREATING USER:", username);
@@ -140,7 +214,8 @@ exports.publishBook = function (req, res) {
         'bookdes': bookdes,
         'bookgenre': bookgenre,
         'writerID': writerID,
-        'writerName': writerName
+        'writerName': writerName,
+        'subscribedNumber':0
     };
     var book_id;
     return MongoClient.connect(mongodbUrl).then(function (db) {
@@ -294,8 +369,25 @@ exports.queryBookinfoFromID = function (book_id) {
 // insert new object to db.Books.chapters as {_id, title, content} with Books._id=book_id
 exports.insertNewChapterToABook = function (req, res) {
     var book_id = req.body.bookid[0];
+    var book;
+    var chapter = req.body.title;
+    var account;
     MongoClient.connect(mongodbUrl).then(function (db) {
         var books = db.collection('Books');
+        books.findOne({'_id': new ObjectId(book_id)}).then(function(elem){
+            book = elem;
+        });
+        var users = db.collection('Users');
+        users.find({'subscriptions':{$elemMatch:{bookId: book_id}}}).forEach(function(item){
+            console.log("chapter is " + chapter);
+            console.log("book is" + book);
+            console.log(book.bookname);
+            console.log("account is"+ item);
+            console.log(item.emailaddr);
+            account = item;
+            EM.dispatchChapterUpdate(account, book, chapter);
+
+        });
         books.findOneAndUpdate(
             {'_id': new ObjectId(book_id)},
             {
@@ -323,7 +415,7 @@ exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
         var books = db.collection('Books');
         return books.findOne({'_id': new ObjectId(bookId)})
             .then(function (result) {
-                return [result.chapters[chapterIdx], result.chapters.length];
+                return [result.chapters[chapterIdx], result.chapters.length, result.writerID];
             })
     }).then(function (item) {
         return item;
@@ -334,14 +426,30 @@ exports.queryOneChapterFromBook = function (chapterIdx, bookId) {
 // insert new subscription to user
 // checking db.Books, find bookname of object with Books._id==book_id
 // finding Users object in db.Users with Users._id==user_id, insert new object {_id,bookId,bookname} to .subscriptions
-exports.insertNewSubscriptionToUser = function (user_id, book_id, req, res) {
+exports.insertNewSubscription = function (user_id, book_id, req, res) {
     MongoClient.connect(mongodbUrl).then(function (db) {
         var users = db.collection('Users');
         var books = db.collection('Books');
         var bookname;
+        var book;
+        var account;
+        books.updateOne(
+                {'_id': new ObjectId(book_id)},
+                {$inc:{
+                    'subscribedNumber':1
+                }}
+                );
         books.findOne({'_id': new ObjectId(book_id)})
             .then(function (item) {
+                book = item;
+                console.log('book is '+ book);
+                console.log('the subsribed number of this book is ' + item.subscribedNumber);
                 bookname = (item.bookname);
+                users.findOne({'_id': new ObjectId(user_id)}).then(function(elem){
+                    var account = elem;
+                    console.log('account is '+ account);
+                    EM.dispatchSubscription(account, book);
+                });
                 users.findOneAndUpdate(
                     {'_id': new ObjectId(user_id)},
                     {
@@ -365,9 +473,16 @@ exports.insertNewSubscriptionToUser = function (user_id, book_id, req, res) {
 
 // delete one subscription object from user
 // finding Users object in db.Users with Users._id==user_id, delete object.subscriptions with BookId==book_id
-exports.deleteSubscriptionFromUser = function (user_id, book_id, req, res) {
+exports.deleteSubscription = function (user_id, book_id, req, res) {
     MongoClient.connect(mongodbUrl).then(function (db) {
         var users = db.collection('Users');
+        var books = db.collection('Books');
+        books.updateOne(
+                {'_id': new ObjectId(book_id)},
+                {$inc:{
+                    'subscribedNumber':-1
+                }}
+        );
         users.findOneAndUpdate(
             {'_id': new ObjectId(user_id)},
             {
@@ -468,4 +583,36 @@ exports.insertEditedChapterToABook = function(bookId, chapterId, chapterTitle, c
     }).then(function(){
         res.redirect('/books/' + bookId);
     });
+};
+
+// search book by name
+exports.searchBookByName = function(bookNameSearched) {
+    var bookNameSearched = bookNameSearched;
+    console.log("book searched is " + bookNameSearched);
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+        var books = db.collection('Books');
+        return books.find({'bookname': {$regex: bookNameSearched}}).toArray();
+    }).then(function (items) {
+        return items;
+    });
+};
+
+exports.insertCommentToABook = function (bookId, comment, username) {
+    return MongoClient.connect(mongodbUrl).then(function (db) {
+        var books = db.collection('Books');
+        books.updateOne(
+            {
+                "_id" : new ObjectId(bookId)
+            },
+            {
+                $push: {
+                    comments:{
+                        comment:comment,
+                        commenter: username
+                    }
+                }
+            },
+            {upsert: true}
+        )
+    })
 };

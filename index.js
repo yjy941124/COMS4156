@@ -71,7 +71,7 @@ passport.use('local-signup', new LocalStrategy(
     {passReqToCallback: true}, //allows us to pass back the request to the callback
     function (req, username, password, done) {
 
-        funct.localReg(username, password, req.body.role)
+        funct.localReg(username, password, req.body.role, req.body.email)
             .then(function (user) {
                 if (user) {
                     console.log("REGISTERED: " + user.username);
@@ -80,7 +80,7 @@ passport.use('local-signup', new LocalStrategy(
                 }
                 if (!user) {
                     console.log("COULD NOT REGISTER");
-                    req.session.error = 'That username is already in use, please try a different one.'; //inform user could not log them in
+                    req.session.error = 'That username or emailaddress is already in use, please try a different one.'; //inform user could not log them in
                     done(null, user);
                 }
             })
@@ -155,18 +155,23 @@ app.get('/signin', function (req, res) {
     res.render('signin');
 });
 
+// display signup page, where you can signup for a forever read account
+app.get('/signup', function(req, res) {
+    res.render('signup');
+});
+
 // sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
 app.post('/local-reg', function (req, res) {
     passport.authenticate('local-signup', {
-        successRedirect: '/',
-        failureRedirect: '/signin'
+        successRedirect: '/signup'
+        // failureRedirect: '/signup'
     })(req, res);
 });
 
 // sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page
 app.post('/login', passport.authenticate('local-signin', {
-        successRedirect: '/',
-        failureRedirect: '/signin'
+         successRedirect: '/signin'
+         // failureRedirect: '/signin'
     })
 );
 
@@ -225,21 +230,28 @@ app.post('/publishBook', function (req, res) {
 
 // profile page, where user can check books published by him/her and books subscribed by him/her
 app.get('/profile/:userId', function (req, res) {
-    var userId = req.params.userId;
-    var userRole = req.user.role;
-    //var user = req.user;
-    funct.queryUserBasedOnID(userId).then(function (item) {
-        var user = item;
-        funct.queryPublicationFromWriter(userId).then(function (set) {
-            res.render('profile', {
-                userID: req.params.userId,
-                userRole: userRole,
-                publication: set.publication,
-                subscription: set.subscription,
-                user: user
+    if (req.user != null) {
+
+        var userId = req.params.userId;
+        var userRole = req.user.role;
+        //var user = req.user;
+        funct.queryUserBasedOnID(userId).then(function (item) {
+            var user = item;
+            funct.queryPublicationFromWriter(userId).then(function (set) {
+                console.log(set);
+                console.log('here');
+                res.render('profile', {
+                    userID: req.params.userId,
+                    userRole: userRole,
+                    publication: set.publication,
+                    subscription: set.subscription,
+                    user: user
+                });
             });
         });
-    });
+    } else {
+        res.send('Please log in!')
+    }
 });
 
 /* since we have a render-for-all situation, I only render bookId to fetch all chapters */
@@ -313,7 +325,8 @@ app.get('/books/:bookId/chapter/:chapterIdx', function (req, res) {
             chapterId: chapterInfos[0]._id,
             bookId: bookId,
             chapterIdx: chapterIdx,
-            chapterMax: chapterInfos[1] - 1
+            chapterMax: chapterInfos[1] - 1,
+            writerId : chapterInfos[2]
         });
     })
 });
@@ -322,14 +335,14 @@ app.get('/books/:bookId/chapter/:chapterIdx', function (req, res) {
 app.get('/service/subscribeBook/:bookId', function (req, res) {
     var userId = req.user._id;
     var bookId = req.params.bookId;
-    funct.insertNewSubscriptionToUser(userId, bookId, req, res);
+    funct.insertNewSubscription(userId, bookId, req, res);
 });
 
 // get method, user unsubscribe book, delete item in user.subscription in database
 app.get('/service/unsubscribeBook/:bookId', function (req, res) {
     var bookId = req.params.bookId;
     var userId = req.user._id;
-    funct.deleteSubscriptionFromUser(userId, bookId, req, res);
+    funct.deleteSubscription(userId, bookId, req, res);
 });
 
 // get method, delete the book with bookId match
@@ -396,11 +409,45 @@ app.post('/service/editChapter', function(req, res) {
     var chapterTitle = req.body.title;
     var chapterContent = req.body.chapterContent;
     var chapterId = req.body.chapterId;
-    console.log(chapterTitle);
-    console.log(chapterContent);
-    console.log(chapterId);
-    console.log(bookId);
     funct.insertEditedChapterToABook(bookId, chapterId, chapterTitle, chapterContent, req, res);
+});
+
+
+app.post('/service/searchBookName', function(req, res){
+    var bookNameSearched = req.body.bookNameSearched;
+    console.log(bookNameSearched);
+    funct.searchBookByName(bookNameSearched).then(function(items){
+        var user = req.user;
+        var bookIDs = [];
+        var bookList = items;
+        bookList.forEach(function (elem) {
+            bookIDs.push(elem._id.toString());
+        });
+        res.render('home', {
+            user: user,
+            bookList: bookList,
+            bookIDs: bookIDs
+        });
+    }, function (err) {
+        console.log("error occurs, details: " + err);
+    })
+});
+
+
+app.post('/service/postComment', function (req, res) {
+    var comment = req.body.commentContent;
+    var bookId = req.body.bookid;
+    var userName;
+    if (req.user == null) {
+        userName = 'Anonymous';
+    } else {
+        userName = req.body.username;
+    }
+    console.log(comment);
+    funct.insertCommentToABook(bookId, comment, userName).then(function () {
+        res.redirect('/books/'+bookId);
+
+    })
 });
 
 
