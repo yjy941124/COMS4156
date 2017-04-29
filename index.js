@@ -155,6 +155,11 @@ app.get('/signin', function (req, res) {
     res.render('signin');
 });
 
+// display signup page, where you can signup for a forever read account
+app.get('/signup', function(req, res) {
+    res.render('signup');
+});
+
 // sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
 app.post('/local-reg', function (req, res) {
     passport.authenticate('local-signup', {

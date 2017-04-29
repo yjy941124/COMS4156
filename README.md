@@ -1,6 +1,16 @@
 # COMS4156 [![Build Status](https://travis-ci.org/yjy941124/Forever-Read.svg?branch=master)](https://travis-ci.org/yjy941124/Forever-Read)
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
+### April 28, Yulong Qiao
+Move on to adjust signin / signup function
+
+Modified:
+- To seperate signin and signup, rename old version *signin.ejs* to *signin.archived.ejs* and *signin.css* to *signin.archived.css*
+- Add **signin.ejs** and **signup.ejs**, modified UI of signIn process
+
+TODO:
+- add frontend files and rules for submitting forms w.r.t. signin and signup
+
 ### April 27 Yulong Qiao
 attribute changed:
 - add **emailaddr** attribute for every entry in db.Users, thus to continue you have to db.Dropdatabase()
