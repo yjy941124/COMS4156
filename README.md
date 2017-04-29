@@ -3,13 +3,17 @@ This is the final project of COMS 4156, co-authored by four members from the cla
 
 ### April 29, Yulong Qiao
 
-Functions added:
+Full Functions added:
 - Now function **signin**'s validator is added, in a hack way.
+  - will prompt instructions
+- Now function **signup**'s validator is added, in a hack way.
   - will prompt instructions
   
 Files added:
 - jquery's ajax form javascript.
 - **singinValidator** and **signin.js** both for signin function.
+- **localRegValidator** and **signup.js** both for signin function.
+
 
 ### April 28, Yulong Qiao
 Move on to adjust signin / signup function

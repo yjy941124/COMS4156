@@ -80,7 +80,7 @@ passport.use('local-signup', new LocalStrategy(
                 }
                 if (!user) {
                     console.log("COULD NOT REGISTER");
-                    req.session.error = 'That username is already in use, please try a different one.'; //inform user could not log them in
+                    req.session.error = 'That username or emailaddress is already in use, please try a different one.'; //inform user could not log them in
                     done(null, user);
                 }
             })
@@ -164,7 +164,7 @@ app.get('/signup', function(req, res) {
 app.post('/local-reg', function (req, res) {
     passport.authenticate('local-signup', {
         successRedirect: '/signup'
-        // failureRedirect: '/signin'
+        // failureRedirect: '/signup'
     })(req, res);
 });
 
