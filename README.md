@@ -15,6 +15,7 @@ UI improvement:
 
 Homepage and Rankpage
 - Homepage and Rankpage now seperates with different buttons on navbar in active.
+- now typeahead.css functions properly
 
 ### April 29, Yulong Qiao
 
