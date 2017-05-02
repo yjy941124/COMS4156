@@ -43,9 +43,6 @@
 }
 
 #book_info{
-    border: dashed;
-    border-color: #265a88;
-    border-width: 2px;
     padding-top: 20px;
     padding-left: 30px;
     padding-bottom: 20px;
@@ -55,12 +52,13 @@
 
 #book_actions{
     margin-left: 50px;
-    margin-right: 50px;
-
+    margin-right: 150px;
+    font-family: "Arial Rounded MT Bold";
 }
 
 #actions{
-    padding-top: 20px;
+    padding-top: 0px;
+    text-align: center;
 }
 
 #comments{
@@ -71,8 +69,17 @@
 
 #chapters{
     margin-top: 30px;
-    margin-left: 50px;
+    margin-left: 60px;
     margin-right: 50px;
+    padding-left: 30px;
+
+}
+
+#comments{
+    margin-top: 30px;
+    margin-left: 60px;
+    margin-right: 50px;
+    padding-left: 30px;
 }
 
 #container{
@@ -88,8 +95,15 @@
 }
 
 #table-for-chapter-menu{
-    margin: auto;
+text-align: center;
 }
+
+
+td{
+    font-size: medium;
+}
+
+
 
 .alert{
     display: none;
@@ -107,5 +121,16 @@
     margin-left: 200px;
     margin-right: 200px;
     margin-top: 150px;
+}
+
+#all{
+    background-color: rgba(255,255,255,0.3);
+}
+
+hr {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+
 }
 
