@@ -159,31 +159,33 @@
             <div id = "actions" class="col-md-3">
                 <% if (user!=null){%>
                 <!--testing -->
-                <% var isSubscribed =false %>
-                <% if (user.subscriptions!=null){%>
-                <% for(var i = 0; i < user.subscriptions.length; i++) {%>
-                <% if (bookID==user.subscriptions[i].bookId){%>
-                <% isSubscribed=true}}}%>
+                    <% var isSubscribed =false %>
+                    <% if (user.subscriptions!=null){%>
+                        <% for(var i = 0; i < user.subscriptions.length; i++) {%>
+                            <% if (bookID==user.subscriptions[i].bookId){%>
+                                <% isSubscribed=true}}}%>
                 <!-- use jQuery to subscribe or unsubscribe-->
-                <% if (isSubscribed==true){%>
-                <a id='unsubscribe-book' href='/' class='btn btn-default btn-md' role='button'>Unsubscribe this book</a>
+                    <% if (isSubscribed==true){%>
+                    <a id='unsubscribe-book' href='/' class='btn btn-default btn-md' role='button'>Unsubscribe this book</a>
+                    <%}else{%>
+                    <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe this book</a>
+                    <%}%>
+
+                    <%if (user._id == book.writerID) {%>
+                    <button type="button" id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md' data-toggle="modal" data-target="#bookinfo_modal"> Edit Book Information </button><p></p>
+
+                    <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><p></p>
+                    <%}%>
+
+                    <%if (user.role == "admin" || user.role == "writer" && user._id == book.writerID) {%>
+                    <button type="button" id = "delete-book" class='btn btn-default btn-md' onclick="deletebook()"> Delete this book </button>
+                    <%}%>
                 <%}else{%>
-                <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe this book</a><br></br>
+                    <h4>Sign in to experience FULL features, such as subscribe and edit!</h4>
                 <%}%>
 
 
-                <%if (user.role == "admin" || user.role == "writer" && user._id == book.writerID) {%>
-                <button type="button" id = "delete-book" class='btn btn-default btn-md' onclick="deletebook()"> Delete this book </button>
-                <%}%>
-                <%}%>
 
-
-                <%if (user != undefined) {%>
-                <%if (user._id == book.writerID) {%>
-                <button type="button" id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md' data-toggle="modal" data-target="#bookinfo_modal"> Edit Book Information </button><p></p>
-
-                <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><p></p>
-                <%}}%>
             </div>
         </div>
     </div>
