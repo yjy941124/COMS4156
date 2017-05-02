@@ -10,8 +10,128 @@
 
 #nav{
    background: rgba(255,255,255,0.6);
-   margin-top: 30px
+   margin-top: 0px
 }
+
+#nav a:hover{
+   background-color: rgba(255,255,255,0.6);
+   color: black;
+   font-style: oblique;
+}
+
+#chapter{
+   margin-left: 200px;
+   margin-right: 200px;
+   margin-top: 50px;
+   margin-bottom: 20px;
+
+
+}
+
+#action{
+   margin-top: 10px;
+   text-align: center;
+}
+
+#title{
+   text-align: center;
+}
+
+#all{
+   margin-top: 20px;
+   background-color: #fefffd;
+   padding-top: 20px;
+   padding-left: 50px;
+   padding-right: 50px;
+}
+
+#hr{
+   border: 0;
+   height: 2px;
+   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+
+}
+
+#hr1{
+   padding: 0;
+   border: none;
+   border-top: medium double #333;
+   color: #333;
+   text-align: center;
+}
+
+#hr2{
+   padding: 0;
+   border: none;
+   border-top: medium double #333;
+   color: #333;
+   text-align: center;
+}
+
+#editor-container{
+   font-size: medium;
+}
+
+#gray1{
+   color: #adadad;
+}
+
+#gray2{
+   color: #adadad;
+}
+
+#switch{
+   padding-top: 20px;
+   padding-bottom: 20px;
+   padding-left: 80px;
+   text-align: center;
+align-items: center}
+
+#switch_page {
+   padding-left: 200px;
+}
+
+tr{
+   text-align: center;
+   align-self: center;
+}
+
+th{
+   text-align: center;
+   width: 200px;
+   font-size: medium;
+}
+
+#hr1:after {
+   content: "Content";
+   display: inline-block;
+   position: relative;
+   top: -0.7em;
+   font-size: 1.5em;
+   padding: 0 0.25em;
+   background: white;
+}
+
+#hr2:after {
+   content: "End";
+   display: inline-block;
+   position: relative;
+   top: -0.7em;
+   font-size: 1.5em;
+   padding: 0 0.25em;
+   background: white;
+}
+
+
+#chapter-title{
+   display: inline;
+}
+
+#navline{
+   font-size: x-large;
+   font-weight: bold;
+}
+
 
 
 #webtitle{

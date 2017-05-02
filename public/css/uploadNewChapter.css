@@ -10,7 +10,17 @@
 
 #nav{
     background: rgba(255,255,255,0.6);
-    margin-top: 30px
+    margin-top: 0px
+}
+
+#nav a:hover{
+    background-color: rgba(255,255,255,0.6);
+    color: black;
+    font-style: oblique;
+}
+
+#chapter-title{
+    display: inline;
 }
 
 
@@ -34,7 +44,57 @@
     font-size: medium;
 }
 
+#non-empty-alert{
+    padding-left: 50px;
+    width: 500px;
+}
 
+#container{
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+hr{
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+
+}
+
+th{
+    width: 150px;
+}
+
+#edit{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#all{
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    padding-left: 60px;
+    padding-right: 60px;
+    background-color: #fefffd;
+}
+
+#sentence{
+    text-align: center;
+}
+
+#chapter-title-input{
+    display: inline;
+    width: 300px;
+    height: 30px;
+}
+
+#navline{
+    font-size: x-large;
+    font-weight: bold;
+}
 
 #title{
     font-size: 250%;
@@ -48,4 +108,9 @@
 #editor-container {
     height: 375px;
     width: 100%;
+}
+
+#submit{
+    text-align: center;
+    padding-top: 20px;
 }

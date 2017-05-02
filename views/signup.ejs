@@ -1,7 +1,13 @@
+
+<link rel="stylesheet" href="../public/css/styles.css" type="text/css">
+<script src="../public/js/form-validators/localRegValidator.js" type="text/javascript"></script>
+<script src="../public/js/signup.js" type="text/javascript"></script>
+
+
 <body>
 <div id="account-form-container" class="center-vertical">
 <form action="/local-reg" method="post" id="account-form" class="form-horizontal well">
-    <h2>SignUp</h2>
+    <h2>Sign Up</h2>
     <h6 id="sub1">Please tell us something about you</h6>
     <hr>
     <div class="form-group">
@@ -12,13 +18,13 @@
     </div>
     <div class="form-group">
         <label class="control-label col-sm-3">Join as Writer or Reader?</label>
-        <div class="col-sm-9">
-            <label class="radio-inline"><input type="radio" class="user-role" name="role" value="writer">Writer</label>
-            <label class="radio-inline"><input type="radio" class="user-role" name="role" value="reader">Reader</label>
+        <div class="col-sm-9" id = "choice">
+            <label><input type="radio" class="user-role" name="role" value="writer" style="vertical-align: middle; margin: 0px;">Writer</label>
+            <label><input type="radio" class="user-role" name="role" value="reader" style="vertical-align: middle; margin: 0px;">Reader</label>
         </div>
     </div>
     <hr>
-    <h6 id="sub2">Choose Your username & Password</h6>
+    <h6 id="sub2">Choose Your Username & Password</h6>
     <div class="form-group">
         <label class="control-label col-sm-3">Username</label>
         <div class="col-sm-9">
@@ -57,6 +63,3 @@
     </div>
 </div>
 </body>
-<link rel="stylesheet" href="../public/css/styles.css" type="text/css">
-<script src="../public/js/form-validators/localRegValidator.js" type="text/javascript"></script>
-<script src="../public/js/signup.js" type="text/javascript"></script>

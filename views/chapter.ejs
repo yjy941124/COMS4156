@@ -1,3 +1,6 @@
+<script type="text/javascript" src="../../../public/js/chapter.js" defer></script>
+<link href="../../../public/css/chapter.css" rel="stylesheet" type="text/css">
+
 <% if (user != null) { %>
 
     <p hidden id="parse-user"><%= (user.role).toString() %></p>
@@ -26,7 +29,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/">Home <span class="sr-only">(current)</span></a></li>
                     <!--rank method to discussed-->
                     <!--<li><a href="#" onclick="sortBySubscribedNumber()">Rank</a></li>-->
                     <li><a href="/service/showranking">Ranking</a></li>
@@ -81,30 +84,53 @@
         </div><!-- /.container-fluid -->
     </nav>
 </div>
+
 <div id="chapter">
     <p hidden id="parse-book-id"><%=bookId%></p>
     <p hidden id="parse-chapter-id"><%=chapterId%></p>
 
-    <label id="title">Title: <%=chapter.title%></label>
-    <br>
-    <!--<label id="content">Content: <%=chapter.content%></label>-->
-    <p hidden id="parse-editor-delta"><%=chapter.content%></p>
-    <div id = "editor-container" class = "container"></div>
-    <div></div>
-    <%if (parseInt(chapterIdx) != 0) {%>
-    <a href= <%= "/books/"+ bookId + '/chapter/' + (parseInt(chapterIdx) - 1).toString()%>>Previous Chapter</a>
-    <%}%>
-    <a href= <%= "/books/"+bookId%>>Return to Menu</a>
-    <%if (parseInt(chapterIdx) != chapterMax) {%>
-    <a href= <%= "/books/"+ bookId + '/chapter/' + (parseInt(chapterIdx) + 1).toString()%>>Next Chapter</a>
-    <%}%>
-    <%if (user != null) {%>
-    <%if (user.role == "admin" || user._id.toString() == writerId) {%>
-    <button type="button" id = "delete-chapter" class='btn btn-default btn-md' onclick="deleteChapter()"> Delete this chapter </button>
-    <a id='edit-chapter' href='/' class='btn btn-default btn-md' role='button'>Edit this chapter</a><p></p>
-    <%}}%>
+    <span id = "navline">
+        <a href= <%= "/books/"+bookId%>>Book Page</a>
+        <p id = "chapter-title"> > Chapter: <%=chapter.title%> </p>
+    </span>
+
+
+    <div id = "all">
+        <div><h3 id = "title"> <%=chapter.title%></h3></div>
+        <div id = "action">
+            <%if (user != null) {%>
+            <%if (user.role == "admin" || user._id.toString() == writerId) {%>
+            <hr id = "hr">
+            <a id='edit-chapter' href='/' class='btn btn-default btn-md' role='button'>Edit this chapter</a>
+            <button type="button" id = "delete-chapter" class='btn btn-default btn-md' onclick="deleteChapter()"> Delete this chapter </button>
+
+            <%}}%>
+        </div><hr id = "hr1">
+
+        <!--<label id="content">Content: <%=chapter.content%></label>-->
+        <p hidden id="parse-editor-delta"><%=chapter.content%></p>
+        <div id = "editor-container" class = "container"></div>
+        <hr id = "hr2">
+
+        <div id = "switch">
+            <table id = "switch_page">
+                <tr>
+                    <%if (parseInt(chapterIdx) != 0) {%>
+                    <th><a href= <%= "/books/"+ bookId + '/chapter/' + (parseInt(chapterIdx) - 1).toString()%>>Previous Chapter</a></th>
+                    <%}else{%>
+                    <th id = "gray1">Previous Chapter</th>
+                    <%}%>
+
+                    <th><a href= <%= "/books/"+bookId%>>Return to Menu</a></th>
+
+                    <%if (parseInt(chapterIdx) != chapterMax) {%>
+                    <th><a href= <%= "/books/"+ bookId + '/chapter/' + (parseInt(chapterIdx) + 1).toString()%>>Next Chapter</a></th>
+                    <%}else{%>
+                    <th id = "gray2">Next Chapter</th>
+                    <%}%>
+                </tr>
+        </div>
+    </div>
 
 </div>
 
-<script type="text/javascript" src="../../../public/js/chapter.js" defer></script>
-<link href="../../../public/css/chapter.css" rel="stylesheet" type="text/css">
