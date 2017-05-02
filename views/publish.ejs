@@ -92,42 +92,49 @@
 
 
 <div id = "container">
+    <span id = "navline">
+        <a href="/">HomePage</a>
+        <p id = "pub"> > Publish New Book </p>
+    </span>
 
-<a href="/">Back to Home Page</a>
-<div class="container">
-    <div id="non-empty-alert" class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-hide="alert">&times;</button>
-        Some field can not be left empty
-    </div>
-</div>
-<form id="publish-book"  action="/publishBook" method="post">
-    <div>
-        <label>Book Name:</label>
-        <input class="publish-non-empty" id="book-name" type="text" name="bookname"/>
-    </div>
-    <div>
-        <label>Book Description:</label>
-        <textarea type="text" name="bookDescription"/></textarea>
-    </div>
-    <div>
-        <label>Book Genre:</label>
-        <br></br>
-        <input id = "bg_fiction" type = "checkbox" name="bookGenre" value="Fiction"/>Fiction
-        <input id = "bg_romance" type = "checkbox" name = "bookGenre" value="Romance"/>Romance
-        <input id = "bg_horror" type = "checkbox" name = "bookGenre" value="Horror"/>Horror
-        <input id = "bg_detective" type = "checkbox" name = "bookGenre" value="Detective"/>Detective
-        <input id = "bg_fantasy" type = "checkbox" name = "bookGenre" value="Fantasy"/>Fantasy
-        <input id = "bg_poetry" type = "checkbox" name = "bookGenre" value="Poetry"/>Poetry
-        <input id = "bg_prose" type = "checkbox" name = "bookGenre" value="Prose"/>Prose
-        <input id = "bg_crime" type = "checkbox" name = "bookGenre" value="Crime"/>Crime
-        <input id = "bg_comedy" type = "checkbox" name = "bookGenre" value="Comedy"/>Comedy
-        <input id = "bg_other" type = "checkbox" name = "bookGenre" value="Other"/>Other
-    </div>
-    <div>
-        <input id="submit-publish-form" type="submit" class="btn btn-primary btn-sm"
-               onclick="return empty()" value="Publish!"/>
+    <div class="container" id = "alert">
+        <div id="non-empty-alert" class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-hide="alert">&times;</button>
+            Some field can not be left empty
+        </div>
     </div>
 
-</form>
+    <div id = "all">
+        <form id="publish-book"  action="/publishBook" method="post">
+            <table id = "new_book">
+                <tr id = "name">
+                    <td><label>Book Name:</label></td>
+                    <td><input class="publish-non-empty" id="book-name" type="text" name="bookname"/></td>
+                </tr>
+                <tr>
+                    <td><label>Book Description:</label></td>
+                    <td><textarea type="text" name="bookDescription" id = "book-des"/></td>
+                </tr>
+            </table>
+                <div id = "new_g">
+                    <label>Book Genre:</label>
+                    <input id = "bg_fiction" type = "checkbox" name="bookGenre" value="Fiction"/>Fiction
+                    <input id = "bg_romance" type = "checkbox" name = "bookGenre" value="Romance"/>Romance
+                    <input id = "bg_horror" type = "checkbox" name = "bookGenre" value="Horror"/>Horror
+                    <input id = "bg_detective" type = "checkbox" name = "bookGenre" value="Detective"/>Detective
+                    <input id = "bg_fantasy" type = "checkbox" name = "bookGenre" value="Fantasy"/>Fantasy
+                    <input id = "bg_poetry" type = "checkbox" name = "bookGenre" value="Poetry"/>Poetry
+                    <input id = "bg_prose" type = "checkbox" name = "bookGenre" value="Prose"/>Prose
+                    <input id = "bg_crime" type = "checkbox" name = "bookGenre" value="Crime"/>Crime
+                    <input id = "bg_comedy" type = "checkbox" name = "bookGenre" value="Comedy"/>Comedy
+                    <input id = "bg_other" type = "checkbox" name = "bookGenre" value="Other"/>Other
+                </div>
+                <div id = "submit_btn">
+                    <input id="submit-publish-form" type="submit" class="btn btn-primary btn-md"
+                           onclick="return empty()" value="Publish!"/>
+                </div>
+
+        </form>
+    </div>
 
 </div>

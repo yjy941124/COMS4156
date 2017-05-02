@@ -30,6 +30,15 @@ ul {
     margin: 4px 0 0 0;
 }
 
+#choice{
+    margin-top: 10px;
+}
+
+th{
+    width: 350px;
+    text-align: center;
+}
+
 label,
 h6 {
     color: #808080;
