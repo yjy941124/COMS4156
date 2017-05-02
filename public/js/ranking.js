@@ -11,20 +11,20 @@ $(document).ready(function () {
     var bookRedirectURL="/books/"+book_id;
     $("#book-redirect-url").attr("href",bookRedirectURL);
     $("#profile-redirect-url").attr("href", profileRedirectURL);
-    sortResults('bookname', true);
+    sortResults('subscribedNumber', false);
     // $('#rank-display').click(function(e){
     //     sortResults('subscribedNumber',true);
     // })
 
     $('.form-group .typeahead').typeahead({
-            hint: true,
-            highlight: true,
-            minLength: 1
-        },
-        {
-            name: 'states',
-            source: substringMatcher(bookNameListForMatch)
-        });
+                hint: true,
+                highlight: true,
+                minLength: 1
+            },
+            {
+                name: 'states',
+                source: substringMatcher(bookNameListForMatch)
+            });
 });
 
 // parse bookList to an Array of JSON elements
@@ -57,8 +57,8 @@ function showResults () {
         if (user_id !== undefined){
             html += '<tr>'
                     +'<td>' + '<a href=' + bookDirectUrl + '>' + bookname + '</a>' + '</td>'
-                    +'<td>'+'<a href=' + authorURL + '>' + bookListArray[e].writerName+ '</a>' +'</td>'
-                    +'<td>'+bookgenre+'</td>'
+                    +'<td>' + '<a href=' + authorURL + '>' + bookListArray[e].writerName + '</a>' + '</td>'
+                    +'<td>' + bookgenre + '</td>'
                     +'<td>' + bookListArray[e].subscribedNumber + '</td>'
                     +'</tr>';}
         else{
