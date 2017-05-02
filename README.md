@@ -7,6 +7,7 @@ Bug Fixed:
 - Genre Generation when publish book & update book: if no genre chosen, categorized to "other"
 - Now functions provided on **chapters.ejs** is appeared all in button form.
 - fixed comment username no show bug
+- QueryBookInfo function bug
 
 UI improvement:
 - UI is currently undergoing huge rebuilding by Ruijue Ji
