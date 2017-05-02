@@ -450,6 +450,25 @@ app.post('/service/postComment', function (req, res) {
     })
 });
 
+// homepage, display all books stored in database
+app.get('/service/showranking', function (req, res) {
+    funct.queryAllBook().then(function (items) {
+        var user = req.user;
+        var bookIDs = [];
+        var bookList = items;
+        bookList.forEach(function (elem) {
+            bookIDs.push(elem._id.toString());
+        });
+        res.render('ranking', {
+            user: user,
+            bookList: bookList,
+            bookIDs: bookIDs
+        });
+    }, function (err) {
+        console.log("error occurs, details: " + err);
+    });
+});
+
 
 //===============PORT=================
 var port = process.env.PORT || 5000;
