@@ -13,10 +13,17 @@
 
 }
 
+
 #nav{
     background: rgba(255,255,255,0.6);
+    margin-top: 0px
 }
 
+#nav a:hover{
+    background-color: rgba(255,255,255,0.6);
+    color: black;
+    font-style: oblique;
+}
 
 #webtitle1{
     font-family: 'Raleway', sans-serif;
@@ -41,6 +48,8 @@
 #book-title{
     display: inline;
 }
+
+
 
 #book_info{
     padding-top: 20px;

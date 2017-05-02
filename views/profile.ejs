@@ -1,3 +1,6 @@
+<link href="../public/css/profile.css" rel="stylesheet" type="text/css">
+
+
 <% if (user != null) { %>
 
 <p hidden id="parse-user"><%= (user.role).toString() %></p>
@@ -27,7 +30,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/">Home <span class="sr-only">(current)</span></a></li>
                     <!--rank method to discussed-->
                     <!--<li><a href="#" onclick="sortBySubscribedNumber()">Rank</a></li>-->
                     <li><a href="/service/showranking">Ranking</a></li>
@@ -85,55 +88,76 @@
 
 
 <div id="container">
-    <h1 id = "profile-title">Profile Page</h1>
-    <p></p>
-    <a href="/" id = "back">Back to Home Page</a>
-    <p hidden id="parse-user-id"><%=userID%></p>
-    <p hidden id="parse-user-role"><%=userRole%></p>
-    <% if (user!=null){%>
-    <p>Email Address: <%=user.emailaddr%></p>
-    <%}%>
-    <% if (publication != undefined) {%>
-    <br></br>
-    <div id="publication-list">
-        <p id = "s1">Here is the book you published:</p>
-        <table class="100%" id = "book-table">
-            <tr>
-                <th>Book Name</th>
+
+     <span id = "navline">
+        <a href="/">HomePage</a>
+        <p id = "profile-title"> > User Profile </p>
+    </span>
 
 
-            </tr>
-            <% for(var i = 0; i < publication.length; i++) { %>
-            <tr>
-                <th>
-                    <a href= <%= "/books/"+publication[i].book_id.toString() %>> <%= publication[i].bookname.toString()%></a></th>
-                </th>
-            </tr>
-            <% } %>
-        </table>
+    <div id = "all">
+        <p hidden id="parse-user-id"><%=userID%></p>
+        <p hidden id="parse-user-role"><%=userRole%></p>
+
+        <% if (user!=null){%>
+            <div id = "contact">
+                <h3>Contact Info</h3>
+                <p>Email Address: <%=user.emailaddr%></p>
+            </div>
+            <hr>
+        <%}%>
+
+        <% if (publication != undefined) {%>
+            <div id="publication-list">
+                <h3 id = "s1"> User Publications </h3>
+                <table class="100%" id = "book-table">
+                    <tr>
+                        <th>Book Name</th>
+
+
+                    </tr>
+                    <% for(var i = 0; i < publication.length; i++) { %>
+                    <tr>
+                        <th>
+                            <a href= <%= "/books/"+publication[i].book_id.toString() %>> <%= publication[i].bookname.toString()%></a></th>
+                        </th>
+                    </tr>
+                    <% } %>
+                </table>
+            </div>
+        <hr>
+        <%}%>
+
+        <% if (subscription!= null){%>
+            <div id = "subscribe">
+                <h3>User Subscriptions </h3>
+                <table class="100%" id = "subscribed-book-table">
+                    <tr>
+                        <th>Book Name</th>
+
+                    </tr>
+                    <% for(var i = 0; i < subscription.length; i++) { %>
+                    <tr>
+                        <th>
+                            <a href= <%= "/books/"+subscription[i].bookId.toString() %>> <%= subscription[i].bookname.toString()%></a></th>
+                        </th>
+                    </tr>
+                    <% } %>
+                </table>
+            </div>
+        <hr>
+        <%}%>
+
+        <div id = "back">
+            <h4><a href="/">Back to Home</a></h4>
+        </div>
     </div>
-    <%}%>
-
-    <% if (subscription!= null){%>
-    <p>Here is the book you subscribed.</p>
-
-    <table class="100%" id = "subscribed-book-table">
-        <tr>
-            <th>Book Name</th>
 
 
-        </tr>
-        <% for(var i = 0; i < subscription.length; i++) { %>
-        <tr>
-            <th>
-                <a href= <%= "/books/"+subscription[i].bookId.toString() %>> <%= subscription[i].bookname.toString()%></a></th>
-            </th>
-        </tr>
-        <% } %>
-    </table>
-
-    <%}%>
 </div>
 
-<link href="../public/css/profile.css" rel="stylesheet" type="text/css">
 
+
+<div id = "rights">
+    <p>Copyright © 2017 Naughty Blue Cat @ Columbia    All Rights Reserved</p>
+</div>
