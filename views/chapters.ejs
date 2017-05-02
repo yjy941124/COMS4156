@@ -166,15 +166,15 @@
                                 <% isSubscribed=true}}}%>
                 <!-- use jQuery to subscribe or unsubscribe-->
                     <% if (isSubscribed==true){%>
-                    <a id='unsubscribe-book' href='/' class='btn btn-default btn-md' role='button'>Unsubscribe this book</a>
+                    <button id='unsubscribe-book' class='btn btn-default btn-md'>Unsubscribe this book</button>
                     <%}else{%>
-                    <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe this book</a>
+                    <button id='subscribe-book' class='btn btn-default btn-md'>Subscribe this book</button>
                     <%}%>
 
                     <%if (user._id == book.writerID) {%>
                     <button type="button" id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md' data-toggle="modal" data-target="#bookinfo_modal"> Edit Book Information </button><p></p>
 
-                    <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><p></p>
+                    <button id='upload-chapter' class='btn btn-default btn-md'>Upload New Chapter</button><p></p>
                     <%}%>
 
                     <%if (user.role == "admin" || user.role == "writer" && user._id == book.writerID) {%>
