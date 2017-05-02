@@ -1,3 +1,10 @@
+
+<script type="text/javascript" src="../../public/js/publish.js" defer></script>
+<link href="../../public/css/uploadNewChapter.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../../public/js/uploadNewChapter.js" defer></script>
+
+
+
 <% if (user != null) { %>
 
 <p hidden id="parse-user"><%= (user.role).toString() %></p>
@@ -27,7 +34,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/">Home <span class="sr-only">(current)</span></a></li>
                     <!--rank method to discussed-->
                     <!--<li><a href="#" onclick="sortBySubscribedNumber()">Rank</a></li>-->
                     <li><a href="/service/showranking">Ranking</a></li>
@@ -83,40 +90,43 @@
     </nav>
 </div>
 
+<div id = "container">
 
+    <span id = "navline">
+        <a href=<%="/books/"+bookID%>>Book Page</a>
+        <p id = "chapter-title"> > Publish New Chapter </p>
+    </span>
 
+    <div id = "all">
+        <div class="container">
+            <div id="non-empty-alert" class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-hide="alert">&times;</button>
+                Some field can not be left empty
+            </div>
+        </div>
 
-<h1 id = "title">Upload New Chapter</h1>
-<a id = "back" href=<%="/books/"+bookID%>>Back to this book's page</a>
-<div class="container">
-    <div id="non-empty-alert" class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-hide="alert">&times;</button>
-        Some field can not be left empty
-    </div>
-</div>
-<p>Here you can upload a new chapter to your book</p>
-<form id="chapter-form" action="/service/uploadNewChapter" method="post">
-    <div>
-        <label for="title">Chapter Title:</label>
-        <div>
-        <input class="publish-non-empty" id="chapter-title-input" type="text" name="title"/>
+        <h3 id = "sentence">Upload a New Chapter to Your Book</h3><hr>
+        <div id = "edit">
+            <form id="chapter-form" action="/service/uploadNewChapter" method="post">
+                <table>
+                    <tr>
+                        <th><h4 for="title">Chapter Title:</h4></th>
+                        <th><input class="publish-non-empty" id="chapter-title-input" type="text" name="title"/></th>
+                    </tr>
+                </table>
+                <!--<div>-->
+                    <!--<label>Content:</label>-->
+                    <!--<textarea type="text" name="chapterContent"/></textarea>-->
+                <!--</div>-->
+                <h4 id="chapterContent">Chapter Content:</h4>
+                <input type="text" hidden name="chapterContent">
+                <div id = "editor-container" class = "container"></div>
+                <div id = "submit">
+                    <input type="hidden" name="bookid" value="<%=bookID%>"/>
+                    <input hidden type="text" name="bookid">
+                    <input id="new-chapter-submit" type="submit" onclick="return empty()" class="btn btn-primary btn-md" value="Publish the New Chapter!"/>
+                </div>
+            </form>
         </div>
     </div>
-    <!--<div>-->
-        <!--<label>Content:</label>-->
-        <!--<textarea type="text" name="chapterContent"/></textarea>-->
-    <!--</div>-->
-    <label for="chapterContent">Chapter Content</label>
-    <input type="text" hidden name="chapterContent">
-    <div id = "editor-container" class = "container"></div>
-    <div>
-        <input type="hidden" name="bookid" value="<%=bookID%>"/>
-        <input hidden type="text" name="bookid">
-        <input id="new-chapter-submit" type="submit" onclick="return empty()" class="btn btn-primary btn-sm" value="ChapterPublish"/>
-    </div>
-</form>
-
-<script type="text/javascript" src="../../public/js/publish.js" defer></script>
-<link href="../../public/css/uploadNewChapter.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="../../public/js/uploadNewChapter.js" defer></script>
-
+</div>

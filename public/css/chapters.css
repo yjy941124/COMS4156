@@ -15,6 +15,22 @@ body{
 
 }
 
+#t1{
+    width: 150px;
+}
+
+#t2{
+    width: 500px;
+}
+
+#t3{
+    width: 150px;
+}
+
+#t4{
+    width: 500px;
+}
+
 
 #nav{
     background: rgba(255,255,255,0.6);
@@ -135,7 +151,7 @@ td{
 }
 
 #all{
-    background-color: rgba(255,255,255,0.3);
+background-color: #fefffd
 }
 
 hr {
@@ -145,8 +161,42 @@ hr {
 
 }
 
+
 #publish_btn{
     text-align: center;
+}
+
+#non-empty-alert{
+    width: 800px;
+}
+
+#name{
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+#new_book{
+    margin-bottom: 10px;
+}
+
+#bookDescription{
+    margin-top: 20px;
+    padding-top: 20px;
+    width: 300px;
+    height: 50px;
+}
+
+#book-name{
+    width: 300px;
+
+}
+
+#des{
+    padding-top: 20px;
+}
+
+#new_g{
+    margin-bottom: 30px;
+    font-size: medium;
 }
 
 #comment-form{
