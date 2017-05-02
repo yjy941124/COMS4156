@@ -8,9 +8,9 @@ $(document).ready(function () {
     var uploadChapterUrl = '/books/' + book_id + '/uploadNewChapter';
     var subscribeBookUrl='/service/' + 'subscribeBook/' + book_id ;
     var unsubscribeBookUrl='/service/'+'unsubscribeBook/'+book_id ;
-    $('#upload-chapter').attr("href", uploadChapterUrl);
-    $('#subscribe-book').attr("href",subscribeBookUrl);
-    $('#unsubscribe-book').attr("href",unsubscribeBookUrl);
+    // $('#upload-chapter').attr("href", uploadChapterUrl);
+    // $('#subscribe-book').attr("href",subscribeBookUrl);
+    // $('#unsubscribe-book').attr("href",unsubscribeBookUrl);
     var updateBookInfoUrl = '/books/' + book_id + '/update';
     $('#edit-book-info').attr("action", updateBookInfoUrl);
     /* Open and Close Edit Book Info Panel */
@@ -30,8 +30,17 @@ $(document).ready(function () {
     // $(document).on("click", "#cancel_bookchange", function(){
     //     $('#bookinfo_modal').css("display","none");
     // });
+    $('#unsubscribe-book').click(function() {
+        window.location = unsubscribeBookUrl;
+    });
 
+    $('#subscribe-book').click(function() {
+        window.location = subscribeBookUrl;
+    });
 
+    $('#upload-chapter').click(function() {
+        window.location = uploadChapterUrl;
+    });
     var user_id = $("#parse-user-id").html();
     var profileRedirectURL = "/profile/" + user_id;
     $("#profile-redirect-url").attr("href", profileRedirectURL);

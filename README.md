@@ -5,6 +5,7 @@ This is the final project of COMS 4156, co-authored by four members from the cla
 Bug Fixed:
 - *delete book* now only functions when user._id === book.writerId;
 - Genre Generation when publish book & update book: if no genre chosen, categorized to "other"
+- Now functions provided on **chapters.ejs** is appeared all in <button> form.
 
 UI improvement:
 - UI is currently undergoing huge rebuilding by Ruijue Ji
