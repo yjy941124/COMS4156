@@ -134,3 +134,19 @@ hr {
 
 }
 
+#publish_btn{
+    text-align: center;
+}
+
+#comment-form{
+    margin-bottom: 10px;
+    font-size: medium;
+}
+
+#reader{
+    font-weight: bold;
+}
+
+#cmt{
+    font-style: italic;
+}
