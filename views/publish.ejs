@@ -1,3 +1,8 @@
+
+<script type="text/javascript" src="../public/js/publish.js" defer></script>
+<link href="../public/css/publish.css" rel="stylesheet" type="text/css">
+
+
 <% if (user != null) { %>
 
 <p hidden id="parse-user"><%= (user.role).toString() %></p>
@@ -27,7 +32,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/">Home <span class="sr-only">(current)</span></a></li>
                     <!--rank method to discussed-->
                     <!--<li><a href="#" onclick="sortBySubscribedNumber()">Rank</a></li>-->
                     <li><a href="/service/showranking">Ranking</a></li>
@@ -86,7 +91,7 @@
 
 
 
-
+<div id = "container">
 
 <a href="/">Back to Home Page</a>
 <div class="container">
@@ -125,5 +130,4 @@
 
 </form>
 
-<script type="text/javascript" src="../public/js/publish.js" defer></script>
-<link href="../public/css/publish.css" rel="stylesheet" type="text/css">
+</div>
