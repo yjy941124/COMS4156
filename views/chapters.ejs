@@ -140,10 +140,11 @@
         <p hidden id="parse-user-id"><%= (user._id).toString() %></p>
 
     <% } %>
+    <div id = "all">
     <div  class="container">
         <div id = "book_actions" class="row">
             <div id ="book_info" class="col-md-8">
-                <p>Title: <%=book.bookname%></p>
+                <h3>Title: <%=book.bookname%></h3>
                 <% if (user!=null) {%>
                 <p>Author: <a href=<%="/profile/"+book.writerID.toString()%> ><%=book.writerName%></a></p>
                 <%} else{%>
@@ -156,7 +157,8 @@
                     <% } else {%> N/A  <% }%></p>
                 <p>Book Description: <%=book.bookdes%></p>
             </div>
-            <div id = "actions" class="col-md-3">
+            <div id = "actions" class="col-md-4">
+                <h4> Now You Can </h4>
                 <% if (user!=null){%>
                 <!--testing -->
                     <% var isSubscribed =false %>
@@ -166,9 +168,9 @@
                                 <% isSubscribed=true}}}%>
                 <!-- use jQuery to subscribe or unsubscribe-->
                     <% if (isSubscribed==true){%>
-                    <button id='unsubscribe-book' class='btn btn-default btn-md'>Unsubscribe this book</button>
+                <button id='unsubscribe-book' class='btn btn-default btn-md'>Unsubscribe this book</button><p></p>
                     <%}else{%>
-                    <button id='subscribe-book' class='btn btn-default btn-md'>Subscribe this book</button>
+                <button id='subscribe-book' class='btn btn-default btn-md'>Subscribe this book</button><p></p>
                     <%}%>
 
                     <%if (user._id == book.writerID) {%>
@@ -181,7 +183,8 @@
                     <button type="button" id = "delete-book" class='btn btn-default btn-md' onclick="deletebook()"> Delete this book </button>
                     <%}%>
                 <%}else{%>
-                    <h4>Sign in to experience FULL features, such as subscribe and edit!</h4>
+                <br>
+                <h4>Sign in to access FULL features</h4><h4> such as subscribe and edit!</h4>
                 <%}%>
 
 
@@ -189,33 +192,50 @@
             </div>
         </div>
     </div>
-
+<hr>
     <div id = "chapters">
-        <table id='table-for-chapter-menu' class="100%">
-            <thead>
-            <tr>
-                <th>Chapter Index</th>
-                <th>Chapter Title</th>
-            </tr>
-            </thead>
+        <div>
+            <h3>Chapters List</h3>
+
+        <table id='table-for-chapter-menu' class="table">
 
             <tbody>
             <!-- problem here, book.chapters.length may be 0-->
             <% if (book.chapters!=null) {%>
-            <% for(var i = 0; i < book.chapters.length; i++) {%>
+            <% for(var i = 0; i < book.chapters.length; i+=3) {%>
             <% var bookID= book._id.toString() %>
-            <tr>
-                <th>
-                    <p><%=i%></p>
-                </th>
-                <th>
-                    <% var chapterID= book.chapters[i].toString() %>
-                    <p hidden id="parse-book-id"><%=bookID%></p>
-                    <a href= <%= "/books/"+bookID +'/chapter/'+i %>> <%= book.chapters[i].title%></a></th>
-            </tr>
+                <tr>
+                    <td>
+                        <p>Ch.<%=i+1%></p>
+                        <% var chapterID= book.chapters[i].toString() %>
+                        <p hidden id="parse-book-id"><%=bookID%></p>
+                        <a href= <%= "/books/"+bookID +'/chapter/'+i %>> <%= book.chapters[i].title%></a>
+                    </td>
+                    <%if (i+1 < book.chapters.length){%>
+                    <td>
+                        <p>Ch.<%=i+2%></p>
+                        <% var chapterID= book.chapters[i+1].toString() %>
+                        <p hidden id="parse-book-id"><%=bookID%></p>
+                        <a href= <%= "/books/"+bookID +'/chapter/'+(i+1) %>> <%= book.chapters[i+1].title%></a>
+                    </td>
+                    <%}else{%>
+                    <td></td>
+                    <%}%>
+                    <%if (i+2 < book.chapters.length){%>
+                    <td>
+                        <p>Ch.<%=i+3%></p>
+                        <% var chapterID= book.chapters[i+2].toString() %>
+                        <p hidden id="parse-book-id"><%=bookID%></p>
+                        <a href= <%= "/books/"+bookID +'/chapter/'+(i+2) %>> <%= book.chapters[i+2].title%></a>
+                    </td>
+                    <%}else{%>
+                    <td></td>
+                    <%}%>
+                </tr>
             <% }} %>
             </tbody>
         </table>
+        </div>
     </div>
     <!--Edit Book Information Modal-->
 
@@ -275,15 +295,25 @@
             </form>
         </div>
 
+        <hr>
     <!--</form>-->
     <%if (book.comments != null) {%>
-    <div id="comments">
-        <p>Comments are below:</p>
-        <%for (var i = 0; i < book.comments.length; i++) {%>
-        <p><%=book.comments[i].commenter%></p>
-        <p><%=(JSON.parse(book.comments[i].comment)).ops[0].insert%></p>
-        <p>---------------</p>
-        <%}%>
+    <div id="comments" >
+        <h3>Reader Comments</h3><br>
+        <table id = "commenttable" class="table">
+            <tbody>
+                <%for (var i = 0; i < book.comments.length; i++) {%>
+                <thread>
+                    <th>
+                </thread>
+                    <tr>
+                        <td><p><%=book.comments[i].commenter%></p>
+                            <p><%=(JSON.parse(book.comments[i].comment)).ops[0].insert%></p>
+                        </td>
+                    </tr>
+                <%}%>
+            </tbody>
+        </table>
     </div>
     <%}%>
     <div id="form-container" class="container">
@@ -302,6 +332,7 @@
         </form>
     </div>
 
+</div>
 </div>
 
 <div id = "rights">
