@@ -1,6 +1,5 @@
 <script type="text/javascript" src="../../public/vendor/js/typeahead.js" defer></script>
 <script type="text/javascript" src="../../public/js/home.js" defer></script>
-<link href="../../public/css/bootstrap/bootstrap.css" rel="stylesheet" type="text/css">
 <link href="../../public/css/home.css" rel="stylesheet" type="text/css">
 
 
@@ -29,7 +28,8 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
                         <!--rank method to discussed-->
-                        <li><a href="#" onclick="sortBySubscribedNumber()">Rank</a></li>
+                        <!--<li><a href="#" onclick="sortBySubscribedNumber()">Rank</a></li>-->
+                        <li><a href="/service/showranking">Ranking</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -93,6 +93,7 @@
                     <th>Book Name</th>
                     <th>Writer Name</th>
                     <th>Book Genre</th>
+                    <th>Followers</th>
 
                 </tr>
             </thead>

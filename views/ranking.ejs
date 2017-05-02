@@ -1,13 +1,12 @@
-<% if (user != null) { %>
-
-<p hidden id="parse-user"><%= (user.role).toString() %></p>
-
-<p hidden id="parse-user-id"><%= (user._id).toString() %></p>
-
-<% } %>
+<script type="text/javascript" src="../../public/vendor/js/typeahead.js" defer></script>
+<script type="text/javascript" src="../../public/js/ranking.js" defer></script>
+<link href="../../public/css/home.css" rel="stylesheet" type="text/css">
 
 
+
+<body id = "b">
 <div id = "banner">
+
     <h1 id = "webtitle">Forever Read</h1>
     <p id = "webdes">Write, Read, Communicate and Grow, Whenever You Like</p>
 
@@ -27,10 +26,10 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/">Home</a></li>
                     <!--rank method to discussed-->
                     <!--<li><a href="#" onclick="sortBySubscribedNumber()">Rank</a></li>-->
-                    <li><a href="/service/showranking">Ranking</a></li>
+                    <li class="active"><a href="/service/showranking">Ranking<span class="sr-only">(current)</span></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -81,43 +80,61 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
+
 </div>
+<!-- this div may be changed to render only for registered user (writer, reader, admin) later-->
+<div id="render-for-all">
+    <h1>Books On Shelf</h1>
+    <hr class="style1">
+    <p id="parse-bookList" hidden><%-JSON.stringify(bookList)%></p>
+    <table class="table table-hover" id = "book-table">
+        <thead class = "thead-default">
+        <tr>
+            <th>Book Name</th>
+            <th>Writer Name</th>
+            <th>Book Genre</th>
+            <th>Followers</th>
+
+        </tr>
+        </thead>
+
+
+        <tbody id="booklist-display">
 
 
 
-<h1 id = "title">Edit Chapter</h1>
-<a id = "back" href=<%="/books/"+bookID%>>Back to this book's page</a>
+
+    </table>
+
+</div>
+<div id = "rights">
+    <p>Copyright © 2017 Naughty Blue Cat @ Columbia    All Rights Reserved</p>
+</div>
+<% if (user != null) { %>
+
+<p hidden id="parse-user"><%= (user.role).toString() %></p>
+
+<p hidden id="parse-user-id"><%= (user._id).toString() %></p>
+
+<% } %>
+
+<!--<nav class="navbar navbar-inverse navbar-fixed-top">
 <div class="container">
-    <div id="non-empty-alert" class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-hide="alert">&times;</button>
-        Some field can not be left empty
-    </div>
-</div>
-<p>Edit this chapter </p>
-<form id="chapter-form" action="/service/editChapter" method="post">
-    <div>
-        <label for="title">Chapter Title:</label>
-        <div>
-            <input class="publish-non-empty" id="chapter-title-input" type="text" name="title" value="<%=chapter.title%>"/>
-        </div>
-    </div>
-    <!--<div>-->
-    <!--<label>Content:</label>-->
-    <!--<textarea type="text" name="chapterContent"/></textarea>-->
-    <!--</div>-->
-    <p hidden id="parse-editor-delta"><%=chapter.content%></p>
-    <label for="chapterContent">Chapter Content</label>
-    <input type="text" hidden name="chapterContent">
-    <div id = "editor-container" class = "container"></div>
-    <div>
-        <input type="hidden" name="bookid" value="<%=bookID%>"/>
-        <!--<input hidden type="text" name="bookid">-->
-        <input hidden type="text" name="chapterId" value="<%=chapter._id%>">
-        <input id="edit-chapter-submit" type="submit" onclick="return empty()" class="btn btn-primary btn-sm" value="editChapterPublish"/>
-    </div>
-</form>
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
 
-<script type="text/javascript" src="/public/js/publish.js" defer></script>
-<link href="/public/css/editChapter.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="/public/js/editChapter.js" defer></script>
+
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right navbar-text">
+        <li> haha</li>
+</div>&lt;!&ndash; /.container-fluid &ndash;&gt;
+</nav>-->
+
+
 
