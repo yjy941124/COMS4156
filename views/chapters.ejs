@@ -1,3 +1,10 @@
+
+<script type="text/javascript" src="../public/js/chapters.js" defer></script>
+<script type="text/javascript" src="../public/js/publish.js" defer></script>
+<link href="../public/css/chapters.css" rel="stylesheet" type="text/css">
+
+
+
 <style>
     #form-container {
         width: 500px;
@@ -61,7 +68,7 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
                     <!--rank method to discussed-->
-                    <li><a href="#">Rank</a></li>
+                    <li><a href="#" onclick="sortBySubscribedNumber()">Rank</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -78,9 +85,9 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-left">
+                <form class="navbar-form navbar-left" action="/service/searchBookName" method="post">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" name="bookNameSearched" class="form-control typeahead" placeholder="Search bookname">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
@@ -117,8 +124,11 @@
 
 
 <div id="container">
-    <h1 id = "chapter-title">Chapter Page</h1>
-    <a href="/">Back to Home Page</a>
+    <span id = "navline">
+        <a href="/">HomePage</a>
+        <p id = "book-title"> > <%=book.bookname%> </p>
+    </span>
+
     <br></br>
     <p hidden id="parse-book-id"><%=bookID%></p>
 
@@ -129,66 +139,82 @@
         <p hidden id="parse-user-id"><%= (user._id).toString() %></p>
 
     <% } %>
+    <div  class="container">
+        <div id = "book_actions" class="row">
+            <div id ="book_info" class="col-md-6">
+                <p>Book: <%=book.bookname%></p>
+                <% if (user!=null) {%>
+                <p>Author: <a href=<%="/profile/"+book.writerID.toString()%> ><%=book.writerName%></a></p>
+                <%} else{%>
+                <p>Author: <%=book.writerName%></p>
 
-    <p>Book: <%=book.bookname%></p>
-    <p>Author: <a href=<%="/profile/"+book.writerID.toString()%> ><%=book.writerName%></a></p>
-    <p hidden id="parse-author-id"><%=book.writerID%></p>
-    <p>Genre: <% if(book.bookgenre!=null){%>
-        <%= book.bookgenre.toString()%>
-        <% } else {%> N/A  <% }%></p>
-    <p>Book Description: <%=book.bookdes%></p>
-    <% if (user!=null){%>
-    <!--testing -->
-    <% var isSubscribed =false %>
-    <% if (user.subscriptions!=null){%>
-    <% for(var i = 0; i < user.subscriptions.length; i++) {%>
-    <% if (bookID==user.subscriptions[i].bookId){%>
-    <% isSubscribed=true}}}%>
-    <!-- use jQuery to subscribe or unsubscribe-->
-    <% if (isSubscribed==true){%>
-    <a id='unsubscribe-book' href='/' class='btn btn-default btn-md' role='button'>Unsubscribe this book</a>
-    <%}else{%>
-    <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe this book</a><br></br>
-    <%}%>
-    <%if (user.role == "admin" || user.role == "writer") {%>
-    <button type="button" id = "delete-book" class='btn btn-default btn-md' onclick="deletebook()"> Delete this book </button>
-    <%}%>
-    <%}%>
+                <%}%>
+                <p hidden id="parse-author-id"><%=book.writerID%></p>
+                <p>Genre: <% if(book.bookgenre!=null){%>
+                    <%= book.bookgenre.toString()%>
+                    <% } else {%> N/A  <% }%></p>
+                <p>Book Description: <%=book.bookdes%></p>
+            </div>
+            <div class="col-12 col-md-1"></div>
+            <div id = "actions" class="col-md-3">
+                <% if (user!=null){%>
+                <!--testing -->
+                <% var isSubscribed =false %>
+                <% if (user.subscriptions!=null){%>
+                <% for(var i = 0; i < user.subscriptions.length; i++) {%>
+                <% if (bookID==user.subscriptions[i].bookId){%>
+                <% isSubscribed=true}}}%>
+                <!-- use jQuery to subscribe or unsubscribe-->
+                <% if (isSubscribed==true){%>
+                <a id='unsubscribe-book' href='/' class='btn btn-default btn-md' role='button'>Unsubscribe this book</a>
+                <%}else{%>
+                <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe this book</a><br></br>
+                <%}%>
 
 
-    <%if (user != undefined) {%>
-    <%if (user._id == book.writerID) {%>
-    <button type="button" id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md' data-toggle="modal" data-target="#bookinfo_modal"> Edit Book Information </button><p></p>
+                <%if (user.role == "admin" || user.role == "writer" && user._id == book.writerID) {%>
+                <button type="button" id = "delete-book" class='btn btn-default btn-md' onclick="deletebook()"> Delete this book </button>
+                <%}%>
+                <%}%>
 
-    <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><p></p>
-    <%}}%>
-    
-    <table id='table-for-chapter-menu' class="100%">
-        <thead>
-        <tr>
-            <th>Chapter Index</th>
-            <th>Chapter Title</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <!-- problem here, book.chapters.length may be 0-->
-        <% if (book.chapters!=null) {%>
-        <% for(var i = 0; i < book.chapters.length; i++) {%>
-        <% var bookID= book._id.toString() %>
-        <tr>
-            <th>
-                <p><%=i%></p>
-            </th>
-            <th>
-                <% var chapterID= book.chapters[i].toString() %>
-                <p hidden id="parse-book-id"><%=bookID%></p>
-                <a href= <%= "/books/"+bookID +'/chapter/'+i %>> <%= book.chapters[i].title%></a></th>
-        </tr>
-        <% }} %>
-        </tbody>
-    </table>
+                <%if (user != undefined) {%>
+                <%if (user._id == book.writerID) {%>
+                <button type="button" id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md' data-toggle="modal" data-target="#bookinfo_modal"> Edit Book Information </button><p></p>
 
+                <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><p></p>
+                <%}}%>
+            </div>
+        </div>
+    </div>
+
+    <div id = "chapters">
+        <table id='table-for-chapter-menu' class="100%">
+            <thead>
+            <tr>
+                <th>Chapter Index</th>
+                <th>Chapter Title</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <!-- problem here, book.chapters.length may be 0-->
+            <% if (book.chapters!=null) {%>
+            <% for(var i = 0; i < book.chapters.length; i++) {%>
+            <% var bookID= book._id.toString() %>
+            <tr>
+                <th>
+                    <p><%=i%></p>
+                </th>
+                <th>
+                    <% var chapterID= book.chapters[i].toString() %>
+                    <p hidden id="parse-book-id"><%=bookID%></p>
+                    <a href= <%= "/books/"+bookID +'/chapter/'+i %>> <%= book.chapters[i].title%></a></th>
+            </tr>
+            <% }} %>
+            </tbody>
+        </table>
+    </div>
     <!--Edit Book Information Modal-->
 
         <div id = "bookinfo_modal" name = "book_modal" class = "modal fade">
@@ -245,8 +271,8 @@
                 </div>
             </div>
             </form>
-
         </div>
+
     <!--</form>-->
     <%if (book.comments != null) {%>
     <div id="comments">
@@ -276,6 +302,8 @@
 
 </div>
 
-<script type="text/javascript" src="../public/js/chapters.js" defer></script>
-<script type="text/javascript" src="../public/js/publish.js" defer></script>
-<link href="../public/css/chapters.css" rel="stylesheet" type="text/css">
+<div id = "rights">
+    <p>Copyright © 2017 Naughty Blue Cat @ Columbia    All Rights Reserved</p>
+</div>
+
+

@@ -1,5 +1,13 @@
+<script type="text/javascript" src="../../public/vendor/js/typeahead.js" defer></script>
+<script type="text/javascript" src="../../public/js/home.js" defer></script>
+<link href="../../public/css/bootstrap/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="../../public/css/home.css" rel="stylesheet" type="text/css">
+
+
+
 <body id = "b">
     <div id = "banner">
+
         <h1 id = "webtitle">Forever Read</h1>
         <p id = "webdes">Write, Read, Communicate and Grow, Whenever You Like</p>
 
@@ -72,19 +80,21 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+
     </div>
     <!-- this div may be changed to render only for registered user (writer, reader, admin) later-->
     <div id="render-for-all">
-        <p>You can view books here!</p>
+        <h1>Books On Shelf</h1>
+        <hr class="style1">
         <p id="parse-bookList" hidden><%-JSON.stringify(bookList)%></p>
-        <table class="100%" id = "book-table">
-            <thead>
-            <tr>
-                <th>Book Name</th>
-                <th>Writer Name</th>
-                <th>Book Genre</th>
+        <table class="table table-hover" id = "book-table">
+            <thead class = "thead-default">
+                <tr>
+                    <th>Book Name</th>
+                    <th>Writer Name</th>
+                    <th>Book Genre</th>
 
-            </tr>
+                </tr>
             </thead>
 
 
@@ -94,6 +104,10 @@
 
 
         </table>
+
+    </div>
+    <div id = "rights">
+        <p>Copyright © 2017 Naughty Blue Cat @ Columbia    All Rights Reserved</p>
     </div>
     <% if (user != null) { %>
 
@@ -102,6 +116,7 @@
         <p hidden id="parse-user-id"><%= (user._id).toString() %></p>
 
     <% } %>
+
     <!--<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -119,7 +134,6 @@
             <li> haha</li>
     </div>&lt;!&ndash; /.container-fluid &ndash;&gt;
   </nav>-->
-    <script type="text/javascript" src="../../public/vendor/js/typeahead.js" defer></script>
-<script type="text/javascript" src="../../public/js/home.js" defer></script>
-<link href="../../public/css/home.css" rel="stylesheet" type="text/css">
+
+
 

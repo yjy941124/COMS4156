@@ -8,18 +8,27 @@ html, body { margin:0; padding:0 }
     margin: 0;
 }
 
-
 #banner{
     padding: 0;
-    padding-top: 10px;
     margin: 0;
+    padding-top: 10px;
     background: url(../banner2.jpeg)no-repeat;
     background-size: cover;
     background-position: center}
 
 #nav{
     background: rgba(255,255,255,0.6);
-    margin-top: 30px
+    margin-top: 0px
+}
+
+#nav a:hover{
+    background-color: rgba(255,255,255,0.6);
+    color: black;
+    font-style: oblique;
+}
+
+#navtitle{
+    font-weight: bold;
 }
 
 
@@ -46,10 +55,19 @@ html, body { margin:0; padding:0 }
 
 #render-for-all{
     text-align: center;
-}
+    margin: 250px;
+    margin-top: 70px;
+    margin-bottom: 100px;
+    alignment: center;
+    }
 
 #book-table{
-    margin: auto;
+    font-size: large;
+}
+
+#book-table th{
+    text-align: center;
+    font-size: larger;
 }
 
 #publish-page{
@@ -64,8 +82,27 @@ html, body { margin:0; padding:0 }
     margin-inside: 20px;
 }
 
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+hr.style1 {
+    height: 30px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
 }
-html, body { margin: 0; padding: 0 }
+hr.style1:after {
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+}
+
+#rights{
+    background-color: #cccccc;
+    padding-bottom: 10px;
+    text-align: center;
+
+}
