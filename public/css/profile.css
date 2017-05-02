@@ -73,8 +73,9 @@ hr {
     text-align: center;
 }
 
-td{
+th{
     text-align: center;
+    font-size: large;
 }
 
 #subscribed-book-table{
@@ -86,6 +87,8 @@ td{
 #all{
     background-color: rgba(255,255,255,0.3);
     margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
 }
 
 #contact{
@@ -115,7 +118,13 @@ td{
 }
 
 #back{
+
     padding-left: 50px;
+    margin-bottom: 20px;
+}
+
+#back1{
+    padding-left: 40%;
 }
 
 #back:hover{
