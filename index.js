@@ -234,6 +234,7 @@ app.get('/profile/:userId', function (req, res) {
 
         var userId = req.params.userId;
         var userRole = req.user.role;
+        var username = req.user.username;
         //var user = req.user;
         funct.queryUserBasedOnID(userId).then(function (item) {
             var user = item;
@@ -245,7 +246,8 @@ app.get('/profile/:userId', function (req, res) {
                     userRole: userRole,
                     publication: set.publication,
                     subscription: set.subscription,
-                    user: user
+                    user: user,
+                    username: username
                 });
             });
         });
