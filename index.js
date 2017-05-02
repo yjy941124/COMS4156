@@ -233,8 +233,11 @@ app.get('/profile/:userId', function (req, res) {
     if (req.user != null) {
 
         var userId = req.params.userId;
+        var dedicated_userId = req.user._id;
         var userRole = req.user.role;
         var username = req.user.username;
+        console.log("!!!!");
+        console.log(req.user._id);
         //var user = req.user;
         funct.queryUserBasedOnID(userId).then(function (item) {
             var user = item;
@@ -247,7 +250,8 @@ app.get('/profile/:userId', function (req, res) {
                     publication: set.publication,
                     subscription: set.subscription,
                     user: user,
-                    username: username
+                    username: username,
+                    dedicated_userId:dedicated_userId
                 });
             });
         });
