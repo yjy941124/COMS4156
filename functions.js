@@ -254,56 +254,59 @@ exports.publishBook = function (req, res) {
 // 2. in db.Books, locate the object with Books._id == book_Id, update attribute bookname, bookdes and bookgenre in this object
 exports.updateBookInfo = function (book_Id, user_Id, info, res) {
     var new_bookname = info.bookname;
+    console.log(new_bookname);
     var new_bookdes = info.bookDescription;
+    console.log(new_bookdes);
     var new_bookGenre;
     if (info.bookGenre == null ){
         new_bookGenre = ["Other"];
     } else{
         new_bookGenre = info.bookGenre;
     }
+    console.log(new_bookGenre);
     MongoClient.connect(mongodbUrl, function (err, db) {
         var books = db.collection('Books');
         var users = db.collection('Users');
         console.log("update function");
         users.updateOne(
-            {
-                "_id": new ObjectId(user_Id),
-                "publication.book_id": new ObjectId(book_Id)
-            },
-            {
-                $set: {
-                    "publication.$.bookname": new_bookname
-                }
-            },
-            {upsert: true}
-        ).then(function () {
-            users.updateOne(
                 {
                     "_id": new ObjectId(user_Id),
-                    "subscriptions.bookId": book_Id
+                    "publication.book_id": new ObjectId(book_Id)
                 },
                 {
                     $set: {
-                        "subscriptions.$.bookname": new_bookname
+                        "publication.$.bookname": new_bookname
                     }
-                }
+                },
+                {upsert: true}
+        ).then(function () {
+            users.updateOne(
+                    {
+                        "_id": new ObjectId(user_Id),
+                        "subscriptions.bookId": book_Id
+                    },
+                    {
+                        $set: {
+                            "subscriptions.$.bookname": new_bookname
+                        }
+                    },
+                    {upsert: true}
             )
-        })
-            .then(function () {
-                books.updateOne(
+        }).then(function () {
+            books.updateOne(
                     {"_id": new ObjectId(book_Id)},
                     {
                         $set: {
                             "bookname": new_bookname, "bookdes": new_bookdes, "bookgenre": new_bookGenre
                         }
-                    }
-                )
-                    .then(function (res) {
-                        db.close();
-                    });
-            })
-    });
-    res.redirect('/books/' + book_Id);
+                    },
+                    {upsert: true}
+            )}).then(function (res) {
+            db.close();
+        }).then(function() {
+            res.redirect('/books/' + book_Id);
+        })
+    })
 };
 
 // query all objects in db.Books, return in form of array
