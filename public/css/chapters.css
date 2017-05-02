@@ -1,6 +1,8 @@
 @import 'https://fonts.googleapis.com/css?family=Lora:400,400i,700|Raleway:300,600,700,900';
 
-#b{
+body{
+    margin: 0;
+    padding: 0;
 }
 
 #banner1{
@@ -13,10 +15,33 @@
 
 }
 
-#nav{
-    background: rgba(255,255,255,0.6);
+#t1{
+    width: 150px;
 }
 
+#t2{
+    width: 500px;
+}
+
+#t3{
+    width: 150px;
+}
+
+#t4{
+    width: 500px;
+}
+
+
+#nav{
+    background: rgba(255,255,255,0.6);
+    margin-top: 0px
+}
+
+#nav a:hover{
+    background-color: rgba(255,255,255,0.6);
+    color: black;
+    font-style: oblique;
+}
 
 #webtitle1{
     font-family: 'Raleway', sans-serif;
@@ -38,20 +63,230 @@
     font-size: medium;
 }
 
-
-#chapter-title{
-    text-align: center;
+#book-title{
+    display: inline;
 }
 
 
-#container{
+
+#book_info{
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-bottom: 20px;
+    font-size: large;
+    margin-bottom: 30px;
+}
+
+#book_actions{
+    margin-left: 50px;
+    margin-right: 150px;
+    font-family: "Arial Rounded MT Bold";
+}
+
+#actions{
+    padding-top: 0px;
     text-align: center;
+}
+
+#comments{
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#chapters{
+    margin-top: 30px;
+    margin-left: 60px;
+    margin-right: 50px;
+    padding-left: 30px;
+
+}
+
+#comments{
+    margin-top: 30px;
+    margin-left: 60px;
+    margin-right: 50px;
+    padding-left: 30px;
+}
+
+#container{
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+#navline{
+    font-size: x-large;
+    font-weight: bold;
 }
 
 #table-for-chapter-menu{
-    margin: auto;
+text-align: center;
+}
+
+
+td{
+    font-size: medium;
+}
+
+input[type='checkbox']{
+    display: none;
 }
 
 .alert{
     display: none;
+}
+
+#rights{
+     background-color: #cccccc;
+     padding-bottom: 10px;
+     text-align: center;
+     margin-bottom: 0;
+
+ }
+
+#bookinfo_modal{
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 150px;
+}
+
+#all{
+background-color: #fefffd
+}
+
+hr {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+
+}
+
+
+#publish_btn{
+    text-align: center;
+}
+
+#non-empty-alert{
+    width: 800px;
+}
+
+#name{
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+#new_book{
+    margin-bottom: 10px;
+}
+
+#bookDescription{
+    margin-top: 20px;
+    padding-top: 20px;
+    width: 300px;
+    height: 50px;
+}
+
+#book-name{
+    width: 300px;
+
+}
+
+#des{
+    padding-top: 20px;
+}
+
+#new_g{
+    margin-bottom: 30px;
+    font-size: medium;
+}
+
+#comment-form{
+    margin-bottom: 10px;
+    font-size: medium;
+}
+
+#reader{
+    font-weight: bold;
+}
+
+#cmt{
+    font-style: italic;
+}
+
+
+
+
+#teleport-1:checked+label,#teleport-2:checked+label,#teleport-4:checked+label,#teleport-5:checked+label,#teleport-6:checked+label,#teleport-7:checked+label,#teleport-8:checked+label,#teleport-9:checked+label,#teleport-10:checked+label {
+    border-color: #AEDCAE;
+}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:before{background: #5CB85C;}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:after{
+    left: -13px;
+}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:before{
+    width: 12px;
+    height: 12px;
+}
+
+#teleport-1+label,#teleport-2+label,#teleport-4+label,#teleport-5+label,#teleport-6+label,#teleport-7+label,#teleport-8+label,#teleport-9+label,#teleport-10+label {
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:after{
+    background: #ddd;
+    border-radius: 10px;
+    width: 12px;
+    height: 12px;
+    top: 2px;
+    left: 2px;
+}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:before{
+    background: #ddd;
+    border-radius: 10px;
+    left: 100%;
+    width: 12px;
+    height: 12px;
+    top: 2px;
+}
+
+
+
+
+#teleport-3:checked+label {
+    border-color: #AEDCAE;
+}
+#teleport-3:before{background: #5CB85C;}
+#teleport-3:after{
+    left: -13px;
+}
+#teleport-3:before{
+    width: 12px;
+    height: 12px;
+}
+#teleport-3+label {
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+}
+#teleport-3:after{
+    background: #ddd;
+    border-radius: 10px;
+    width: 12px;
+    height: 12px;
+    top: 2px;
+    left: 2px;
+}
+#teleport-3:before{
+    background: #ddd;
+    border-radius: 10px;
+    left: 100%;
+    width: 12px;
+    height: 12px;
+    top: 2px;
+}
+
+#choice,#choice1{
+    margin-top: 20px;
 }

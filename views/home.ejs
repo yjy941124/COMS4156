@@ -1,5 +1,12 @@
+<script type="text/javascript" src="../../public/vendor/js/typeahead.js" defer></script>
+<script type="text/javascript" src="../../public/js/home.js" defer></script>
+<link href="../../public/css/home.css" rel="stylesheet" type="text/css">
+
+
+
 <body id = "b">
     <div id = "banner">
+
         <h1 id = "webtitle">Forever Read</h1>
         <p id = "webdes">Write, Read, Communicate and Grow, Whenever You Like</p>
 
@@ -21,7 +28,8 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
                         <!--rank method to discussed-->
-                        <li><a href="#" onclick="sortBySubscribedNumber()">Rank</a></li>
+                        <!--<li><a href="#" onclick="sortBySubscribedNumber()">Rank</a></li>-->
+                        <li><a href="/service/showranking">Ranking</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -72,19 +80,22 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+
     </div>
     <!-- this div may be changed to render only for registered user (writer, reader, admin) later-->
     <div id="render-for-all">
-        <p>You can view books here!</p>
+        <h1>Books On Shelf</h1>
+        <hr class="style1">
         <p id="parse-bookList" hidden><%-JSON.stringify(bookList)%></p>
-        <table class="100%" id = "book-table">
-            <thead>
-            <tr>
-                <th>Book Name</th>
-                <th>Writer Name</th>
-                <th>Book Genre</th>
+        <table class="table table-hover" id = "book-table">
+            <thead class = "thead-default">
+                <tr>
+                    <th>Book Name</th>
+                    <th>Writer Name</th>
+                    <th>Book Genre</th>
+                    <th>Followers</th>
 
-            </tr>
+                </tr>
             </thead>
 
 
@@ -94,7 +105,9 @@
 
 
         </table>
+
     </div>
+
     <% if (user != null) { %>
 
         <p hidden id="parse-user"><%= (user.role).toString() %></p>
@@ -102,6 +115,7 @@
         <p hidden id="parse-user-id"><%= (user._id).toString() %></p>
 
     <% } %>
+
     <!--<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -119,7 +133,6 @@
             <li> haha</li>
     </div>&lt;!&ndash; /.container-fluid &ndash;&gt;
   </nav>-->
-    <script type="text/javascript" src="../../public/js/typeahead.js" defer></script>
-<script type="text/javascript" src="../../public/js/home.js" defer></script>
-<link href="../../public/css/home.css" rel="stylesheet" type="text/css">
+
+
 

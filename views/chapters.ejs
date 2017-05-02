@@ -1,3 +1,10 @@
+
+<script type="text/javascript" src="../public/js/chapters.js" defer></script>
+<script type="text/javascript" src="../public/js/publish.js" defer></script>
+<link href="../public/css/chapters.css" rel="stylesheet" type="text/css">
+
+
+
 <style>
     #form-container {
         width: 500px;
@@ -59,9 +66,10 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/">Home <span class="sr-only"></span></a></li>
                     <!--rank method to discussed-->
-                    <li><a href="#">Rank</a></li>
+                    <!--<li><a href="#" onclick="sortBySubscribedNumber()">Rank</a></li>-->
+                    <li><a href="/service/showranking">Ranking</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -78,9 +86,9 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-left">
+                <form class="navbar-form navbar-left" action="/service/searchBookName" method="post">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" name="bookNameSearched" class="form-control typeahead" placeholder="Search bookname">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
@@ -117,8 +125,11 @@
 
 
 <div id="container">
-    <h1 id = "chapter-title">Chapter Page</h1>
-    <a href="/">Back to Home Page</a>
+    <span id = "navline">
+        <a href="/">HomePage</a>
+        <p id = "book-title"> > <%=book.bookname%> </p>
+    </span>
+
     <br></br>
     <p hidden id="parse-book-id"><%=bookID%></p>
 
@@ -129,66 +140,103 @@
         <p hidden id="parse-user-id"><%= (user._id).toString() %></p>
 
     <% } %>
+    <div id = "all">
+    <div  class="container">
+        <div id = "book_actions" class="row">
+            <div id ="book_info" class="col-md-8">
+                <h3>Title: <%=book.bookname%></h3>
+                <% if (user!=null) {%>
+                <p>Author: <a href=<%="/profile/"+book.writerID.toString()%> ><%=book.writerName%></a></p>
+                <%} else{%>
+                <p>Author: <%=book.writerName%></p>
 
-    <p>Book: <%=book.bookname%></p>
-    <p>Author: <a href=<%="/profile/"+book.writerID.toString()%> ><%=book.writerName%></a></p>
-    <p hidden id="parse-author-id"><%=book.writerID%></p>
-    <p>Genre: <% if(book.bookgenre!=null){%>
-        <%= book.bookgenre.toString()%>
-        <% } else {%> N/A  <% }%></p>
-    <p>Book Description: <%=book.bookdes%></p>
-    <% if (user!=null){%>
-    <!--testing -->
-    <% var isSubscribed =false %>
-    <% if (user.subscriptions!=null){%>
-    <% for(var i = 0; i < user.subscriptions.length; i++) {%>
-    <% if (bookID==user.subscriptions[i].bookId){%>
-    <% isSubscribed=true}}}%>
-    <!-- use jQuery to subscribe or unsubscribe-->
-    <% if (isSubscribed==true){%>
-    <a id='unsubscribe-book' href='/' class='btn btn-default btn-md' role='button'>Unsubscribe this book</a>
-    <%}else{%>
-    <a id='subscribe-book' href='/' class='btn btn-default btn-md' role='button'>Subscribe this book</a><br></br>
-    <%}%>
-    <%if (user.role == "admin" || user.role == "writer") {%>
-    <button type="button" id = "delete-book" class='btn btn-default btn-md' onclick="deletebook()"> Delete this book </button>
-    <%}%>
-    <%}%>
+                <%}%>
+                <p hidden id="parse-author-id"><%=book.writerID%></p>
+                <p>Genre: <% if(book.bookgenre!=null){%>
+                    <%= book.bookgenre.toString()%>
+                    <% } else {%> N/A  <% }%></p>
+                <p>Book Description: <%=book.bookdes%></p>
+            </div>
+            <div id = "actions" class="col-md-4">
+                <h4> Now You Can </h4>
+                <% if (user!=null){%>
+                <!--testing -->
+                    <% var isSubscribed =false %>
+                    <% if (user.subscriptions!=null){%>
+                        <% for(var i = 0; i < user.subscriptions.length; i++) {%>
+                            <% if (bookID==user.subscriptions[i].bookId){%>
+                                <% isSubscribed=true}}}%>
+                <!-- use jQuery to subscribe or unsubscribe-->
+                    <% if (isSubscribed==true){%>
+                <button id='unsubscribe-book' class='btn btn-default btn-md'>Unsubscribe this book</button><p></p>
+                    <%}else{%>
+                <button id='subscribe-book' class='btn btn-default btn-md'>Subscribe this book</button><p></p>
+                    <%}%>
+
+                    <%if (user._id == book.writerID) {%>
+                    <button type="button" id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md' data-toggle="modal" data-target="#bookinfo_modal"> Edit Book Information </button><p></p>
+
+                    <button id='upload-chapter' class='btn btn-default btn-md'>Upload New Chapter</button><p></p>
+                    <%}%>
+
+                    <%if (user.role == "admin" || user.role == "writer" && user._id == book.writerID) {%>
+                    <button type="button" id = "delete-book" class='btn btn-default btn-md' onclick="deletebook()"> Delete this book </button>
+                    <%}%>
+                <%}else{%>
+                <br>
+                <h4>Sign in to access FULL features</h4><h4> such as subscribe and edit!</h4>
+                <%}%>
 
 
-    <%if (user != undefined) {%>
-    <%if (user._id == book.writerID) {%>
-    <button type="button" id = "editbook_btn" name = "book_btn" class='btn btn-default btn-md' data-toggle="modal" data-target="#bookinfo_modal"> Edit Book Information </button><p></p>
 
-    <a id='upload-chapter' href='/' class='btn btn-default btn-md' role='button'>Upload New Chapter</a><p></p>
-    <%}}%>
-    
-    <table id='table-for-chapter-menu' class="100%">
-        <thead>
-        <tr>
-            <th>Chapter Index</th>
-            <th>Chapter Title</th>
-        </tr>
-        </thead>
+            </div>
+        </div>
+    </div>
+<hr>
+    <div id = "chapters">
+        <div>
+            <h3>Chapters List</h3>
 
-        <tbody>
-        <!-- problem here, book.chapters.length may be 0-->
-        <% if (book.chapters!=null) {%>
-        <% for(var i = 0; i < book.chapters.length; i++) {%>
-        <% var bookID= book._id.toString() %>
-        <tr>
-            <th>
-                <p><%=i%></p>
-            </th>
-            <th>
-                <% var chapterID= book.chapters[i].toString() %>
-                <p hidden id="parse-book-id"><%=bookID%></p>
-                <a href= <%= "/books/"+bookID +'/chapter/'+i %>> <%= book.chapters[i].title%></a></th>
-        </tr>
-        <% }} %>
-        </tbody>
-    </table>
+        <table id='table-for-chapter-menu' class="table">
 
+            <tbody>
+            <!-- problem here, book.chapters.length may be 0-->
+            <% if (book.chapters!=null) {%>
+            <% for(var i = 0; i < book.chapters.length; i+=3) {%>
+            <% var bookID= book._id.toString() %>
+                <tr>
+                    <td>
+                        <p>Ch.<%=i+1%></p>
+                        <% var chapterID= book.chapters[i].toString() %>
+                        <p hidden id="parse-book-id"><%=bookID%></p>
+                        <a href= <%= "/books/"+bookID +'/chapter/'+i %>> <%= book.chapters[i].title%></a>
+                    </td>
+                    <%if (i+1 < book.chapters.length){%>
+                    <td>
+                        <p>Ch.<%=i+2%></p>
+                        <% var chapterID= book.chapters[i+1].toString() %>
+                        <p hidden id="parse-book-id"><%=bookID%></p>
+                        <a href= <%= "/books/"+bookID +'/chapter/'+(i+1) %>> <%= book.chapters[i+1].title%></a>
+                    </td>
+                    <%}else{%>
+                    <td></td>
+                    <%}%>
+                    <%if (i+2 < book.chapters.length){%>
+                    <td>
+                        <p>Ch.<%=i+3%></p>
+                        <% var chapterID= book.chapters[i+2].toString() %>
+                        <p hidden id="parse-book-id"><%=bookID%></p>
+                        <a href= <%= "/books/"+bookID +'/chapter/'+(i+2) %>> <%= book.chapters[i+2].title%></a>
+                    </td>
+                    <%}else{%>
+                    <td></td>
+                    <%}%>
+                </tr>
+            <% }} %>
+            </tbody>
+        </table>
+        </div>
+    </div>
     <!--Edit Book Information Modal-->
 
         <div id = "bookinfo_modal" name = "book_modal" class = "modal fade">
@@ -205,57 +253,93 @@
                     <h2>Edit Book Information</h2>
                 </div>
                 <div class="modal-body">
-                    <label>Book Name: </label>
-                    <input type="text" class="publish-non-empty" id="book-name" type="text" name="bookname" value="<%= book.bookname%>" />
-                    <br></br>
+                    <table id = "new_book">
+                        <tr id = "name">
+                            <td id = "t1"><label>Book Name: </label></td>
+                            <td id = "t2"><input type="text" class="publish-non-empty" id="book-name" type="text" name="bookname" value="<%= book.bookname%>" /></td>
+                        </tr>
+                        <tr id = "des">
+                            <td id = "t3"><label>Book Description: </label></td>
+                            <td id = "t4"><textarea id="bookDescription" type="text" name="bookDescription"><%= book.bookdes%></textarea></td>
+                        </tr>
+                    </table>
 
-                    <label>Book Description: </label>
-                    <textarea id="bookDescription" type="text" name="bookDescription"><%= book.bookdes%></textarea>
-                    <br></br>
+                    <div id = "new_g">
+                        <label>Book Genre: </label>
 
-                    <label>Book Genre: </label>
+                        <%if(book.bookgenre != null) {%>
+                        <div id = "choice">
+                        <input type="checkbox" id="teleport-1" name="bookGenre" value="Fiction" <%if(book.bookgenre.indexOf("Fiction")>= 0){%> checked <%}%> />
+                        <label for="teleport-1" class="green">Fiction</label>
+                        <input type="checkbox" id="teleport-2" name="bookGenre" value="Romance" <%if(book.bookgenre.indexOf("Romance")>= 0){%> checked <%}%>/>
+                        <label for="teleport-2" class="green">Romance</label>
+                        <input type="checkbox" id="teleport-3" name="bookGenre" value="Horror" <%if(book.bookgenre.indexOf("Horror")>= 0){%> checked <%}%> />
+                        <label for="teleport-3" class="green">Horror</label>
+                        <input type="checkbox" id="teleport-4" name="bookGenre" value="Detective"  <%if(book.bookgenre.indexOf("Detective")>= 0){%> checked <%}%> />
+                        <label for="teleport-4" class="green">Detective</label>
+                        <input type="checkbox" id="teleport-5" name="bookGenre" value="Fantasy" <%if(book.bookgenre.indexOf("Fantasy")>= 0){%> checked <%}%> />
+                        <label for="teleport-5" class="green">Fantasy</label>
+                        <input type="checkbox" id="teleport-6" name="bookGenre" value="Poetry" <%if(book.bookgenre.indexOf("Poetry")>= 0){%> checked <%}%> />
+                        <label for="teleport-6" class="green">Poetry</label>
+                        <input type="checkbox" id="teleport-7" name="bookGenre" value="Prose" <%if(book.bookgenre.indexOf("Prose")>= 0){%> checked <%}%> />
+                        <label for="teleport-7" class="green">Prose</label>
+                        <input type="checkbox" id="teleport-8" name="bookGenre" value="Crime" <%if(book.bookgenre.indexOf("Crime")>= 0){%> checked <%}%> />
+                        <label for="teleport-8" class="green">Crime</label>
+                        <input type="checkbox" id="teleport-9" name="bookGenre" value="Comedy" <%if(book.bookgenre.indexOf("Comedy")>= 0){%> checked <%}%> />
+                        <label for="teleport-9" class="green">Comedy</label>
+                        <input type="checkbox" id="teleport-10" name="bookGenre" value="Other" <%if(book.bookgenre.indexOf("Other")>= 0){%> checked <%}%> />
+                        <label for="teleport-10" class="green">Other</label>
+                        </div>
 
-                    <%if(book.bookgenre != null) {%>
-                        <input id = "bg_fiction" type = "checkbox" name = "bookGenre" value="Fiction" <%if(book.bookgenre.indexOf("Fiction")>= 0){%> checked <%}%> />Fiction
-                        <input id = "bg_romance" type = "checkbox" name = "bookGenre" value="Romance" <%if(book.bookgenre.indexOf("Romance")>= 0){%> checked <%}%> />Romance
-                        <input id = "bg_horror" type = "checkbox" name = "bookGenre" value="Horror"  <%if(book.bookgenre.indexOf("Horror")>= 0){%> checked <%}%> />Horror
-                        <input id = "bg_detective" type = "checkbox" name = "bookGenre" value="Detective"  <%if(book.bookgenre.indexOf("Detective")>= 0){%> checked <%}%> />Detective
-                        <input id = "bg_fantasy" type = "checkbox" name = "bookGenre" value="Fantasy"  <%if(book.bookgenre.indexOf("Fantasy")>= 0){%> checked <%}%> />Fantasy
-                        <input id = "bg_poetry" type = "checkbox" name = "bookGenre" value="Poetry"   <%if(book.bookgenre.indexOf("Poetry")>= 0){%> checked <%}%> />Poetry
-                        <input id = "bg_prose" type = "checkbox" name = "bookGenre" value="Prose"  <%if(book.bookgenre.indexOf("Prose")>= 0){%> checked <%}%> />Prose
-                        <input id = "bg_crime" type = "checkbox" name = "bookGenre" value="Crime"  <%if(book.bookgenre.indexOf("Crime")>= 0){%> checked <%}%> />Crime
-                        <input id = "bg_comedy" type = "checkbox" name = "bookGenre" value="Comedy"  <%if(book.bookgenre.indexOf("Comedy")>= 0){%> checked <%}%> />Comedy
-                        <input id = "bg_other" type = "checkbox" name = "bookGenre" value="Other"  <%if(book.bookgenre.indexOf("Other")>= 0){%> checked <%}%> />Other
-                    <%} else {%>
-                        <input id = "bg_fiction" type = "checkbox" name = "bookGenre" value="Fiction"  />Fiction
-                        <input id = "bg_romance" type = "checkbox" name = "bookGenre" value="Romance" />Romance
-                        <input id = "bg_horror" type = "checkbox" name = "bookGenre" value="Horror"  />Horror
-                        <input id = "bg_detective" type = "checkbox" name = "bookGenre" value="Detective" />Detective
-                        <input id = "bg_fantasy" type = "checkbox" name = "bookGenre" value="Fantasy"   />Fantasy
-                        <input id = "bg_poetry" type = "checkbox" name = "bookGenre" value="Poetry"  />Poetry
-                        <input id = "bg_prose" type = "checkbox" name = "bookGenre" value="Prose" />Prose
-                        <input id = "bg_crime" type = "checkbox" name = "bookGenre" value="Crime"  />Crime
-                        <input id = "bg_comedy" type = "checkbox" name = "bookGenre" value="Comedy"  />Comedy
-                        <input id = "bg_other" type = "checkbox" name = "bookGenre" value="Other" />Other
-                    <%}%>
+                        <%} else {%>
+                        <div id = "choice1">
+                                <input type="checkbox" id="teleport-1" name="bookGenre" value="Fiction">
+                                <label for="teleport-1" class="green">Fiction</label>
+                                <input type="checkbox" id="teleport-2" name="bookGenre" value="Romance">
+                                <label for="teleport-2" class="green">Romance</label>
+                                <input type="checkbox" id="teleport-3" name="bookGenre" value="Horror">
+                                <label for="teleport-3" class="green">Horror</label>
+                                <input type="checkbox" id="teleport-4" name="bookGenre" value="Detective">
+                                <label for="teleport-4" class="green">Detective</label>
+                                <input type="checkbox" id="teleport-5" name="bookGenre" value="Fantasy">
+                                <label for="teleport-5" class="green">Fantasy</label>
+                                <input type="checkbox" id="teleport-6" name="bookGenre" value="Poetry">
+                                <label for="teleport-6" class="green">Poetry</label>
+                                <input type="checkbox" id="teleport-7" name="bookGenre" value="Prose">
+                                <label for="teleport-7" class="green">Prose</label>
+                                <input type="checkbox" id="teleport-8" name="bookGenre" value="Crime">
+                                <label for="teleport-8" class="green">Crime</label>
+                                <input type="checkbox" id="teleport-9" name="bookGenre" value="Comedy">
+                                <label for="teleport-9" class="green">Comedy</label>
+                                <input type="checkbox" id="teleport-10" name="bookGenre" value="Other">
+                                <label for="teleport-10" class="green">Other</label>
+                        </div>
+                        <%}%>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <input type = "submit" id = "save_bookchange" onclick="return empty()" class = 'btn btn-default btn-sm' value="Save Changes"/>
-                    <button type="button" id = "cancel_bookchange" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <input type = "submit" id = "save_bookchange" onclick="return empty()" class = 'btn btn-primary btn-md' value="Save Changes"/>
+                    <button type="button" id = "cancel_bookchange" class="btn btn-default btn-md" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
             </form>
-
         </div>
+
+        <hr>
     <!--</form>-->
     <%if (book.comments != null) {%>
-    <div id="comments">
-        <p>Comments are below:</p>
-        <%for (var i = 0; i < book.comments.length; i++) {%>
-        <p><%=book.comments[i].commenter%></p>
-        <p><%=(JSON.parse(book.comments[i].comment)).ops[0].insert%></p>
-        <p>---------------</p>
-        <%}%>
+    <div id="comments" >
+        <h3>Reader Comments</h3><br>
+        <table id = "commenttable" class="table">
+            <tbody>
+                <%for (var i = 0; i < book.comments.length; i++) {%>
+                    <tr>
+                        <td><p id = "reader"><%=book.comments[i].commenter%> says: </p> </td>
+                        <td><p id = "cmt">" <%=(JSON.parse(book.comments[i].comment)).ops[0].insert%>"</p></td>
+                    </tr>
+                <%}%>
+            </tbody>
+        </table>
     </div>
     <%}%>
     <div id="form-container" class="container">
@@ -264,18 +348,21 @@
             <div class="row form-group">
                 <label for="about">Leave a comment for this book!</label>
                 <input type="hidden" name="bookid" value="<%=bookID%>"/>
+                <% if (user != null) {%>
+                <input type="hidden" name="username" value="<%=user.username%>">
+                <%}%>
                 <div id="editor-container">
 
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id = "publish_btn">
                 <button class="btn btn-primary" type="submit">Publish your comment</button>
             </div>
         </form>
     </div>
 
 </div>
+</div>
 
-<script type="text/javascript" src="../public/js/chapters.js" defer></script>
-<script type="text/javascript" src="../public/js/publish.js" defer></script>
-<link href="../public/css/chapters.css" rel="stylesheet" type="text/css">
+
+

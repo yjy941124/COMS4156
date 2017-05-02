@@ -1,6 +1,16 @@
 @import 'https://fonts.googleapis.com/css?family=Lora:400,400i,700|Raleway:300,600,700,900';
 
+html,body{
+    margin: 0;
+    padding: 0;
+}
 
+#container{
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
 
 #banner{
     padding: 0;
@@ -12,9 +22,29 @@
 
 #nav{
     background: rgba(255,255,255,0.6);
-    margin-top: 30px
+    margin-top: 0px
 }
 
+#nav a:hover{
+    background-color: rgba(255,255,255,0.6);
+    color: black;
+    font-style: oblique;
+}
+
+#all{
+    background-color: #fefffd;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+    font-size: medium;
+}
+
+#alert{
+    margin-left: 80px;
+    margin-right: 300px;
+    margin-top: 10px;
+    width: 70%;
+}
 
 #webtitle{
     font-family: 'Raleway', sans-serif;
@@ -40,4 +70,135 @@
 
 .alert{
     display: none;
+}
+
+#pub{
+    display: inline;
+}
+
+#navline{
+    font-size: x-large;
+    font-weight: bold;
+}
+
+#publish-book{
+    padding-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    padding-bottom: 30px;
+
+}
+
+tr{
+    padding-bottom: 10px;
+}
+
+td{
+    padding-top: 20px;
+    width: 150px;
+}
+
+#name{
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+#new_book{
+    margin-bottom: 10px;
+}
+
+#book-des{
+    padding-top: 10px;
+    width: 500px;
+    height: 100px;
+}
+
+#book-name{
+    width: 500px;
+
+}
+
+#new_g{
+    margin-bottom: 30px;
+}
+#submit_btn{
+    text-align: center;
+}
+
+input[type='checkbox']{
+    display: none;
+}
+
+
+#teleport-1:checked+label,#teleport-2:checked+label,#teleport-4:checked+label,#teleport-5:checked+label,#teleport-6:checked+label,#teleport-7:checked+label,#teleport-8:checked+label,#teleport-9:checked+label,#teleport-10:checked+label {
+    border-color: #AEDCAE;
+}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:before{background: #5CB85C;}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:after{
+    left: -13px;
+}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:before{
+    width: 12px;
+    height: 12px;
+}
+
+#teleport-1+label,#teleport-2+label,#teleport-4+label,#teleport-5+label,#teleport-6+label,#teleport-7+label,#teleport-8+label,#teleport-9+label,#teleport-10+label {
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:after{
+    background: #ddd;
+    border-radius: 10px;
+    width: 12px;
+    height: 12px;
+    top: 2px;
+    left: 2px;
+}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:before{
+    background: #ddd;
+    border-radius: 10px;
+    left: 100%;
+    width: 12px;
+    height: 12px;
+    top: 2px;
+}
+
+
+
+
+#teleport-3:checked+label {
+    border-color: #AEDCAE;
+}
+#teleport-3:before{background: #5CB85C;}
+#teleport-3:after{
+     left: -13px;
+}
+#teleport-3:before{
+     width: 12px;
+     height: 12px;
+ }
+#teleport-3+label {
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+}
+#teleport-3:after{
+     background: #ddd;
+     border-radius: 10px;
+     width: 12px;
+     height: 12px;
+     top: 2px;
+     left: 2px;
+}
+#teleport-3:before{
+     background: #ddd;
+     border-radius: 10px;
+     left: 100%;
+     width: 12px;
+     height: 12px;
+     top: 2px;
+ }
+
+#choice{
+    margin-top: 20px;
 }

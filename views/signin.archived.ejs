@@ -1,0 +1,59 @@
+<body>
+<!--Feel free to change the css class of each element. Do not change the hrefs as they are related to certain url.-->
+<div class="jumbotron" id = "signin-page">
+    <h1 id = "signin-title">Sign in and Sign up page</h1>
+    <br></br>
+    <p id = "sentence">Here you can sign up account or sign in.</p>
+
+
+    <div id="local">
+        <a data-toggle="collapse" href="#local-sign-in" class="btn btn-default btn-md" role="button">I already have an
+            account</a>
+        <a data-toggle="collapse" href="#local-reg" class="btn btn-default btn-md" role="button">I need to make an
+            account</a>
+    </div>
+
+    <form id="local-sign-in" class="collapse" action="/login" method="post">
+        <div>
+            <p></p>
+            <label>Username:</label>
+            <input type="text" name="username"/>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password"/>
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary btn-sm" value="Log In"/>
+        </div>
+    </form>
+
+    <form id="local-reg" class="collapse" action="/local-reg" method="post">
+        <div>
+            <p></p>
+            <label>New Username:</label>
+            <input type="text" name="username"/>
+        </div>
+        <div>
+            <label>New Password:</label>
+            <input type="password" name="password"/>
+        </div>
+        <div>
+            <p></p>
+            <label>New Email:</label>
+            <input type="email" name="email">
+        </div>
+        <div>
+            <label>Writer or Reader?</label>
+            <label class="radio-inline"><input type="radio" name="role" value="writer">Writer</label>
+            <label class="radio-inline"><input type="radio" name="role" value="reader">Reader</label>
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary btn-sm" value="Register"/>
+        </div>
+    </form>
+</div>
+</body>
+
+
+<link href="../public/css/signin.archived.css" rel="stylesheet" type="text/css">

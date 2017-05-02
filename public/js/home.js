@@ -27,11 +27,6 @@ $(document).ready(function () {
         });
 });
 
-function sortBySubscribedNumber(){
-    sortResults('subscribedNumber',false);
-
-}
-
 // parse bookList to an Array of JSON elements
 var bookList = $('#parse-bookList').html();
 var bookListArray = JSON.parse(bookList);
@@ -64,12 +59,14 @@ function showResults () {
                     +'<td>' + '<a href=' + bookDirectUrl + '>' + bookname + '</a>' + '</td>'
                     +'<td>'+'<a href=' + authorURL + '>' + bookListArray[e].writerName+ '</a>' +'</td>'
                     +'<td>'+bookgenre+'</td>'
+                    +'<td>' + bookListArray[e].subscribedNumber + '</td>'
                     +'</tr>';}
         else{
             html += '<tr>'
                     +'<td>' + '<a href=' + bookDirectUrl + '>' + bookname + '</a>' + '</td>'
                     +'<td>'+ bookListArray[e].writerName + '</td>'
                     +'<td>'+bookgenre+'</td>'
+                    +'<td>' + bookListArray[e].subscribedNumber + '</td>'
                     +'</tr>';
         }
     }
