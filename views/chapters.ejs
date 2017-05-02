@@ -66,7 +66,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/">Home <span class="sr-only">(current)</span></a></li>
                     <!--rank method to discussed-->
                     <!--<li><a href="#" onclick="sortBySubscribedNumber()">Rank</a></li>-->
                     <li><a href="/service/showranking">Ranking</a></li>
@@ -142,8 +142,8 @@
     <% } %>
     <div  class="container">
         <div id = "book_actions" class="row">
-            <div id ="book_info" class="col-md-6">
-                <p>Book: <%=book.bookname%></p>
+            <div id ="book_info" class="col-md-8">
+                <p>Title: <%=book.bookname%></p>
                 <% if (user!=null) {%>
                 <p>Author: <a href=<%="/profile/"+book.writerID.toString()%> ><%=book.writerName%></a></p>
                 <%} else{%>
@@ -156,7 +156,6 @@
                     <% } else {%> N/A  <% }%></p>
                 <p>Book Description: <%=book.bookdes%></p>
             </div>
-            <div class="col-12 col-md-1"></div>
             <div id = "actions" class="col-md-3">
                 <% if (user!=null){%>
                 <!--testing -->
