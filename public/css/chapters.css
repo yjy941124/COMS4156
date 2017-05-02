@@ -1,6 +1,8 @@
 @import 'https://fonts.googleapis.com/css?family=Lora:400,400i,700|Raleway:300,600,700,900';
 
-#b{
+body{
+    margin: 0;
+    padding: 0;
 }
 
 #banner1{
