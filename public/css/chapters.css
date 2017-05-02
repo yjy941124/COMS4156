@@ -130,7 +130,9 @@ td{
     font-size: medium;
 }
 
-
+input[type='checkbox']{
+    display: none;
+}
 
 .alert{
     display: none;
@@ -210,4 +212,81 @@ hr {
 
 #cmt{
     font-style: italic;
+}
+
+
+
+
+#teleport-1:checked+label,#teleport-2:checked+label,#teleport-4:checked+label,#teleport-5:checked+label,#teleport-6:checked+label,#teleport-7:checked+label,#teleport-8:checked+label,#teleport-9:checked+label,#teleport-10:checked+label {
+    border-color: #AEDCAE;
+}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:before{background: #5CB85C;}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:after{
+    left: -13px;
+}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:before{
+    width: 12px;
+    height: 12px;
+}
+
+#teleport-1+label,#teleport-2+label,#teleport-4+label,#teleport-5+label,#teleport-6+label,#teleport-7+label,#teleport-8+label,#teleport-9+label,#teleport-10+label {
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:after{
+    background: #ddd;
+    border-radius: 10px;
+    width: 12px;
+    height: 12px;
+    top: 2px;
+    left: 2px;
+}
+#teleport-1,#teleport-2,#teleport-4,#teleport-5,#teleport-6,#teleport-7,#teleport-8,#teleport-9,#teleport-10:before{
+    background: #ddd;
+    border-radius: 10px;
+    left: 100%;
+    width: 12px;
+    height: 12px;
+    top: 2px;
+}
+
+
+
+
+#teleport-3:checked+label {
+    border-color: #AEDCAE;
+}
+#teleport-3:before{background: #5CB85C;}
+#teleport-3:after{
+    left: -13px;
+}
+#teleport-3:before{
+    width: 12px;
+    height: 12px;
+}
+#teleport-3+label {
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+}
+#teleport-3:after{
+    background: #ddd;
+    border-radius: 10px;
+    width: 12px;
+    height: 12px;
+    top: 2px;
+    left: 2px;
+}
+#teleport-3:before{
+    background: #ddd;
+    border-radius: 10px;
+    left: 100%;
+    width: 12px;
+    height: 12px;
+    top: 2px;
+}
+
+#choice,#choice1{
+    margin-top: 20px;
 }
