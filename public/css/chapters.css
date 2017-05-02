@@ -50,6 +50,7 @@
     padding-left: 30px;
     padding-bottom: 20px;
     font-size: large;
+    margin-bottom: 30px;
 }
 
 #book_actions{
@@ -59,9 +60,7 @@
 }
 
 #actions{
-    border: dashed;
-    border-color: #265a88;
-    border-width: 2px;
+    padding-top: 20px;
 }
 
 #comments{
@@ -100,6 +99,7 @@
      background-color: #cccccc;
      padding-bottom: 10px;
      text-align: center;
+     margin-bottom: 0;
 
  }
 

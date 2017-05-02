@@ -206,7 +206,12 @@ exports.localAuth = function (username, password) {
 exports.publishBook = function (req, res) {
     var bookname = req.body.bookname;
     var bookdes = req.body.bookDescription;
-    var bookgenre = req.body.bookGenre;
+    var bookgenre;
+    if (req.body.bookGenre == null ){
+        bookgenre = ["Other"];
+    } else{
+        bookgenre = req.body.bookGenre;
+    }
     var writerID = req.user._id.toString();
     var writerName = req.user.username;
     var book = {
@@ -250,7 +255,12 @@ exports.publishBook = function (req, res) {
 exports.updateBookInfo = function (book_Id, user_Id, info, res) {
     var new_bookname = info.bookname;
     var new_bookdes = info.bookDescription;
-    var new_bookGenre = info.bookGenre;
+    var new_bookGenre;
+    if (info.bookGenre == null ){
+        new_bookGenre = ["Other"];
+    } else{
+        new_bookGenre = info.bookGenre;
+    }
     MongoClient.connect(mongodbUrl, function (err, db) {
         var books = db.collection('Books');
         var users = db.collection('Users');
