@@ -1,4 +1,4 @@
-# Forever Read
+# Forever Read [![Build Status](https://travis-ci.org/yjy941124/Forever-Read.svg?branch=master)](https://travis-ci.org/yjy941124/Forever-Read)
 
 Forever is a lightweight, offline-storage, multiple-technology powered online book publish platform built in Node.js.
 
@@ -74,4 +74,4 @@ Suggestions for improvement are welcome.
 [mocha.js]:<https://mochajs.org/>
 [sinon.js]:<http://sinonjs.org/>
 [MongoDB Compass]:<https://www.mongodb.com/products/compass>
-[DevLog]:<>
+[DevLog]:<https://github.com/yjy941124/Forever-Read/blob/master/DevLog.md>
