@@ -44,7 +44,7 @@ $ sudo mongod
 $ npm start
 ```
 
-6.(optional) Open Mongo Shell to view database storage
+6. (optional) Open Mongo Shell to view database storage
 
 ```sh
 $ mongo
