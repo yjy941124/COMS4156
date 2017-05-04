@@ -1,4 +1,4 @@
-# Forever Read [![Build Status](https://travis-ci.org/yjy941124/Forever-Read.svg?branch=master)](https://travis-ci.org/yjy941124/Forever-Read)
+# Forever Read 
 
 Forever is a lightweight, offline-storage, multiple-technology powered online book publish platform built in Node.js.
 

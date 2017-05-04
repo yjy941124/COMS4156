@@ -1,4 +1,4 @@
-# COMS4156 [![Build Status](https://travis-ci.org/yjy941124/Forever-Read.svg?branch=master)](https://travis-ci.org/yjy941124/Forever-Read)
+# COMS4156 
 This is the final project of COMS 4156, co-authored by four members from the class - JY, YW, RJ, and YQ.
 
 ### May 1, Ruijue Ji & Yulong Qiao
